@@ -159,7 +159,7 @@ class @Datom extends Multimix
   #   @LINKS  = require './links'
   #   @export target if target?
 
-module.exports = FONTMIRROR = new @Datom()
+module.exports = new Datom()
 
 
 

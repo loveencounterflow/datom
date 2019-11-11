@@ -20,6 +20,7 @@ Multimix                  = require 'multimix'
 types                     = require './types'
 { isa
   validate
+  defaults
   type_of }               = types
 LFT                       = require 'letsfreezethat'
 LFT_nofreeze              = LFT.nofreeze

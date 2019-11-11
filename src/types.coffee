@@ -62,3 +62,6 @@ intertype                 = new Intertype module.exports
 # #-----------------------------------------------------------------------------------------------------------
 # @declare 'true', ( x ) -> x is true
 
+@defaults =
+  settings:
+    merge:    true

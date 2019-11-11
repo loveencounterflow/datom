@@ -20,6 +20,12 @@ Intertype                 = ( require 'intertype' ).Intertype
 intertype                 = new Intertype module.exports
 
 #-----------------------------------------------------------------------------------------------------------
+@declare 'datom_settings',
+  tests:
+    "x is a object":                          ( x ) -> @isa.object                      x
+    "x.merge is a ?boolean":                  ( x ) -> ( not x.merge? ) or @isa.boolean x.merge
+
+#-----------------------------------------------------------------------------------------------------------
 @declare 'datom_nonempty_list_of_positive_integers', ( x ) ->
   return false unless @isa.nonempty_list x
   return x.every ( xx ) => @isa.positive_integer xx

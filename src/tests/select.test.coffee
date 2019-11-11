@@ -105,29 +105,29 @@ DATOM                     = require '../..'
 #-----------------------------------------------------------------------------------------------------------
 @[ "select 2" ] = ( T, done ) ->
   probes_and_matchers = [
-    [[ {key:'^number',value:42,$stamped:true}, '^number'],false]
-    [[ {key:'<italic',$stamped:true}, '<italic'],false]
-    [[ {key:'<italic',$stamped:true}, '>italic'],false]
-    [[ {key:'^number',value:42}, '^number'],true]
-    [[ {key:'^number',value:42,$stamped:true}, '^number#stamped'],true]
-    [[ {key:'<italic',$stamped:true}, '<italic#stamped'],true]
-    [[ {key:'<italic',$stamped:true}, '>italic#stamped'],false]
-    [[ {key:'<italic',$stamped:true}, '<italic#stamped'],true]
-    [[ {key:'<italic'}, '<italic#stamped'],true]
-    [[ {key:'<italic'}, '>italic#stamped'],false]
-    [[ {key:'<italic',$stamped:true}, '>italic'],false]
-    [[ {key:"*data"},'*data'],null,'illegal selector']
-    [[ {key:"data>"},'data>'],null,'illegal selector']
-    [[ {key:"%data"},'%data'],null,'illegal selector']
-    [[ {key:"[data"},'[data'],true,null]
-    [[ {key:"data]"},'data]'],null,'illegal selector']
-    [[ {key:"]data"},']data'],true,null]
+    [[ {$key:'^number',$value:42,$stamped:true}, '^number'],false]
+    [[ {$key:'<italic',$stamped:true}, '<italic'],false]
+    [[ {$key:'<italic',$stamped:true}, '>italic'],false]
+    [[ {$key:'^number',$value:42}, '^number'],true]
+    [[ {$key:'^number',$value:42,$stamped:true}, '^number#stamped'],true]
+    [[ {$key:'<italic',$stamped:true}, '<italic#stamped'],true]
+    [[ {$key:'<italic',$stamped:true}, '>italic#stamped'],false]
+    [[ {$key:'<italic',$stamped:true}, '<italic#stamped'],true]
+    [[ {$key:'<italic'}, '<italic#stamped'],true]
+    [[ {$key:'<italic'}, '>italic#stamped'],false]
+    [[ {$key:'<italic',$stamped:true}, '>italic'],false]
+    [[ {$key:"*data"},'*data'],null,'illegal selector']
+    [[ {$key:"data>"},'data>'],null,'illegal selector']
+    [[ {$key:"%data"},'%data'],null,'illegal selector']
+    [[ {$key:"[data"},'[data'],true,null]
+    [[ {$key:"data]"},'data]'],null,'illegal selector']
+    [[ {$key:"]data"},']data'],true,null]
     ]
   #.........................................................................................................
   for [ probe, matcher, error, ] in probes_and_matchers
     await T.perform probe, matcher, error, ->
       [ d, selector, ] = probe
-      return DATOM.select d, selector
+      return select d, selector
   done()
   return null
 
@@ -142,10 +142,33 @@ DATOM                     = require '../..'
     await T.perform probe, matcher, error, -> return new Promise ( resolve, reject ) ->
       [ d, selector, ] = probe
       try
-        resolve DATOM.select d, selector
+        resolve select d, selector
       catch error
         return resolve error.message
       return null
+  done()
+  return null
+
+#-----------------------------------------------------------------------------------------------------------
+@[ "new_datom (default settings)" ] = ( T, done ) ->
+  probes_and_matchers = [
+    [["^number",null],{"$key":"^number"},null]
+    [["^number",123],{"$key":"^number","$value":123},null]
+    [["^number",{"$value":123,}],{"$key":"^number","$value":123},null]
+    [["^number",{"value":123,}],{"$key":"^number","value":123},null]
+    [["^number",{"$value":{"$value":123,}}],{"$key":"^number","$value": { "$value": 123, }, },null]
+    [["^number",{"value":{"$value":123,}}],{"$key":"^number","value": { "$value": 123, }, },null]
+    [["^number",{"$value":{"value":123,}}],{"$key":"^number","$value": { "value": 123, }, },null]
+    [["^number",{"value":{"value":123,}}],{"$key":"^number","value": { "value": 123, }, },null]
+    [["^value",123],{"$key":"^value","$value":123},null]
+    [["<start",123],{"$key":"<start","$value":123},null]
+    [[">stop",123],{"$key":">stop","$value":123},null]
+    ]
+  #.........................................................................................................
+  for [ probe, matcher, error, ] in probes_and_matchers
+    await T.perform probe, matcher, error, -> return new Promise ( resolve, reject ) ->
+      [ key, value, ] = probe
+      resolve new_datom key, value
   done()
   return null
 

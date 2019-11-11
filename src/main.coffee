@@ -76,7 +76,7 @@ LFT_nofreeze              = LFT.nofreeze
 #-----------------------------------------------------------------------------------------------------------
 @is_system = ( d ) ->
   ### Return whether datom is a system datom (i.e. whether its `sigil` equals `'~'`). ###
-  return d.key.match /^[~\[\]]/
+  return d.$key.match /^[~\[\]]/
 
 #-----------------------------------------------------------------------------------------------------------
 @is_stamped = ( d ) -> d.$stamped ? false ### i.e. already processed? ###
@@ -84,29 +84,29 @@ LFT_nofreeze              = LFT.nofreeze
 @is_dirty   = ( d ) -> d.$dirty   ? false ### i.e. modified? ###
 
 #-----------------------------------------------------------------------------------------------------------
-@new_datom = ( key, value, other... ) ->
+@new_datom = ( $key, $value, other... ) ->
   ### TAINT should validate key ###
   ### When `other` contains a key `$`, it is treated as a hint to copy
   system-level attributes; if the value of key `$` is a POD that has itself a
   key `$`, then a copy of that value is used. This allows to write `new_datom
   ..., $: d` to copy system-level attributes such as source locations to a new
   datom. ###
-  validate.datom_key key
-  if value?
-    value = { value, } if not isa.object value
-    R     = assign { key, }, value, other...
+  validate.datom_key $key
+  if $value?
+    $value = { $value, } if not isa.object $value
+    R     = assign { $key, }, $value, other...
   else
-    R     = assign { key, }, other...
+    R     = assign { $key, }, other...
   while ( isa.object R.$ ) and ( isa.object R.$.$ ) then R.$ = copy R.$.$
   return @freeze R
 
 #-----------------------------------------------------------------------------------------------------------
-@new_single_datom = ( key, value, other...  ) -> @new_datom         "^#{key}",  value, other...
-@new_open_datom   = ( key, value, other...  ) -> @new_datom         "<#{key}",  value, other...
-@new_close_datom  = ( key, value, other...  ) -> @new_datom         ">#{key}",  value, other...
-@new_system_datom = ( key, value, other...  ) -> @new_datom         "~#{key}",  value, other...
-@new_text_datom   = (      value, other...  ) -> @new_single_datom  'text',     value, other...
-@new_end_datom    =                           -> @new_system_datom  'end'
+@new_single_datom = ( $key, $value, other... ) -> @new_datom         "^#{$key}",  $value, other...
+@new_open_datom   = ( $key, $value, other... ) -> @new_datom         "<#{$key}",  $value, other...
+@new_close_datom  = ( $key, $value, other... ) -> @new_datom         ">#{$key}",  $value, other...
+@new_system_datom = ( $key, $value, other... ) -> @new_datom         "~#{$key}",  $value, other...
+@new_text_datom   = (       $value, other... ) -> @new_single_datom  'text',      $value, other...
+@new_end_datom    =                            -> @new_system_datom  'end'
 # @new_flush_datom    =                           -> @new_system_datom  'flush'
 
 #-----------------------------------------------------------------------------------------------------------
@@ -122,7 +122,7 @@ selector_pattern = /^[<^>\[~\]][^<^>\[~\]]*$/
 #-----------------------------------------------------------------------------------------------------------
 @select = ( d, selector ) ->
   throw new Error "µ86606 expected a selector, got none" unless selector?
-  return false unless ( ( isa.object d ) and ( d.key? ) )
+  return false unless ( ( isa.object d ) and ( d.$key? ) )
   #.........................................................................................................
   stamped = false
   if selector.endsWith '#stamped'
@@ -133,7 +133,7 @@ selector_pattern = /^[<^>\[~\]][^<^>\[~\]]*$/
   throw new Error "µ37783 illegal selector #{rpr selector}" unless selector_pattern.test selector
   #.........................................................................................................
   return false if ( not stamped ) and ( d.$stamped ? false )
-  return d.key is selector
+  return d.$key is selector
 
 
 #===========================================================================================================

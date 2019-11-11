@@ -184,17 +184,17 @@ types                     = require '../types'
 @[ "new_datom (without value merging)" ] = ( T, done ) ->
   DATOM                     = require '../..'
   { new_datom
-    select }                = DATOM.export()
+    select }                = ( new DATOM.Datom { merge_values: false, } ).export()
   #.........................................................................................................
   probes_and_matchers = [
     [["^number",null],{"$key":"^number"},null]
     [["^number",123],{"$key":"^number","$value":123},null]
-    [["^number",{"$value":123,}],{"$key":"^number","$value":123},null]
-    [["^number",{"value":123,}],{"$key":"^number","value":123},null]
-    [["^number",{"$value":{"$value":123,}}],{"$key":"^number","$value": { "$value": 123, }, },null]
-    [["^number",{"value":{"$value":123,}}],{"$key":"^number","value": { "$value": 123, }, },null]
-    [["^number",{"$value":{"value":123,}}],{"$key":"^number","$value": { "value": 123, }, },null]
-    [["^number",{"value":{"value":123,}}],{"$key":"^number","value": { "value": 123, }, },null]
+    [["^number",{"$value":123,}],{"$key":"^number","$value":{"$value":123}},null]
+    [["^number",{"value":123,}],{"$key":"^number","$value":{"value":123}},null]
+    [["^number",{"$value":{"$value":123,}}],{"$key":"^number","$value":{"$value": { "$value": 123, }, }, },null]
+    [["^number",{"value":{"$value":123,}}],{"$key":"^number","$value":{"value": { "$value": 123, }}, },null]
+    [["^number",{"$value":{"value":123,}}],{"$key":"^number","$value":{ "$value": { "value": 123, }}, },null]
+    [["^number",{"value":{"value":123,}}],{"$key":"^number","$value":{ "value": { "value": 123, }}, },null]
     [["^value",123],{"$key":"^value","$value":123},null]
     [["<start",123],{"$key":"<start","$value":123},null]
     [[">stop",123],{"$key":">stop","$value":123},null]

@@ -22,8 +22,8 @@ intertype                 = new Intertype module.exports
 #-----------------------------------------------------------------------------------------------------------
 @declare 'datom_settings',
   tests:
-    "x is a object":                          ( x ) -> @isa.object                      x
-    "x.merge is a ?boolean":                  ( x ) -> ( not x.merge? ) or @isa.boolean x.merge
+    "x is a object":                  ( x ) -> @isa.object x
+    "x.merge_values is a ?boolean":   ( x ) -> ( not x.merge_values? ) or @isa.boolean x.merge_values
 
 #-----------------------------------------------------------------------------------------------------------
 @declare 'datom_nonempty_list_of_positive_integers', ( x ) ->
@@ -70,4 +70,4 @@ intertype                 = new Intertype module.exports
 
 @defaults =
   settings:
-    merge:    true
+    merge_values: true

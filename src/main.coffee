@@ -93,7 +93,7 @@ LFT_nofreeze              = LFT.nofreeze
   datom. ###
   validate.datom_key $key
   if $value?
-    $value = { $value, } if not isa.object $value
+    $value = { $value, } if ( not @settings.merge_values ) or ( not isa.object $value )
     R     = assign { $key, }, $value, other...
   else
     R     = assign { $key, }, other...
@@ -140,7 +140,7 @@ selector_pattern = /^[<^>\[~\]][^<^>\[~\]]*$/
 # EXPORT
 #-----------------------------------------------------------------------------------------------------------
 MAIN = @
-class @Datom extends Multimix
+class Datom extends Multimix
   @include MAIN,                              { overwrite: false, }
   # @include ( require './outliner.mixin' ),    { overwrite: false, }
   # @include ( require './cachewalker.mixin' ), { overwrite: false, }
@@ -151,7 +151,8 @@ class @Datom extends Multimix
   constructor: ( settings = null ) ->
     super()
     validate.datom_settings settings = { defaults.settings..., settings..., }
-
+    @settings = @freeze settings
+    @Datom    = Datom
   #   @CLI    = require './cli'
   #   @CFG    = require './cfg'
   #   @TAGS   = require './tags'

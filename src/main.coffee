@@ -140,7 +140,7 @@ selector_pattern = /^[<^>\[~\]][^<^>\[~\]]*$/
 # EXPORT
 #-----------------------------------------------------------------------------------------------------------
 MAIN = @
-class Fontmirror extends Multimix
+class @Datom extends Multimix
   @include MAIN,                              { overwrite: false, }
   # @include ( require './outliner.mixin' ),    { overwrite: false, }
   # @include ( require './cachewalker.mixin' ), { overwrite: false, }
@@ -159,7 +159,7 @@ class Fontmirror extends Multimix
   #   @LINKS  = require './links'
   #   @export target if target?
 
-module.exports = FONTMIRROR = new Fontmirror()
+module.exports = FONTMIRROR = new @Datom()
 
 
 

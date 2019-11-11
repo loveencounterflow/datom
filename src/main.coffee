@@ -147,9 +147,11 @@ class Fontmirror extends Multimix
   # @include ( require './_temp_svgttf' ),      { overwrite: false, } ### !!!!!!!!!!!!!!!!!!!!!!!!!!! ###
   # @extend MAIN, { overwrite: false, }
 
-  # #---------------------------------------------------------------------------------------------------------
-  # constructor: ( target = null ) ->
-  #   super()
+  #---------------------------------------------------------------------------------------------------------
+  constructor: ( settings = null ) ->
+    super()
+    validate.datom_settings settings = { defaults.settings..., settings..., }
+
   #   @CLI    = require './cli'
   #   @CFG    = require './cfg'
   #   @TAGS   = require './tags'

@@ -34,20 +34,20 @@ intertype                 = new Intertype module.exports
 @declare 'datom_key',
   tests:
     "x is a nonempty text":                   ( x ) -> @isa.nonempty_text   x
-    "x has sigil":                            ( x ) -> @isa.pd_datom_sigil  x[ 0 ]
+    "x has sigil":                            ( x ) -> @isa.datom_sigil  x[ 0 ]
 
 #-----------------------------------------------------------------------------------------------------------
 @declare 'datom_datom',
   tests:
     "x is a object":                          ( x ) -> @isa.object          x
     "x has key 'key'":                        ( x ) -> @has_key             x, 'key'
-    "x.key is a pd_datom_key":                ( x ) -> @isa.pd_datom_key    x.key
+    "x.key is a datom_key":                   ( x ) -> @isa.datom_key    x.key
     "x.$stamped is an optional boolean":      ( x ) -> ( not x.$stamped? ) or ( @isa.boolean x.$stamped )
     "x.$dirty is an optional boolean":        ( x ) -> ( not x.$dirty?   ) or ( @isa.boolean x.$dirty   )
     "x.$fresh is an optional boolean":        ( x ) -> ( not x.$fresh?   ) or ( @isa.boolean x.$fresh   )
     #.......................................................................................................
     "x.$vnr is an optional nonempty list of positive integers": ( x ) ->
-      ( not x.$vnr? ) or @isa.pd_nonempty_list_of_positive_integers x.$vnr
+      ( not x.$vnr? ) or @isa.datom_nonempty_list_of_positive_integers x.$vnr
 
     # "?..$vnr is a ?positive":            ( x ) -> ( not x.$vnr? ) or @isa.positive x.$vnr
 #     "? has key 'vlnr_txt'":                   ( x ) -> @has_key             x, 'vlnr_txt'

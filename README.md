@@ -11,6 +11,12 @@
 - [Export Bound Methods](#export-bound-methods)
 - [Creation of Bespoke Library Instances](#creation-of-bespoke-library-instances)
 - [Configuration Parameters](#configuration-parameters)
+- [Methods](#methods)
+  - [Freezing & Thawing](#freezing--thawing)
+  - [Stamping](#stamping)
+  - [Type Testing](#type-testing)
+  - [Value Creation](#value-creation)
+  - [Selecting](#selecting)
 - [PipeDreams Datoms (Data Events)](#pipedreams-datoms-data-events)
     - [`select = ( d, selector ) ->`](#select---d-selector---)
 
@@ -66,6 +72,43 @@ course the same library with a different configuration.
   result in a datom `{ $key: '^somekey', $value: somevalue, }`; when left to the default, and if `somevalue`
   is an object, then its attributes will become attributes of the datom, which may result in name clashes in
   case any attribute name should start with a `$` (dollar sign).
+
+# Methods
+
+## Freezing & Thawing
+
+* **`@freeze = ( d ) ->`**
+* **`@thaw   = ( d ) ->`**
+* **`@lets = ( original, modifier ) ->`**
+* **`@set = ( d, k, P... ) ->`**
+* **`@unset = ( d, k ) ->`**
+
+## Stamping
+
+* **`@stamp = ( d, P... ) ->`**
+* **`@unstamp = ( d ) ->`**
+
+## Type Testing
+
+* **`@is_system = ( d ) ->`**
+* **`@is_stamped = ( d ) ->`**
+* **`@is_fresh   = ( d ) ->`**
+* **`@is_dirty   = ( d ) ->`**
+
+## Value Creation
+
+* **`@new_datom = ( $key, $value, other... ) ->`**
+* **`@new_single_datom = ( $key, $value, other... ) ->`**
+* **`@new_open_datom   = ( $key, $value, other... ) ->`**
+* **`@new_close_datom  = ( $key, $value, other... ) ->`**
+* **`@new_system_datom = ( $key, $value, other... ) ->`**
+* **`@new_text_datom   = (       $value, other... ) ->`**
+* **`@new_end_datom    =                            ->`**
+* **`@new_warning = ( ref, message, d, other...  ) ->`**
+
+## Selecting
+
+* **`@select = ( d, selector ) ->`**
 
 -------------------------------------------------------------------------------
 

@@ -114,8 +114,10 @@ course the same library with a different configuration.
 # System Properties
 
 * **`d.$key`**—key (i.e., type) of a datom.
-* **`d.$value`**—'the' proper value of a datom, in case there is no `d.$value`, the datom's proper value is
-  the object that would result from deleting all properties whose names start with a `$` (dollar sign).
+* **`d.$value`**—'the' proper value of a datom. This is always used in case `new_datom()` was called with a
+  non-object in the value slot (as in `new_datom '^mykey', 123`), or when the library was configured with `{
+  merge_values: false, }`.—In case there is no `d.$value`, the datom's proper value is the object that would
+  result from deleting all properties whose names start with a `$` (dollar sign).
 * **`d.$dirty`**—whether the object has been (thawed, then) changed (and then frozen again) since its
   `$dirty` property was last cleared or set to `false`.
 * **`d.$stamped`**—whether the object has been marked as 'stamped' (i.e., processed).

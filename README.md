@@ -11,7 +11,6 @@
 - [Export Bound Methods](#export-bound-methods)
 - [Creation of Bespoke Library Instances](#creation-of-bespoke-library-instances)
 - [Configuration Parameters](#configuration-parameters)
-- [**Copied from PipeDreams docs, to be updated**](#copied-from-pipedreams-docs-to-be-updated)
 - [PipeDreams Datoms (Data Events)](#pipedreams-datoms-data-events)
     - [`select = ( d, selector ) ->`](#select---d-selector---)
 
@@ -68,7 +67,9 @@ course the same library with a different configuration.
   is an object, then its attributes will become attributes of the datom, which may result in name clashes in
   case any attribute name should start with a `$` (dollar sign).
 
-# **Copied from PipeDreams docs, to be updated**
+-------------------------------------------------------------------------------
+
+**The below copied from PipeDreams docs, to be updated**
 
 # PipeDreams Datoms (Data Events)
 

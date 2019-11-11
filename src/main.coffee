@@ -25,13 +25,7 @@ types                     = require './types'
 LFT                       = require 'letsfreezethat'
 LFT_nofreeze              = LFT.nofreeze
 @_copy                    = LFT_nofreeze._copy.bind LFT
-@_nofreeze                = false
-
-#-----------------------------------------------------------------------------------------------------------
-@create_nofreeze = ->
-  R = new @Pipedreams()
-  R._nofreeze = true
-  return R
+# @_nofreeze                = false
 
 #-----------------------------------------------------------------------------------------------------------
 @freeze = ( d ) -> if @_nofreeze then LFT_nofreeze.freeze d else LFT.freeze d

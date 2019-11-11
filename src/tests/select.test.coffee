@@ -22,10 +22,6 @@ types                     = require '../types'
 { isa
   validate
   type_of }               = types
-#...........................................................................................................
-DATOM                     = require '../..'
-{ new_datom
-  select }                = DATOM.export()
 
 
 # #-----------------------------------------------------------------------------------------------------------
@@ -104,6 +100,10 @@ DATOM                     = require '../..'
 
 #-----------------------------------------------------------------------------------------------------------
 @[ "select 2" ] = ( T, done ) ->
+  DATOM                     = require '../..'
+  { new_datom
+    select }                = DATOM.export()
+  #.........................................................................................................
   probes_and_matchers = [
     [[ {$key:'^number',$value:42,$stamped:true}, '^number'],false]
     [[ {$key:'<italic',$stamped:true}, '<italic'],false]
@@ -133,6 +133,10 @@ DATOM                     = require '../..'
 
 #-----------------------------------------------------------------------------------------------------------
 @[ "select ignores values other than PODs" ] = ( T, done ) ->
+  DATOM                     = require '../..'
+  { new_datom
+    select }                = DATOM.export()
+  #.........................................................................................................
   probes_and_matchers = [
     [[ null, '^number',],false]
     [[ 123, '^number',],false]
@@ -151,6 +155,37 @@ DATOM                     = require '../..'
 
 #-----------------------------------------------------------------------------------------------------------
 @[ "new_datom (default settings)" ] = ( T, done ) ->
+  DATOM                     = require '../..'
+  { new_datom
+    select }                = DATOM.export()
+  #.........................................................................................................
+  probes_and_matchers = [
+    [["^number",null],{"$key":"^number"},null]
+    [["^number",123],{"$key":"^number","$value":123},null]
+    [["^number",{"$value":123,}],{"$key":"^number","$value":123},null]
+    [["^number",{"value":123,}],{"$key":"^number","value":123},null]
+    [["^number",{"$value":{"$value":123,}}],{"$key":"^number","$value": { "$value": 123, }, },null]
+    [["^number",{"value":{"$value":123,}}],{"$key":"^number","value": { "$value": 123, }, },null]
+    [["^number",{"$value":{"value":123,}}],{"$key":"^number","$value": { "value": 123, }, },null]
+    [["^number",{"value":{"value":123,}}],{"$key":"^number","value": { "value": 123, }, },null]
+    [["^value",123],{"$key":"^value","$value":123},null]
+    [["<start",123],{"$key":"<start","$value":123},null]
+    [[">stop",123],{"$key":">stop","$value":123},null]
+    ]
+  #.........................................................................................................
+  for [ probe, matcher, error, ] in probes_and_matchers
+    await T.perform probe, matcher, error, -> return new Promise ( resolve, reject ) ->
+      [ key, value, ] = probe
+      resolve new_datom key, value
+  done()
+  return null
+
+#-----------------------------------------------------------------------------------------------------------
+@[ "new_datom (without value merging)" ] = ( T, done ) ->
+  DATOM                     = require '../..'
+  { new_datom
+    select }                = DATOM.export()
+  #.........................................................................................................
   probes_and_matchers = [
     [["^number",null],{"$key":"^number"},null]
     [["^number",123],{"$key":"^number","$value":123},null]

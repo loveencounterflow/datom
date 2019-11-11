@@ -18,8 +18,9 @@
   - [Value Creation](#value-creation)
   - [Selecting](#selecting)
 - [System Properties](#system-properties)
-- [PipeDreams Datoms (Data Events)](#pipedreams-datoms-data-events)
-    - [`select = ( d, selector ) ->`](#select---d-selector---)
+- [WIP](#wip)
+  - [PipeDreams Datoms (Data Events)](#pipedreams-datoms-data-events)
+  - [`select = ( d, selector ) ->`](#select---d-selector---)
 - [To Do](#to-do)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -125,9 +126,11 @@ course the same library with a different configuration.
 
 -------------------------------------------------------------------------------
 
+# WIP
+
 **The below copied from PipeDreams docs, to be updated**
 
-# PipeDreams Datoms (Data Events)
+## PipeDreams Datoms (Data Events)
 
 Data streams—of which [pull-streams](https://pull-stream.github.io/),
 [PipeStreams](https://github.com/loveencounterflow/pipestreams), and [NodeJS
@@ -292,7 +295,7 @@ boxes:<sup>*note*</sup>
 > of your to-do list first, and vice versa. This can be mildly confusing.
 
 
-### `select = ( d, selector ) ->`
+## `select = ( d, selector ) ->`
 
 The `select` method can be used to determine whether a given event `d` matches a
 set of conditions; typically, one will want to use `select d, selector` to decide

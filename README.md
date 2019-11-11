@@ -8,9 +8,8 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
-- [Datom](#datom)
-  - [PipeDreams Datoms (Data Events)](#pipedreams-datoms-data-events)
-    - [`select = ( d, selector ) ->`](#select---d-selector---)
+- [PipeDreams Datoms (Data Events)](#pipedreams-datoms-data-events)
+  - [`select = ( d, selector ) ->`](#select---d-selector---)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

@@ -111,23 +111,45 @@ LFT_nofreeze              = LFT.nofreeze
 #===========================================================================================================
 # SELECT
 #-----------------------------------------------------------------------------------------------------------
-selector_pattern = /^[<^>\[~\]][^<^>\[~\]]*$/
+p1 = /// # `\x23` used instead of `\#` which causes syntax error (???)
+  ^
+    (?<skey>
+      (?<sigil>            [  < ^ > \[ ~ \] \x23 ]  )
+      (?<key>              [^ < ^ > \[ ~ \] \x23 ]* )
+    )
+  $ ///u
+p2 = /// # `\x23` used instead of `\#` which causes syntax error (???)
+  ^
+    (?<skey>
+      (?<sigil>            [  < ^ > \[ ~ \] \x23 ]  )
+      (?<key>              [^ < ^ > \[ ~ \] \x23 ]* )
+    ) \x23
+    (?<attribute>        [^ < ^ > \[ ~ \] \x23 ]+ ) :
+    (?<value>            [^ < ^ > \[ ~ \] \x23 ]+ )
+  $ ///u
 
 #-----------------------------------------------------------------------------------------------------------
 @select = ( d, selector ) ->
   throw new Error "µ86606 expected a selector, got none" unless selector?
   return false unless ( ( isa.object d ) and ( d.$key? ) )
   #.........................................................................................................
-  stamped = false
-  if selector.endsWith '#stamped'
-    stamped   = true
-    selector  = selector[ ... selector.length - 8 ]
-    throw new Error "µ33982 selector cannot just contain tag '#stamped'" if selector is ''
+  unless ( match = ( selector.match p2 ) ? ( selector.match p1 ) )?
+    throw new Error "µ37799 illegal selector #{rpr selector}"
+  g       = {}
+  g[ k ]  = v for k, v of match.groups when v isnt ''
+  if g.attribute? and ( g.attribute isnt 'stamped' )
+    throw new Error "µ77764 unknown attribute name #{rpr g.attribute}"
+  switch g.value
+    when undefined      then stamped_values = [       false, ]
+    when '*'            then stamped_values = [ true, false, ]
+    when 'true'         then stamped_values = [ true,        ]
+    when 'false'        then stamped_values = [       false, ]
+    else throw new Error "µ33366 illegal attribute or value in selector #{rpr selector}"
   #.........................................................................................................
-  throw new Error "µ37783 illegal selector #{rpr selector}" unless selector_pattern.test selector
-  #.........................................................................................................
-  return false if ( not stamped ) and ( d.$stamped ? false )
-  return d.$key is selector
+  return false if ( d.$stamped ? false ) not in stamped_values
+  return ( d.$key is g.skey ) if g.key?
+  return false unless d.$key.startsWith g.sigil
+  return true
 
 
 #===========================================================================================================

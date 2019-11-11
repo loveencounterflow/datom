@@ -105,16 +105,18 @@ types                     = require '../types'
     select }                = DATOM.export()
   #.........................................................................................................
   probes_and_matchers = [
+    [[ {$key:'^number',$value:42,$stamped:true}, '^number#stamped:*'],true]
+    [[ {$key:'<italic',$stamped:true}, '<italic#stamped:*'],true]
+    [[ {$key:'<italic',$stamped:true}, '<italic#stamped:*'],true]
+    [[ {$key:'<italic'}, '<italic#stamped:*'],true]
+
+    [[ {$key:'<italic',$stamped:true}, '>italic#stamped:*'],false]
+    [[ {$key:'<italic'}, '>italic#stamped:*'],false]
+
     [[ {$key:'^number',$value:42,$stamped:true}, '^number'],false]
     [[ {$key:'<italic',$stamped:true}, '<italic'],false]
     [[ {$key:'<italic',$stamped:true}, '>italic'],false]
     [[ {$key:'^number',$value:42}, '^number'],true]
-    [[ {$key:'^number',$value:42,$stamped:true}, '^number#stamped'],true]
-    [[ {$key:'<italic',$stamped:true}, '<italic#stamped'],true]
-    [[ {$key:'<italic',$stamped:true}, '>italic#stamped'],false]
-    [[ {$key:'<italic',$stamped:true}, '<italic#stamped'],true]
-    [[ {$key:'<italic'}, '<italic#stamped'],true]
-    [[ {$key:'<italic'}, '>italic#stamped'],false]
     [[ {$key:'<italic',$stamped:true}, '>italic'],false]
     [[ {$key:"*data"},'*data'],null,'illegal selector']
     [[ {$key:"data>"},'data>'],null,'illegal selector']

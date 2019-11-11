@@ -8,8 +8,12 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
+- [Export Bound Methods](#export-bound-methods)
+- [Creation of Bespoke Library Instances](#creation-of-bespoke-library-instances)
+- [Configuration Parameters](#configuration-parameters)
+- [**Copied from PipeDreams docs, to be updated**](#copied-from-pipedreams-docs-to-be-updated)
 - [PipeDreams Datoms (Data Events)](#pipedreams-datoms-data-events)
-  - [`select = ( d, selector ) ->`](#select---d-selector---)
+    - [`select = ( d, selector ) ->`](#select---d-selector---)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

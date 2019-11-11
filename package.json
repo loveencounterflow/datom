@@ -1,0 +1,39 @@
+{
+  "name": "datom",
+  "version": "0.0.1",
+  "description": "standardized immutable objects in the spirit of datomic, especially suited for use in data pipelines",
+  "main": "lib/main.js",
+  "scripts": {
+    "build": "coffee --map -o lib -c src",
+    "doctoc": "doctoc README.md",
+    "test": "npm run build && node lib/tests/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/loveencounterflow/datom.git"
+  },
+  "keywords": [
+    "datomic",
+    "datom",
+    "datoms",
+    "pipeline",
+    "pipestreaming",
+    "immutable",
+    "letsfreezethat"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/loveencounterflow/datom/issues"
+  },
+  "homepage": "https://github.com/loveencounterflow/datom#readme",
+  "dependencies": {
+    "cnd": "^4.6.0",
+    "intertype": "^2.5.0",
+    "letsfreezethat": "^2.2.5",
+    "multimix": "^2.1.0"
+  },
+  "devDependencies": {
+    "guy-test": "^1.4.1"
+  }
+}

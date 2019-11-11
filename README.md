@@ -312,7 +312,7 @@ stamped datoms.
 
 # To Do
 
-* [ ]—implement piecemeal structural validation such that on repeated calls to a validator instance's
+* `[ ]`—implement piecemeal structural validation such that on repeated calls to a validator instance's
   `validate()` method an error will be thrown as soon as unbalanced regions (delimeted by `{ $key: '<token',
   ..., }` and `{ $key: '>token', ..., }`) are encountered.
 

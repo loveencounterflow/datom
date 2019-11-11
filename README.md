@@ -20,6 +20,9 @@
 
 standardized immutable objects in the spirit of datomic, especially suited for use in data pipelines
 
+
+**NOTE: Documentation is still fragmentary. WIP.**
+
 # Export Bound Methods
 
 If you plan on using methods like `new_datom()` or `select()` a lot, consider using `.export()`:

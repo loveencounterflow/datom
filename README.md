@@ -20,6 +20,7 @@
 - [System Properties](#system-properties)
 - [PipeDreams Datoms (Data Events)](#pipedreams-datoms-data-events)
     - [`select = ( d, selector ) ->`](#select---d-selector---)
+- [To Do](#to-do)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -304,5 +305,11 @@ version does little more than check wheter the single selector allowed equals th
 value—that's about it, except that one can still `select d, '^somekey#stamped'` to match both unstamped and
 stamped datoms.
 
+------------------------------------------------------------------------
 
+# To Do
+
+* [ ]—implement piecemeal structural validation such that on repeated calls to a validator instance's
+  `validate()` method an error will be thrown as soon as unbalanced regions (delimeted by `{ $key: '<token',
+  ..., }` and `{ $key: '>token', ..., }`) are encountered.
 

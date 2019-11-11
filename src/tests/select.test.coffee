@@ -164,4 +164,8 @@ unless module.parent?
   test @
   # test @[ "selector keypatterns" ]
   # test @[ "select 2" ]
+  # test @[ "new_datom (default settings)" ]
+  # debug new_datom '^helo', 42
+
+
 

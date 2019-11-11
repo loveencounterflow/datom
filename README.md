@@ -16,10 +16,54 @@
 
 standardized immutable objects in the spirit of datomic, especially suited for use in data pipelines
 
+# Export Bound Methods
 
-**Copied from PipeDreams docs, to be updated**
+If you plan on using methods like `new_datom()` or `select()` a lot, consider using `.export()`:
 
-## PipeDreams Datoms (Data Events)
+```coffee
+DATOM         = require 'datom'
+{ new_datom
+  select }    = DATOM.export()
+```
+
+Now `new_datom()` and `select()` are methods bound to `DATOM`. (Observe that because of the JavaScript
+'tear-off' effect, when you do `method = DATOM.method`, then `method()` will likely fail as its reference to
+`this` has been lost.)
+
+# Creation of Bespoke Library Instances
+
+In order to configure a copy of the library, pass in a settings object:
+
+```coffee
+_DATOM        = require 'datom'
+settings      = { merge_values: false, }
+DATOM         = new _DATOM.Datom settings
+{ new_datom
+  select }    = DATOM.export()
+```
+
+Or, mode idiomatically:
+
+```coffee
+DATOM         = new ( require 'datom' ).Datom { merge_values: false, }
+{ new_datom
+  select }    = DATOM.export()
+```
+
+The second form also helps to avoid accidental usage of the result of `require 'datom'`, which is of
+course the same library with a different configuration.
+
+# Configuration Parameters
+
+* **`merge_values`** (boolean, default: `true`)—Whether to merge attributes of the second argument to
+  `new_datom()` into the resulting value. When set to `false`, `new_datom '^somekey', somevalue` will always
+  result in a datom `{ $key: '^somekey', $value: somevalue, }`; when left to the default, and if `somevalue`
+  is an object, then its attributes will become attributes of the datom, which may result in name clashes in
+  case any attribute name should start with a `$` (dollar sign).
+
+# **Copied from PipeDreams docs, to be updated**
+
+# PipeDreams Datoms (Data Events)
 
 Data streams—of which [pull-streams](https://pull-stream.github.io/),
 [PipeStreams](https://github.com/loveencounterflow/pipestreams), and [NodeJS

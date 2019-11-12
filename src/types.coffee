@@ -41,7 +41,7 @@ intertype                 = new Intertype module.exports
 @declare 'datom_key',
   tests:
     "x is a nonempty text":                   ( x ) -> @isa.nonempty_text   x
-    "x has sigil":                            ( x ) -> @isa.datom_sigil  x[ 0 ]
+    "x has sigil":                            ( x ) -> @isa.datom_sigil     x[ 0 ]
 
 #-----------------------------------------------------------------------------------------------------------
 @declare 'datom_datom',

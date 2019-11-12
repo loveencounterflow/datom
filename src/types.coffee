@@ -56,11 +56,6 @@ intertype                 = new Intertype module.exports
       ( not x.$vnr? ) or @isa.datom_nonempty_list_of_positive_integers x.$vnr
 
 #-----------------------------------------------------------------------------------------------------------
-@declare 'datom_value', ( x ) ->
-  return true unless @isa.object x
-  return x.$key is undefined
-
-#-----------------------------------------------------------------------------------------------------------
 @defaults =
   settings:
     merge_values: true

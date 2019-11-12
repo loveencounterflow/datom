@@ -17,11 +17,11 @@ echo                      = CND.echo.bind CND
   jr }                    = CND
 #...........................................................................................................
 Multimix                  = require 'multimix'
-types                     = require './types'
+@types                    = require './types'
 { isa
   validate
   defaults
-  type_of }               = types
+  type_of }               = @types
 LFT                       = require 'letsfreezethat'
 LFT_nofreeze              = LFT.nofreeze
 @_copy                    = LFT_nofreeze._copy.bind LFT

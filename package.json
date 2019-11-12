@@ -29,6 +29,7 @@
   "homepage": "https://github.com/loveencounterflow/datom#readme",
   "dependencies": {
     "cnd": "^4.6.0",
+    "emittery": "^0.5.1",
     "intertype": "^2.5.0",
     "letsfreezethat": "^2.2.5",
     "multimix": "^2.1.0"

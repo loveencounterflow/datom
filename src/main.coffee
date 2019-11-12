@@ -25,15 +25,14 @@ types                     = require './types'
 LFT                       = require 'letsfreezethat'
 LFT_nofreeze              = LFT.nofreeze
 @_copy                    = LFT_nofreeze._copy.bind LFT
-# @_nofreeze                = false
 
 #-----------------------------------------------------------------------------------------------------------
-@freeze = ( d ) -> if @_nofreeze then LFT_nofreeze.freeze d else LFT.freeze d
-@thaw   = ( d ) -> if @_nofreeze then LFT_nofreeze.thaw   d else LFT.thaw   d
+@freeze = ( d ) -> if @settings.freeze then LFT.freeze d else LFT_nofreeze.freeze d
+@thaw   = ( d ) -> if @settings.freeze then LFT.thaw   d else LFT_nofreeze.thaw   d
 
 #-----------------------------------------------------------------------------------------------------------
 @lets = ( original, modifier ) ->
-  if @_nofreeze
+  unless @settings.freeze
     draft = @_copy original
     if modifier?
       modifier draft
@@ -168,14 +167,9 @@ class Datom extends Multimix
   constructor: ( settings = null ) ->
     super()
     validate.datom_settings settings = { defaults.settings..., settings..., }
-    @settings = @freeze settings
+    @settings = LFT.freeze settings
     @Datom    = Datom
-  #   @CLI    = require './cli'
-  #   @CFG    = require './cfg'
-  #   @TAGS   = require './tags'
-  #   @NICKS  = require './texfontnamesake'
-  #   @LINKS  = require './links'
-  #   @export target if target?
+    return @
 
 module.exports = new Datom()
 

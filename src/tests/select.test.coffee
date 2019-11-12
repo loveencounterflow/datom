@@ -109,10 +109,8 @@ types                     = require '../types'
     [[ {$key:'<italic',$stamped:true}, '<italic#stamped:*'],true]
     [[ {$key:'<italic',$stamped:true}, '<italic#stamped:*'],true]
     [[ {$key:'<italic'}, '<italic#stamped:*'],true]
-
     [[ {$key:'<italic',$stamped:true}, '>italic#stamped:*'],false]
     [[ {$key:'<italic'}, '>italic#stamped:*'],false]
-
     [[ {$key:'^number',$value:42,$stamped:true}, '^number'],false]
     [[ {$key:'<italic',$stamped:true}, '<italic'],false]
     [[ {$key:'<italic',$stamped:true}, '>italic'],false]
@@ -202,9 +200,9 @@ types                     = require '../types'
 
 #-----------------------------------------------------------------------------------------------------------
 @[ "new_datom (without value merging)" ] = ( T, done ) ->
-  DATOM                     = require '../..'
+  DATOM                     = new ( require '../..' ).Datom { merge_values: false, }
   { new_datom
-    select }                = ( new DATOM.Datom { merge_values: false, } ).export()
+    select }                = DATOM.export()
   #.........................................................................................................
   probes_and_matchers = [
     [["^number",null],{"$key":"^number"},null]
@@ -228,6 +226,18 @@ types                     = require '../types'
   return null
 
 #-----------------------------------------------------------------------------------------------------------
+@[ "freezing" ] = ( T, done ) ->
+  DATOM_FREEZE                        = new ( require '../..' ).Datom { freeze: true, }
+  { new_datom: new_datom_freeze, }    = DATOM_FREEZE.export()
+  DATOM_NOFREEZE                      = new ( require '../..' ).Datom { freeze: false, }
+  { new_datom: new_datom_nofreeze, }  = DATOM_NOFREEZE.export()
+  #.........................................................................................................
+  T.ok      Object.isFrozen new_datom_freeze    '^mykey'
+  T.ok not  Object.isFrozen new_datom_nofreeze  '^mykey'
+  done()
+  return null
+
+#-----------------------------------------------------------------------------------------------------------
 @[ "_regex performance, runaway test" ] = ( T, done ) ->
   ###
   See https://github.com/loveencounterflow/runaway-regex-test
@@ -238,7 +248,7 @@ types                     = require '../types'
 
 
 ############################################################################################################
-unless module.parent?
+if require.main is module then do =>
   test @
   # test @[ "new_datom complains when value has `$key`" ]
   # test @[ "selector keypatterns" ]

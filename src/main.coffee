@@ -159,7 +159,7 @@ p2 = /// # `\x23` used instead of `\#` which causes syntax error (???)
 MAIN = @
 class Datom extends Multimix
   @include MAIN,                              { overwrite: false, }
-  # @include ( require './outliner.mixin' ),    { overwrite: false, }
+  @include ( require './xemitter.mixin' ),    { overwrite: false, }
   # @include ( require './cachewalker.mixin' ), { overwrite: false, }
   # @include ( require './_temp_svgttf' ),      { overwrite: false, } ### !!!!!!!!!!!!!!!!!!!!!!!!!!! ###
   # @extend MAIN, { overwrite: false, }

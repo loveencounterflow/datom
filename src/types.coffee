@@ -24,6 +24,7 @@ intertype                 = new Intertype module.exports
   tests:
     "x is a object":                  ( x ) -> @isa.object x
     "x.merge_values is a ?boolean":   ( x ) -> ( not x.merge_values? ) or @isa.boolean x.merge_values
+    "x.freeze is a ?boolean":         ( x ) -> ( not x.freeze?       ) or @isa.boolean x.freeze
 
 #-----------------------------------------------------------------------------------------------------------
 @declare 'datom_nonempty_list_of_positive_integers', ( x ) ->
@@ -55,19 +56,15 @@ intertype                 = new Intertype module.exports
     "x.$vnr is an optional nonempty list of positive integers": ( x ) ->
       ( not x.$vnr? ) or @isa.datom_nonempty_list_of_positive_integers x.$vnr
 
-    # "?..$vnr is a ?positive":            ( x ) -> ( not x.$vnr? ) or @isa.positive x.$vnr
-#     "? has key 'vlnr_txt'":                   ( x ) -> @has_key             x, 'vlnr_txt'
-#     "? has key 'value'":                      ( x ) -> @has_key             x, 'value'
-#     "?.vlnr_txt is a nonempty text":          ( x ) -> @isa.nonempty_text   x.vlnr_txt
-#     "?.vlnr_txt starts, ends with '[]'":      ( x ) -> ( x.vlnr_txt.match /^\[.*\]$/ )?
-#     "?.vlnr_txt is a JSON array of integers": ( x ) ->
-#       # debug 'µ55589', x
-#       ( @isa.list ( lst = JSON.parse x.vlnr_txt ) ) and \
-#       ( lst.every ( xx ) => ( @isa.integer xx ) and ( @isa.positive xx ) )
+#-----------------------------------------------------------------------------------------------------------
+@declare 'datom_value', ( x ) ->
+  return true unless @isa.object x
+  return x.$key is undefined
 
-# #-----------------------------------------------------------------------------------------------------------
-# @declare 'true', ( x ) -> x is true
-
+#-----------------------------------------------------------------------------------------------------------
 @defaults =
   settings:
     merge_values: true
+    freeze:       true
+
+

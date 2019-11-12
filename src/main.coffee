@@ -85,7 +85,8 @@ LFT_nofreeze              = LFT.nofreeze
   key `$`, then a copy of that value is used. This allows to write `new_datom
   ..., $: d` to copy system-level attributes such as source locations to a new
   datom. ###
-  validate.datom_key $key
+  validate.datom_key    $key
+  validate.datom_value  $value
   if $value?
     $value = { $value, } if ( not @settings.merge_values ) or ( not isa.object $value )
     R     = assign { $key, }, $value, other...

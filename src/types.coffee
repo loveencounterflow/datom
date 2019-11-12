@@ -47,8 +47,7 @@ intertype                 = new Intertype module.exports
 @declare 'datom_datom',
   tests:
     "x is a object":                          ( x ) -> @isa.object          x
-    "x has key 'key'":                        ( x ) -> @has_key             x, 'key'
-    "x.key is a datom_key":                   ( x ) -> @isa.datom_key    x.key
+    "x.$key is a datom_key":                  ( x ) -> @isa.datom_key       x.$key
     "x.$stamped is an optional boolean":      ( x ) -> ( not x.$stamped? ) or ( @isa.boolean x.$stamped )
     "x.$dirty is an optional boolean":        ( x ) -> ( not x.$dirty?   ) or ( @isa.boolean x.$dirty   )
     "x.$fresh is an optional boolean":        ( x ) -> ( not x.$fresh?   ) or ( @isa.boolean x.$fresh   )

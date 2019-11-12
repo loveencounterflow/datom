@@ -75,6 +75,7 @@ LFT_nofreeze              = LFT.nofreeze
 @is_stamped = ( d ) -> d.$stamped ? false ### i.e. already processed? ###
 @is_fresh   = ( d ) -> d.$fresh   ? false ### i.e. created within stream? ###
 @is_dirty   = ( d ) -> d.$dirty   ? false ### i.e. modified? ###
+@is_datom   = ( x ) -> isa.datom_datom x
 
 #-----------------------------------------------------------------------------------------------------------
 @new_datom = ( $key, $value, other... ) ->

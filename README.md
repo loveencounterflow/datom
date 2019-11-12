@@ -76,6 +76,9 @@ course the same library with a different configuration.
   is an object, then its attributes will become attributes of the datom, which may result in name clashes in
   case any attribute name should start with a `$` (dollar sign).
 
+* **`freeze`** (boolean, default: `true`)—Whether to freeze datoms. When set to `false`, no freezing will
+  be performed, which may entail slightly improved performance.
+
 # Methods
 
 ## Freezing & Thawing

@@ -199,6 +199,25 @@ types                     = require '../types'
   return null
 
 #-----------------------------------------------------------------------------------------------------------
+@[ "wrap_datom" ] = ( T, done ) ->
+  DATOM                     = require '../..'
+  { new_datom
+    wrap_datom
+    select }                = DATOM.export()
+  #.........................................................................................................
+  probes_and_matchers = [
+    [["^text",'helo'],{"$key":"^wrapper","$value":{"$key":"^text","$value":"helo"}},null]
+    ]
+  #.........................................................................................................
+  for [ probe, matcher, error, ] in probes_and_matchers
+    await T.perform probe, matcher, error, -> return new Promise ( resolve, reject ) ->
+      [ key, value, ] = probe
+      d               = new_datom key, value
+      resolve wrap_datom '^wrapper', d
+  done()
+  return null
+
+#-----------------------------------------------------------------------------------------------------------
 @[ "new_datom (without value merging)" ] = ( T, done ) ->
   DATOM                     = new ( require '../..' ).Datom { merge_values: false, }
   { new_datom
@@ -249,7 +268,8 @@ types                     = require '../types'
 
 ############################################################################################################
 if require.main is module then do =>
-  test @
+  # test @
+  test @[ "wrap_datom" ]
   # test @[ "new_datom complains when value has `$key`" ]
   # test @[ "selector keypatterns" ]
   # test @[ "select 2" ]

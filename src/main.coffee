@@ -79,19 +79,26 @@ LFT_nofreeze              = LFT.nofreeze
 
 #-----------------------------------------------------------------------------------------------------------
 @new_datom = ( $key, $value, other... ) ->
-  ### TAINT should validate key ###
   ### When `other` contains a key `$`, it is treated as a hint to copy
   system-level attributes; if the value of key `$` is a POD that has itself a
   key `$`, then a copy of that value is used. This allows to write `new_datom
   ..., $: d` to copy system-level attributes such as source locations to a new
   datom. ###
   validate.datom_key    $key
-  validate.datom_value  $value
   if $value?
-    $value = { $value, } if ( not @settings.merge_values ) or ( not isa.object $value )
-    R     = assign { $key, }, $value, other...
+    $value  = { $value, } if ( not @settings.merge_values ) or ( not isa.object $value )
+    R       = assign {}, $value,  other..., { $key, }
   else
-    R     = assign { $key, }, other...
+    R       = assign {},          other..., { $key, }
+  while ( isa.object R.$ ) and ( isa.object R.$.$ ) then R.$ = copy R.$.$
+  return @freeze R
+
+#-----------------------------------------------------------------------------------------------------------
+@wrap_datom = ( $key, $value ) ->
+  ### TAINT code duplication ###
+  validate.datom_key    $key
+  validate.datom_datom  $value
+  R = assign {}, { $key, $value, }
   while ( isa.object R.$ ) and ( isa.object R.$.$ ) then R.$ = copy R.$.$
   return @freeze R
 

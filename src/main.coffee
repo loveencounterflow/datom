@@ -36,13 +36,17 @@ LFT_nofreeze              = LFT.nofreeze
     draft = @_copy original
     if modifier?
       modifier draft
-      draft.$dirty = true unless draft.$dirty isnt original.dirty
+      ### TAINT simplify logic by rewriting as single term without double negatives ###
+      if @settings.dirty
+        draft.$dirty = true unless draft.$dirty isnt original.dirty
     return draft
   #.........................................................................................................
   draft = @thaw original
   if modifier?
     modifier draft
-    draft.$dirty = true unless draft.$dirty isnt original.dirty
+    ### TAINT simplify logic by rewriting as single term without double negatives ###
+    if @settings.dirty
+      draft.$dirty = true unless draft.$dirty isnt original.dirty
   return @freeze draft
 
 #-----------------------------------------------------------------------------------------------------------

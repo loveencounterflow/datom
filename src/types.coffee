@@ -60,5 +60,5 @@ intertype                 = new Intertype module.exports
   settings:
     merge_values: true
     freeze:       true
-
+    dirty:        true
 

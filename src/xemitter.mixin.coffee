@@ -36,14 +36,14 @@ provide_library = ->
   @_has_contractors = {}
 
   #---------------------------------------------------------------------------------------------------------
-  @_mark_as_primary = ( x ) -> DATOM.new_datom '~XEMITTER-preferred', x
-  @_filter_primary  = ( x ) -> DATOM.select x, '~XEMITTER-preferred'
+  @_mark_as_primary = ( x ) -> DATOM.wrap_datom '~XEMITTER-preferred', { $key: '~wrapper', $value: x, }
+  @_filter_primary  = ( x ) -> DATOM.select x,  '~XEMITTER-preferred'
 
   #---------------------------------------------------------------------------------------------------------
   @_get_primary = ( values ) ->
     primary_responses = values.filter @_filter_primary
     return misfit unless primary_responses.length > 0
-    return primary_responses[ 0 ]?.$value
+    return primary_responses[ 0 ]?.$value.$value
 
   #---------------------------------------------------------------------------------------------------------
   @_get_ksl = ( key, self, listener ) ->

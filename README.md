@@ -79,6 +79,10 @@ course the same library with a different configuration.
 * **`freeze`** (boolean, default: `true`)—Whether to freeze datoms. When set to `false`, no freezing will
   be performed, which may entail slightly improved performance.
 
+* **`dirty`** (boolean, default: `true`)—Whether to automatically set `{ $dirty: true, }` when the copy
+  of a datom has been treated with `lets()` and a modifyer function.
+
+
 # Methods
 
 ## Freezing & Thawing

@@ -161,7 +161,24 @@ types                     = require '../types'
   #.........................................................................................................
   probes_and_matchers = [
     [["^number",{"$value":123,}],{"$key":"^number","$value":123},null]
-    [["^number",{"$value":123,"$key":"something"}],null,"not a valid datom_value"]
+    [["^number",{"$value":123,"$key":"something"}],null,"value must not have attribute '\\$key'"]
+    ]
+  #.........................................................................................................
+  for [ probe, matcher, error, ] in probes_and_matchers
+    await T.perform probe, matcher, error, -> return new Promise ( resolve, reject ) ->
+      [ key, value, ] = probe
+      resolve new_datom key, value
+  done()
+  return null
+
+#-----------------------------------------------------------------------------------------------------------
+@[ "xxx" ] = ( T, done ) ->
+  DATOM                     = require '../..'
+  { new_datom
+    select }                = DATOM.export()
+  #.........................................................................................................
+  probes_and_matchers = [
+    [['^foo', { time: 1500000, value: "msg#1", }],{"time":1500000,"value":"msg#1","$key":"^foo"},null]
     ]
   #.........................................................................................................
   for [ probe, matcher, error, ] in probes_and_matchers

@@ -91,6 +91,7 @@ LFT_nofreeze              = LFT.nofreeze
   validate.datom_key    $key
   if $value?
     $value  = { $value, } if ( not @settings.merge_values ) or ( not isa.object $value )
+    throw new Error "µ55632 value must not have attribute '$key'" if '$key' in Object.keys $value
     R       = assign {}, $value,  other..., { $key, }
   else
     R       = assign {},          other..., { $key, }

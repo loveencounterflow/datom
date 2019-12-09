@@ -54,12 +54,13 @@ types                     = require '../types'
   T.ok isa.function       XE.contract
   T.ok isa.function       XE.listen_to
   T.ok isa.function       XE.listen_to_all
-  T.eq XE.emit.length,          2
-  T.eq XE.delegate.length,      2
-  T.eq XE.contract.length,      2
-  T.eq XE.listen_to.length,     2
-  T.eq XE.listen_to_all.length, 1
-  known_keys = [ 'emit', 'delegate', 'contract', 'listen_to', 'listen_to_all', ]
+  T.eq XE.emit.length,              2
+  T.eq XE.delegate.length,          2
+  T.eq XE.contract.length,          2
+  T.eq XE.listen_to.length,         2
+  T.eq XE.listen_to_all.length,     1
+  T.eq XE.listen_to_unheard.length, 1
+  known_keys = [ 'emit', 'delegate', 'contract', 'listen_to', 'listen_to_all', 'listen_to_unheard', ]
   T.eq ( k for k of XE when ( not k.startsWith '_' ) and ( k not in known_keys ) ), []
   done()
   return null
@@ -84,17 +85,45 @@ types                     = require '../types'
   return null
 
 #-----------------------------------------------------------------------------------------------------------
-@[ "can listen to events that no specific listener" ] = ( T, done ) ->
+@[ "throws when more than one contractor is added for given event key" ] = ( T, done ) ->
   DATOM                     = require '../..'
   { new_datom
     new_xemitter
     select }                = DATOM.export()
+  XE                        = new_xemitter()
   #.........................................................................................................
-  XE    = new_xemitter()
-  XE.listen_to '^mykey', ( d ) ->
+  XE.contract '^mykey', ( d ) ->
   XE.contract '^otherkey', ( d ) ->
-  XE.contract '^otherkey', ( d ) ->
-  debug '^887347^', XE._has_contractors
+  T.throws /already has a primary listener/, ( -> XE.contract '^otherkey', ( d ) -> )
+  done()
+  return null
+
+#-----------------------------------------------------------------------------------------------------------
+@[ "can listen to events that have no specific listener" ] = ( T, done ) ->
+  DATOM                     = require '../..'
+  { new_datom
+    new_xemitter
+    select }                = DATOM.export()
+  XE                        = new_xemitter()
+  #.........................................................................................................
+  keys =
+    listen:     []
+    contract:   []
+    all:        []
+    unheard:    []
+  XE.listen_to          '^mykey',     ( d       ) ->  keys.listen   .push d.$key
+  XE.contract           '^otherkey',  ( d       ) ->  keys.contract .push d.$key
+  XE.listen_to_all                    ( key, d  ) ->  keys.all      .push d.$key
+  XE.listen_to_unheard                ( key, d  ) ->  keys.unheard  .push d.$key
+  await XE.emit '^mykey'
+  await XE.emit '^otherkey'
+  await XE.emit '^thirdkey'
+  # debug keys
+  T.eq keys, {
+    listen:   [ '^mykey',                           ],
+    contract: [ '^otherkey',                        ],
+    all:      [ '^mykey', '^otherkey', '^thirdkey', ],
+    unheard:  [ '^thirdkey',                        ], }
   done()
   return null
 

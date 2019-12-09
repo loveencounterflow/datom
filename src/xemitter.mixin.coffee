@@ -34,6 +34,7 @@ provide_library = ->
   #---------------------------------------------------------------------------------------------------------
   @_emitter         = new Emittery()
   @_has_contractors = {}
+  @_has_listener    = {}
 
   #---------------------------------------------------------------------------------------------------------
   @_mark_as_primary = ( x ) -> DATOM.wrap_datom '~XEMITTER-preferred', { $key: '~wrapper', $value: x, }
@@ -64,18 +65,26 @@ provide_library = ->
     validate.datom_key  key
     validate.callable   listener
     throw new Error "µ68704 key #{rpr key} already has a primary listener" if @_has_contractors[ key ]
+    @_has_contractors[ key ]  = true
+    @_has_listener[ key ]     = true
     return @_emitter.on key, ( d ) => @_mark_as_primary await listener d
 
   #---------------------------------------------------------------------------------------------------------
   @listen_to = ( key, listener ) ->
     validate.datom_key  key
     validate.callable   listener
-    return @_emitter.on key, ( d ) -> await listener d
+    @_has_listener[ key ] = true
+    return @_emitter.on key, ( d ) => await listener d
 
   #---------------------------------------------------------------------------------------------------------
   @listen_to_all = ( listener ) ->
     validate.callable   listener
-    return @_emitter.onAny ( key, d ) -> await listener key, d
+    return @_emitter.onAny ( key, d ) => await listener key, d
+
+  #---------------------------------------------------------------------------------------------------------
+  @listen_to_unheard = ( listener ) ->
+    validate.callable   listener
+    return @_emitter.onAny ( key, d ) => await listener key, d unless @_has_listener[ key ]
 
 
   #=========================================================================================================

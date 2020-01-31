@@ -59,6 +59,7 @@ echo                      = CND.echo.bind CND
   sigil       = d.$key[ 0 ]
   tagname     = d.$key[ 1 .. ]
   #.........................................................................................................
+  ### TAINT simplistic solution; namespace might already be taken? ###
   switch sigil
     when '[' then [ sigil, tagname, ] = [ '<', "sys:#{tagname}", ]
     when '~' then [ sigil, tagname, ] = [ '^', "sys:#{tagname}", ]

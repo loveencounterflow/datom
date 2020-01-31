@@ -182,7 +182,6 @@ class Datom extends Multimix
     validate.datom_settings settings = { defaults.settings..., settings..., }
     @settings = LFT.freeze settings
     @Datom    = Datom
-    @HTML     = require './html'
     return @
 
 module.exports = new Datom()

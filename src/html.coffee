@@ -58,27 +58,38 @@ echo                      = CND.echo.bind CND
   atxt        = ''
   sigil       = d.$key[ 0 ]
   tagname     = d.$key[ 1 .. ]
+  x_key       = null
   #.........................................................................................................
   ### TAINT simplistic solution; namespace might already be taken? ###
-  switch sigil
-    when '[' then [ sigil, tagname, ] = [ '<', "sys:#{tagname}", ]
-    when '~' then [ sigil, tagname, ] = [ '^', "sys:#{tagname}", ]
-    when ']' then [ sigil, tagname, ] = [ '>', "sys:#{tagname}", ]
+  if sigil in '[~]'
+    switch sigil
+      when '[' then sigil = '<'
+      when '~' then sigil = '^'
+      when ']' then sigil = '>'
+    [ x_key, tagname, ] = [ tagname, 'x-sys', ]
   #.........................................................................................................
-  return ( @_escape_text d.text ? '' )    if ( sigil is '^' ) and ( tagname is 'text' )
-  return "</#{tagname}>"                  if sigil is '>'
+  return ( @_escape_text d.text ? '' )      if ( sigil is '^' ) and ( tagname is 'text'     )
+  return (               d.text ? '' )      if ( sigil is '^' ) and ( tagname is 'raw'      )
+  return "<!DOCTYPE #{d.$value ? 'html'}>"  if ( sigil is '^' ) and ( tagname is 'doctype'  )
+  return "</#{tagname}>"                    if sigil is '>'
   #.........................................................................................................
   ### NOTE sorting atxt by keys to make result predictable: ###
   if @isa.object d.$value then  src = d.$value
   else                          src = d
+  atxt += " x-key=#{@_as_attribute_literal x_key}" if x_key?
   for key in ( Object.keys src ).sort()
     continue if key.startsWith '$'
     if ( value = src[ key ] ) is true then  atxt += " #{key}"
     else                                    atxt += " #{key}=#{@_as_attribute_literal value}"
   #.........................................................................................................
-  slash = if sigil is '<' then '' else '/'
-  return "<#{tagname}#{slash}>" if atxt is ''
-  return "<#{tagname}#{atxt}#{slash}>"
+  ### TAINT make self-closing elements configurable, depend on HTML5 type ###
+  slash     = if sigil is '<' then '' else "</#{tagname}>"
+  x_sys_key = if x_key? then "<x-sys-key>#{x_key}</x-sys-key>" else ''
+  return "<#{tagname}>#{slash}#{x_sys_key}" if atxt is ''
+  return "<#{tagname}#{atxt}>#{x_sys_key}#{slash}"
+  # slash = if sigil is '<' then '' else '/'
+  # return "<#{tagname}#{slash}>" if atxt is ''
+  # return "<#{tagname}#{atxt}#{slash}>"
 
 
 

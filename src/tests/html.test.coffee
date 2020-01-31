@@ -90,15 +90,15 @@ test                      = require 'guy-test'
 #-----------------------------------------------------------------------------------------------------------
 @[ "DATOM.HTML.cast.html (singular tags)" ] = ( T, done ) ->
   probes_and_matchers = [
-    [ [ '^foo', ],                                    "<foo/>",                                       ]
-    [ [ '^foo', { height: 42,               }, ],     "<foo height=42/>",                             ]
-    [ [ '^foo', { class: 'plain',           }, ],     "<foo class=plain/>",                           ]
-    [ [ '^foo', { class: 'plain hilite',    }, ],     "<foo class='plain hilite'/>",                  ]
-    [ [ '^foo', { editable: true,           }, ],     "<foo editable/>",                              ]
-    [ [ '^foo', { empty: '',                }, ],     "<foo empty=''/>",                              ]
-    [ [ '^foo', { specials: '<\n\'"&>',     }, ],     "<foo specials='&lt;&#10;&#39;\"&amp;&gt;'/>",  ]
-    [ [ '^something', { one: 1, two: 2,     }, ],     "<something one=1 two=2/>",                     ]
-    [ [ '^something', { z: 'Z', a: 'A',     }, ],     "<something a=A z=Z/>",                         ]
+    [ [ '^foo', ],                                    "<foo></foo>",                                       ]
+    [ [ '^foo', { height: 42,               }, ],     "<foo height=42></foo>",                             ]
+    [ [ '^foo', { class: 'plain',           }, ],     "<foo class=plain></foo>",                           ]
+    [ [ '^foo', { class: 'plain hilite',    }, ],     "<foo class='plain hilite'></foo>",                  ]
+    [ [ '^foo', { editable: true,           }, ],     "<foo editable></foo>",                              ]
+    [ [ '^foo', { empty: '',                }, ],     "<foo empty=''></foo>",                              ]
+    [ [ '^foo', { specials: '<\n\'"&>',     }, ],     "<foo specials='&lt;&#10;&#39;\"&amp;&gt;'></foo>",  ]
+    [ [ '^something', { one: 1, two: 2,     }, ],     "<something one=1 two=2></something>",               ]
+    [ [ '^something', { z: 'Z', a: 'A',     }, ],     "<something a=A z=Z></something>",                   ]
     ]
   for [ probe, matcher, error, ] in probes_and_matchers
     await T.perform probe, matcher, error, -> return new Promise ( resolve, reject ) ->
@@ -190,15 +190,45 @@ test                      = require 'guy-test'
 #-----------------------------------------------------------------------------------------------------------
 @[ "DATOM.HTML.cast.html (system tags)" ] = ( T, done ) ->
   probes_and_matchers = [
-    [ [ '~foo', ],                                    "<sys:foo/>",                                       ]
-    [ [ '~foo', { height: 42,               }, ],     "<sys:foo height=42/>",                             ]
-    [ [ '[foo', { class: 'plain',           }, ],     "<sys:foo class=plain>",                            ]
-    [ [ '[foo', { class: 'plain hilite',    }, ],     "<sys:foo class='plain hilite'>",                   ]
-    [ [ ']foo', { editable: true,           }, ],     "</sys:foo>",                                       ]
-    [ [ ']foo', { empty: '',                }, ],     "</sys:foo>",                                       ]
-    [ [ '~foo', { specials: '<\n\'"&>',     }, ],     "<sys:foo specials='&lt;&#10;&#39;\"&amp;&gt;'/>",  ]
-    [ [ '~something', { one: 1, two: 2,     }, ],     "<sys:something one=1 two=2/>",                     ]
-    [ [ '~something', { z: 'Z', a: 'A',     }, ],     "<sys:something a=A z=Z/>",                         ]
+    [["~foo"],"<x-sys x-key=foo><x-sys-key>foo</x-sys-key></x-sys>",null]
+    [["~foo",{"height":42}],"<x-sys x-key=foo height=42><x-sys-key>foo</x-sys-key></x-sys>",null]
+    [["[foo",{"class":"plain"}],"<x-sys x-key=foo class=plain><x-sys-key>foo</x-sys-key>",null]
+    [["[foo",{"class":"plain hilite"}],"<x-sys x-key=foo class='plain hilite'><x-sys-key>foo</x-sys-key>",null]
+    [["]foo",{"editable":true}],"</x-sys>",null]
+    [["]foo",{"empty":""}],"</x-sys>",null]
+    [["~foo",{"specials":"<\n'\"&>"}],"<x-sys x-key=foo specials='&lt;&#10;&#39;\"&amp;&gt;'><x-sys-key>foo</x-sys-key></x-sys>",null]
+    [["~something",{"one":1,"two":2}],"<x-sys x-key=something one=1 two=2><x-sys-key>something</x-sys-key></x-sys>",null]
+    [["~something",{"z":"Z","a":"A"}],"<x-sys x-key=something a=A z=Z><x-sys-key>something</x-sys-key></x-sys>",null]
+    ]
+  for [ probe, matcher, error, ] in probes_and_matchers
+    await T.perform probe, matcher, error, -> return new Promise ( resolve, reject ) ->
+      d = new_datom probe...
+      resolve DATOM.HTML.cast.html d
+  #.........................................................................................................
+  done()
+  return null
+
+#-----------------------------------------------------------------------------------------------------------
+@[ "DATOM.HTML.cast.html (raw pseudo-tag)" ] = ( T, done ) ->
+  probes_and_matchers = [
+    [ [ '^raw', ],                                    "",                                       ]
+    [ [ '^raw', { height: 42,               }, ],     "",                                       ]
+    [ [ '^raw', { text: '<\n\'"&>',           }, ],   '<\n\'"&>',                               ]
+    ]
+  for [ probe, matcher, error, ] in probes_and_matchers
+    await T.perform probe, matcher, error, -> return new Promise ( resolve, reject ) ->
+      d = new_datom probe...
+      resolve DATOM.HTML.cast.html d
+  #.........................................................................................................
+  done()
+  return null
+
+#-----------------------------------------------------------------------------------------------------------
+@[ "DATOM.HTML.cast.html (doctype)" ] = ( T, done ) ->
+  probes_and_matchers = [
+    [ [ '^doctype', ],                  "<!DOCTYPE html>",        ]
+    [ [ '^doctype', { height: 42, }, ], "<!DOCTYPE html>",        ]
+    [ [ '^doctype', "obvious", ],       "<!DOCTYPE obvious>",     ]
     ]
   for [ probe, matcher, error, ] in probes_and_matchers
     await T.perform probe, matcher, error, -> return new Promise ( resolve, reject ) ->
@@ -215,3 +245,14 @@ if module is require.main then do => # await do =>
   test @
   help 'ok'
 
+  # test @[ "must quote attribute value" ]
+  # test @[ "DATOM.HTML._as_attribute_literal" ]
+  # test @[ "DATOM.HTML.isa.datom_html_tagname" ]
+  # test @[ "DATOM.HTML.cast.html (singular tags)" ]
+  # test @[ "DATOM.HTML.cast.html (closing tags)" ]
+  # test @[ "DATOM.HTML.cast.html (opening tags)" ]
+  # test @[ "DATOM.HTML.cast.html (texts)" ]
+  # test @[ "DATOM.HTML.cast.html (opening tags w/ $value)" ]
+  # test @[ "DATOM.HTML.cast.html (system tags)" ]
+  # test @[ "DATOM.HTML.cast.html (raw pseudo-tag)" ]
+  # test @[ "DATOM.HTML.cast.html (doctype)" ]

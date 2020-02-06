@@ -26,7 +26,6 @@
     - [XE Receiving API](#xe-receiving-api)
     - [Sample](#sample)
     - [Managing Scope](#managing-scope)
-  - [HTML Conversion](#html-conversion)
 - [To Do](#to-do)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -391,31 +390,6 @@ Only methods that emit and listen to the same scope can exchange messages. When 
 you will want to publish that scope to all participating modules; one way to do so is to write a dedicated
 module with a single line in it, `module.exports = ( require 'pipedreams' ).XE.new_scope()`.
 
-## HTML Conversion
-
-* For the tagname:
-    *  `d.$key` will become the tagname
-    * the tagname must conform to the [XML tagname restrictions](https://www.w3.org/TR/xml)
-
-* For the attributes:
-    * all facets with value `true` (the boolean, not the text) will be turned into 'lone attributes', such
-      that `{ $key: '<p', contenteditable: true, }` will result in `<p contenteditable>`
-    * facet values are subject to HTML5 attribute value escaping rules as detailed in
-      https://mathiasbynens.be/notes/unquoted-attribute-values
-    * where permitted, values will be left unquoted ('naked'); where necessary, values will be surrounded
-      by `'` (single quotes)
-    * facets with an empty string are not treated specially; per attribute value escaping rules, they will
-      result in `''` (two single quotes)
-    * all keys that start with a `$` will be ignored
-    * if `d.$value` is an object, its facets will be turned into HTML attributes; all other keys are ignored
-
-* Open questions:
-  * how to treat system-level names (sigils `[`, `~`, `]`)?
-    * ignore?
-    * as comments?
-    * as prefixed/namespaced tags?
-  * how to treat datom keys that contain hyphens, underscores?
-    * turn underscores into hyphens?
 
 
 

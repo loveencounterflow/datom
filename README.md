@@ -26,6 +26,7 @@
     - [XE Receiving API](#xe-receiving-api)
     - [Sample](#sample)
     - [Managing Scope](#managing-scope)
+- [Vectorial NumbeRs (VNRs)](#vectorial-numbers-vnrs)
 - [To Do](#to-do)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -231,7 +232,7 @@ specifies the datom's category, namespace and name; in addition, they may have a
 `value` property with the payload (where desired), and any number of other
 attributes. The property `$` is used to carry metadata (e.g. from which line in
 a source file a given datom was generated from). Thus, we may give the outline
-of a datom as (in a rather informal notation) `d := { key, ?value, ?stamped,...,
+of a datom as (in a rather informal notation) `d := { $key, ?$value, ?$stamped,...,
 ?$, }`.
 
 The `key` of a datom must be a string that consists of at least two parts, the
@@ -390,8 +391,24 @@ Only methods that emit and listen to the same scope can exchange messages. When 
 you will want to publish that scope to all participating modules; one way to do so is to write a dedicated
 module with a single line in it, `module.exports = ( require 'pipedreams' ).XE.new_scope()`.
 
+# Vectorial NumbeRs (VNRs)
 
+**To Be Written**
 
+* submodule `vnr`, available as `DATOM.VNR`
+* lists of integers
+* used to order datoms, standard property name is `$vnr`
+* ordering done per position in a lexicographic fashion, so
+  * `[ 1, 2, ]` comes after `[ 1, 1, ]` and before `[ 1, 3, ]`
+  * can extend to insert arbitrary number of elements in between any two given ones, e.g.
+    `[ 1, 2, 0, ]`, `[ 1, 2, 1, ]`, `[ 1, 2, 2, ]` all come after `[ 1, 2, ]` but before `[ 1, 3, ]`
+
+<!-- `$vnr`—'vectorial datom number', an array of positive integers that imposes a total ordering on datoms by
+which I mean to say that given any two datoms `a`, `b` that are piped through the same stream either
+`a.$vnr < b.$vnr` or `a.$vnr > b.$vnr` will always hold, and `a.$vnr == b[ '$vnr' ] <=> a is b`. "the
+variable-length Vectorial Number VNR (which starts with the line number of the respective source file and
+has additional positions added wherever a processing step inserted material)"
+ -->
 
 ------------------------------------------------------------------------
 
@@ -400,4 +417,9 @@ module with a single line in it, `module.exports = ( require 'pipedreams' ).XE.n
 * [ ] implement piecemeal structural validation such that on repeated calls to a validator instance's
   `validate()` method an error will be thrown as soon as unbalanced regions (delimeted by `{ $key: '<token',
   ..., }` and `{ $key: '>token', ..., }`) are encountered.
+
+* [X] implement Vectorial NumbeRs (VNRs)
+* [ ] document Vectorial NumbeRs (VNRs)
+
+
 

@@ -181,6 +181,7 @@ class Datom extends Multimix
     super()
     validate.datom_settings settings = { defaults.settings..., settings..., }
     @settings = LFT.freeze settings
+    @VNR      = require './vnr'
     @Datom    = Datom
     return @
 

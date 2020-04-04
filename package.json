@@ -30,7 +30,7 @@
   "dependencies": {
     "cnd": "^5.3.1",
     "emittery": "^0.6.0",
-    "intertype": "^3.2.0",
+    "intertype": "^3.3.1",
     "letsfreezethat": "^2.2.5",
     "multimix": "^2.2.0"
   },

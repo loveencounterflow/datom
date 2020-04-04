@@ -22,6 +22,12 @@ types                     = require '../types'
 { isa
   validate
   type_of }               = types
+#...........................................................................................................
+{ inspect }               = require 'util'
+rpr = ( P... ) ->
+  return ( \
+    ( inspect x, { depth: Infinity, maxArrayLength: Infinity, breakLength: Infinity, compact: true, } ) \
+      for x in P ).join ' '
 
 
 # #-----------------------------------------------------------------------------------------------------------

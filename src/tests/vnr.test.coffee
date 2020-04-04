@@ -77,6 +77,20 @@ test_basics = ( T, VNR ) ->
   done()
   return null
 
+#-----------------------------------------------------------------------------------------------------------
+@[ "VNR sort 2" ] = ( T, done ) ->
+  VNR     = ( require '../..' ).VNR
+  matcher = [ [ 1 ], [ 1, 0 ], [ 1, 0, -1 ], [ 1, 0, 1 ], [ 2 ], [ 2, -1 ], [ 2, 0 ] ]
+  for _ in [ 1 .. 30 ]
+    probe   = CND.shuffle [ matcher..., ]
+    result  = VNR.sort probe
+    # info  '^33987-15^', rpr probe
+    # debug '^33987-15^', rpr result
+    T.ok probe isnt matcher
+    T.ok probe isnt result
+    T.eq ( VNR.sort probe ), matcher
+  done()
+  return null
 
 
 

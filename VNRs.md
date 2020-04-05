@@ -19,8 +19,13 @@ Dictionary, we give it a sequential number starting with 1; in this way, we migh
 similar to [*Mathews' Chinese–English
 Dictionary*](https://en.wikipedia.org/wiki/Mathews%27_Chinese–English_Dictionary) ([preview
 here](https://books.google.de/books?id=Pj_e2d3eHTQC&printsec=frontcover&dq=Mathew%27s+Chinese–English+Dictionary&hl=en&sa=X&ved=0ahUKEwid45mx-dDoAhXT8aYKHZjqAKEQ6AEIKjAA#v=onepage&q=Mathew's%20Chinese–English%20Dictionary&f=false))
-where `U+963f 阿 a¹` is identified as *№1*, up to `U+8580 薀 yun¹, yun⁴` which is identified as *№7773*. So
-far so good.
+where `U+963f 阿 a¹` is identified as *№&nbsp;1*, up to `U+8580 薀 yun¹, yun⁴` which is identified as
+*№&nbsp;7773*, with 7771 characters in between. So far so good.
+
+* `U+6e24 渤 po², po⁵` *№&nbsp;4985*
+* `U+64d8 擘 po⁴, po⁵, pai¹` *№&nbsp;4985a*
+* `U+62cd 拍 p'eh⁴, p'eh⁵, p'ai¹` *№&nbsp;4986*
+
 
 Now suppose for the upcoming edition, we would like to include a hundred or so new characters that we have found
 are too important to be skipped over. We then face the question: how can we keep the numbering scheme and still

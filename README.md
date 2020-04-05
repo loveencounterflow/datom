@@ -394,9 +394,9 @@ module with a single line in it, `module.exports = ( require 'pipedreams' ).XE.n
 # Vectorial NumbeRs (VNRs)
 
 Where a consistent relative ordering of streams of datoms is needed, especially if any number of datoms may
-get deleted and inserted at some mid-stream point, [Vectorial Numbers (VNRs)](), which are implemented as
-lists of integers, can be used to avoid a re-numbering of elements and still be able to insert arbitrarily
-many new elements between any two given elements.
+get deleted and inserted at some mid-stream point, [Vectorial Numbers (VNRs)](./blob/master/VNRs.md), which
+are implemented as lists of integers, can be used to avoid a re-numbering of elements and still be able to
+insert arbitrarily many new elements between any two given elements.
 
 # To Do
 

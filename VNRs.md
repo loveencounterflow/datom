@@ -18,9 +18,9 @@ alphabetically by their respected reading. In order to be able to uniquely ident
 Dictionary, we give it a sequential number starting with 1; in this way, we might end up with a dictionary
 similar to [*Mathews' Chinese–English
 Dictionary*](https://en.wikipedia.org/wiki/Mathews%27_Chinese–English_Dictionary) ([preview
-here](https://books.google.de/books?id=Pj_e2d3eHTQC&printsec=frontcover&dq=Mathew%27s+Chinese–English+Dictionary&hl=en&sa=X&ved=0ahUKEwid45mx-dDoAhXT8aYKHZjqAKEQ6AEIKjAA#v=onepage&q=Mathew's%20Chinese–English%20Dictionary&f=false)).
-where `U+963f 阿 a` is identified as *№1*, up to `U+8580 薀 yun` which is identified as *№7773*. So far so
-good.
+here](https://books.google.de/books?id=Pj_e2d3eHTQC&printsec=frontcover&dq=Mathew%27s+Chinese–English+Dictionary&hl=en&sa=X&ved=0ahUKEwid45mx-dDoAhXT8aYKHZjqAKEQ6AEIKjAA#v=onepage&q=Mathew's%20Chinese–English%20Dictionary&f=false))
+where `U+963f 阿 a¹` is identified as *№1*, up to `U+8580 薀 yun¹, yun⁴` which is identified as *№7773*. So
+far so good.
 
 Now suppose for the upcoming edition, we would like to include a hundred or so new characters that we have found
 are too important to be skipped over. We then face the question: how can we keep the numbering scheme and still

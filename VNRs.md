@@ -26,6 +26,8 @@ where `U+963f 阿 a¹` is identified as *№&nbsp;1*, up to `U+8580 薀 yun¹, y
 * `U+64d8 擘 po⁴, po⁵, pai¹` *№&nbsp;4985a*
 * `U+62cd 拍 p'eh⁴, p'eh⁵, p'ai¹` *№&nbsp;4986*
 
+* At least one added character with a numerical suffix: `U+752d 甭 pëng²` 不用 need not *№&nbsp;5047½* (Unihan:
+  `5047.5`)
 
 Now suppose for the upcoming edition, we would like to include a hundred or so new characters that we have found
 are too important to be skipped over. We then face the question: how can we keep the numbering scheme and still

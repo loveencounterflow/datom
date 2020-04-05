@@ -393,24 +393,10 @@ module with a single line in it, `module.exports = ( require 'pipedreams' ).XE.n
 
 # Vectorial NumbeRs (VNRs)
 
-**To Be Written**
-
-* submodule `vnr`, available as `DATOM.VNR`
-* lists of integers
-* used to order datoms, standard property name is `$vnr`
-* ordering done per position in a lexicographic fashion, so
-  * `[ 1, 2, ]` comes after `[ 1, 1, ]` and before `[ 1, 3, ]`
-  * can extend to insert arbitrary number of elements in between any two given ones, e.g.
-    `[ 1, 2, 0, ]`, `[ 1, 2, 1, ]`, `[ 1, 2, 2, ]` all come after `[ 1, 2, ]` but before `[ 1, 3, ]`
-
-<!-- `$vnr`—'vectorial datom number', an array of positive integers that imposes a total ordering on datoms by
-which I mean to say that given any two datoms `a`, `b` that are piped through the same stream either
-`a.$vnr < b.$vnr` or `a.$vnr > b.$vnr` will always hold, and `a.$vnr == b[ '$vnr' ] <=> a is b`. "the
-variable-length Vectorial Number VNR (which starts with the line number of the respective source file and
-has additional positions added wherever a processing step inserted material)"
- -->
-
-------------------------------------------------------------------------
+Where a consistent relative ordering of streams of datoms is needed, especially if any number of datoms may
+get deleted and inserted at some mid-stream point, [Vectorial Numbers (VNRs)](), which are implemented as
+lists of integers, can be used to avoid a re-numbering of elements and still be able to insert arbitrarily
+many new elements between any two given elements.
 
 # To Do
 

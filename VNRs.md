@@ -139,18 +139,21 @@ existing item*, only by knowing the reference's VNR. This is because `[ x, -1, ]
 > NodeJS started using V8 v7 with version 11.0.0, so *the following only applies to users running NodeJS
 > older than version 11.0.0.*
 >
-> Sorting VNRs with a partial ordering *will* in principle work with any version of NodeJS. An unstable
-> sort, however, may occsasionally cause unpredictable behavior to occur when
+> Sorting VNRs with a partial ordering will work with any version of NodeJS. An unstable sort, however, may
+> occsasionally cause unpredictable behavior to occur when
 > * sequences of more than 10 datoms
-> * that contain repeated and/or equivalent but nonequal VNRs (such as `[ 1, ]` and `[ 1, 0, ]`) (which is
->   not recommended)
+> * that contain repeated and/or equivalent but nonequal VNRs (such as `[ 1, ]` and `[ 1, 0, ]`)
 > * are sorted according to their respective VNRs.
 >
 > In such cases, any seemingly unrelated change such as swapping out some VNRs or insertion or omission of
 > any number of datoms may cause datoms with equal or equivalent VNRs to change places. Such changes would
 > be reproducible but not predicatable (without intimate knowledge of the sorting algorithm's implementation
 > details) and thus could conceivably lead to rare and hard-to-track Heisenbugs.
-
+>
+> Note that using VNRs such as `[ 1, ]` and `[ 1, 0, ]` in a single stream is discouraged because they
+> should be considered alternative representation of the same value, in the same way that `0.99999...`
+> should be considered as an alternative way to write `1`. Users should settle for the one or the other way
+> and stick to it.
 
 With total ordering,
 

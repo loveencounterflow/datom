@@ -151,9 +151,8 @@ existing item*, only by knowing the reference's VNR. This is because `[ x, -1, ]
 > details) and thus could conceivably lead to rare and hard-to-track Heisenbugs.
 >
 > Note that using VNRs such as `[ 1, ]` and `[ 1, 0, ]` in a single stream is discouraged because they
-> should be considered alternative representation of the same value, in the same way that `0.99999...`
-> should be considered as an alternative way to write `1`. Users should settle for the one or the other way
-> and stick to it.
+> should be considered alternative representation of the same value, in the same way that `0.99999...` is an
+> alternative way to write `1`. Users should settle for the one or the other way and stick to it.
 
 With total ordering,
 
@@ -168,6 +167,8 @@ With total ordering,
 [ 1, 0, ],  [ 1,  0, ]     0
 [ 1, 0, ],  [ 1, +1, ]    -1
 ```
+
+With partial ordering,
 
 ```
 𝖆           𝖇             cmp_partial( 𝖆, 𝖇 )

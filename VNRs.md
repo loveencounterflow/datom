@@ -131,6 +131,45 @@ items in a sequence before or after a given position (the reference) *without ha
 existing item*, only by knowing the reference's VNR. This is because `[ x, -1, ] ≺ ( [ x, 0, ] ≍ [ x, ] )
 ≺ [ x, +1, ]` in partial ordering ###
 
+> **NB** Sorting VNRs with a partial ordering *will* in principle work with any version of NodeJS but may
+> occsasionally display unpredictable behavior when sequences contain equivalent but nonequal VNRs (such as
+> `[ 1, ]` and `[ 1, 0, ]`) in older NodeJS versions because it is only in NodeJS 11.0.0 and newer that
+> QuickSort for arrays with more than 10 elements has been replaced with the stable TimSort algorithm. If
+> your stream does not contain any datoms with VNRs that share the same prefix where the suffix of the
+> longer only contains `0`s, no effect can be discerned; however, if it does (which is not recommended) and
+> is longer than 10 elements, then in older versions of NodeJS any unrelated change such as the insertion or
+> omission of a VNR may cause such datoms to change places.
+
+> > "Previously, V8 used an unstable QuickSort for arrays with more than 10 elements. As of V8 v7.0 / Chrome
+> > 70, [it] use[s] the stable TimSort algorithm."—[*Array.prototype.sort
+> > stability*](https://mathiasbynens.be/demo/sort-stability)
+
+With total ordering,
+
+```
+𝖆           𝖇             cmp_total( 𝖆, 𝖇 )
+—————————————————————————————
+[ 1, ],     [ 1, -1, ]    -1
+[ 1, ],     [ 1,  0, ]    -1
+[ 1, ],     [ 1, +1, ]    -1
+—————————————————————————————
+[ 1, 0, ],  [ 1, -1, ]    +1
+[ 1, 0, ],  [ 1,  0, ]     0
+[ 1, 0, ],  [ 1, +1, ]    -1
+```
+
+```
+𝖆           𝖇             cmp_partial( 𝖆, 𝖇 )
+—————————————————————————————
+[ 1, ],     [ 1, -1, ]    +1
+[ 1, ],     [ 1,  0, ]     0
+[ 1, ],     [ 1, +1, ]    -1
+—————————————————————————————
+[ 1, 0, ],  [ 1, -1, ]    +1
+[ 1, 0, ],  [ 1,  0, ]     0
+[ 1, 0, ],  [ 1, +1, ]    -1
+```
+
 -----------------------------------------------------------------
 
 

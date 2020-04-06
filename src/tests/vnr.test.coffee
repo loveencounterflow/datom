@@ -80,15 +80,35 @@ test_basics = ( T, VNR ) ->
 #-----------------------------------------------------------------------------------------------------------
 @[ "VNR sort 2" ] = ( T, done ) ->
   VNR     = ( require '../..' ).VNR
-  matcher = [ [ 1 ], [ 1, 0 ], [ 1, 0, -1 ], [ 1, 0, 1 ], [ 2 ], [ 2, -1 ], [ 2, 0 ] ]
-  for _ in [ 1 .. 30 ]
+  matcher = [ [ 1 ], [ 2, 1, ], [ 1, 0 ], [ 1, 0, -1 ], [ 1, 0, 1 ], [ 2 ], [ 2, -1 ], [ 2, 0 ] ]
+  matcher = [ [ 1 ], [ 2, 1, ], [ 1, 0 ], [ 1, 0, -1 ], [ 1, 0, 1 ],        [ 2, -1 ], [ 2, 0 ], [ 2 ], ]
+  for _ in [ 1 .. 1 ]
     probe   = CND.shuffle [ matcher..., ]
     result  = VNR.sort probe
     # info  '^33987-15^', rpr probe
     # debug '^33987-15^', rpr result
     T.ok probe isnt matcher
     T.ok probe isnt result
-    T.eq ( VNR.sort probe ), matcher
+    T.eq ( result ), matcher
+    debug rpr result
+  done()
+  return null
+
+#-----------------------------------------------------------------------------------------------------------
+@[ "VNR sort 3" ] = ( T, done ) ->
+  VNR     = ( require '../..' ).VNR
+  debug "[ 1, ],     [ 1,  0, ]", VNR.cmp [ 1, ],     [ 1,  0, ]
+  debug "[ 1, ],     [ 1, -1, ]", VNR.cmp [ 1, ],     [ 1, -1, ]
+  debug "[ 1, ],     [ 1, +1, ]", VNR.cmp [ 1, ],     [ 1, +1, ]
+  debug "[ 1, 0, ],  [ 1,  0, ]", VNR.cmp [ 1, 0, ],  [ 1,  0, ]
+  debug "[ 1, 0, ],  [ 1, -1, ]", VNR.cmp [ 1, 0, ],  [ 1, -1, ]
+  debug "[ 1, 0, ],  [ 1, +1, ]", VNR.cmp [ 1, 0, ],  [ 1, +1, ]
+  info  "[ 1, ],     [ 1,  0, ]", VNR.cmp2 [ 1, ],     [ 1,  0, ]
+  info  "[ 1, ],     [ 1, -1, ]", VNR.cmp2 [ 1, ],     [ 1, -1, ]
+  info  "[ 1, ],     [ 1, +1, ]", VNR.cmp2 [ 1, ],     [ 1, +1, ]
+  info  "[ 1, 0, ],  [ 1,  0, ]", VNR.cmp2 [ 1, 0, ],  [ 1,  0, ]
+  info  "[ 1, 0, ],  [ 1, -1, ]", VNR.cmp2 [ 1, 0, ],  [ 1, -1, ]
+  info  "[ 1, 0, ],  [ 1, +1, ]", VNR.cmp2 [ 1, 0, ],  [ 1, +1, ]
   done()
   return null
 

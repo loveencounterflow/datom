@@ -131,18 +131,25 @@ items in a sequence before or after a given position (the reference) *without ha
 existing item*, only by knowing the reference's VNR. This is because `[ x, -1, ] ≺ ( [ x, 0, ] ≍ [ x, ] )
 ≺ [ x, +1, ]` in partial ordering ###
 
-> **NB** Sorting VNRs with a partial ordering *will* in principle work with any version of NodeJS but may
-> occsasionally display unpredictable behavior when sequences contain equivalent but nonequal VNRs (such as
-> `[ 1, ]` and `[ 1, 0, ]`) in older NodeJS versions because it is only in NodeJS 11.0.0 and newer that
-> QuickSort for arrays with more than 10 elements has been replaced with the stable TimSort algorithm. If
-> your stream does not contain any datoms with VNRs that share the same prefix where the suffix of the
-> longer only contains `0`s, no effect can be discerned; however, if it does (which is not recommended) and
-> is longer than 10 elements, then in older versions of NodeJS any unrelated change such as the insertion or
-> omission of a VNR may cause such datoms to change places.
-
+> **NB**
 > > "Previously, V8 used an unstable QuickSort for arrays with more than 10 elements. As of V8 v7.0 / Chrome
 > > 70, [it] use[s] the stable TimSort algorithm."—[*Array.prototype.sort
 > > stability*](https://mathiasbynens.be/demo/sort-stability)
+> NodeJS started using V8 v7 with version 11.0.0, so *the following only applies to users running NodeJS
+> older than version 11.0.0.*
+>
+> Sorting VNRs with a partial ordering *will* in principle work with any version of NodeJS. An unstable
+> sort, however, may occsasionally cause unpredictable behavior to occur when
+> * sequences of more than 10 datoms
+> * that contain repeated and/or equivalent but nonequal VNRs (such as `[ 1, ]` and `[ 1, 0, ]`) (which is
+>   not recommended)
+> * are sorted according to their respective VNRs.
+>
+> In such cases, any seemingly unrelated change such as swapping out some VNRs or insertion or omission of
+> any number of datoms may cause datoms with equal or equivalent VNRs to change places. Such changes would
+> be reproducible but not predicatable (without intimate knowledge of the sorting algorithm's implementation
+> details) and thus could conceivably lead to rare and hard-to-track Heisenbugs.
+
 
 With total ordering,
 

@@ -135,6 +135,7 @@ existing item*, only by knowing the reference's VNR. This is because `[ x, -1, ]
 > > "Previously, V8 used an unstable QuickSort for arrays with more than 10 elements. As of V8 v7.0 / Chrome
 > > 70, [it] use[s] the stable TimSort algorithm."—[*Array.prototype.sort
 > > stability*](https://mathiasbynens.be/demo/sort-stability)
+>
 > NodeJS started using V8 v7 with version 11.0.0, so *the following only applies to users running NodeJS
 > older than version 11.0.0.*
 >

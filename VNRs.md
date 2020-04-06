@@ -13,6 +13,7 @@
 
 ## The Problem
 
+<!--
 Suppose we wanted to publish a Chinese-English dictionary with the most common characters, ordered
 alphabetically by their respected reading. In order to be able to uniquely identify each character in the
 Dictionary, we give it a sequential number starting with 1; in this way, we might end up with a dictionary
@@ -26,12 +27,39 @@ where `U+963f 阿 a¹` is identified as *№&nbsp;1*, up to `U+8580 薀 yun¹, y
 * `U+64d8 擘 po⁴, po⁵, pai¹` *№&nbsp;4985a*
 * `U+62cd 拍 p'eh⁴, p'eh⁵, p'ai¹` *№&nbsp;4986*
 
-* At least one added character with a numerical suffix: `U+752d 甭 pëng²` "不用 need not" *№&nbsp;5047½* (Unihan:
-  `5047.5`)
+* At least one added character with a numerical suffix: `U+752d 甭 pëng²` "不用 need not" *№&nbsp;5047½*
+  (listed in Unihan as `5047.5`)
+
+006c2f:氯 *№&nbsp;4194½*
 
 Now suppose for the upcoming edition, we would like to include a hundred or so new characters that we have found
 are too important to be skipped over. We then face the question: how can we keep the numbering scheme and still
 insert new characters?
+-->
+
+When dealing with streams of data the relative order in which items appear is frequently of importance. This
+ordering may be implicit in the data stream (e.g. when each item represents one line as read from a file) or
+made explicit (when recording line numbers along with the text). Now suppose one wanted to parse several
+fields from each line and make each field a seperate datom while keeping the original lines with their line
+numbers:
+
+```
+# https://www.unicode.org/Public/14.0.0/ucd/UnicodeData-14.0.0d1.txt
+linenr  text
+90      0059;LATIN CAPITAL LETTER Y;Lu;0;L;;;;;N;;;;0079;
+91      005A;LATIN CAPITAL LETTER Z;Lu;0;L;;;;;N;;;;007A;
+92      005B;LEFT SQUARE BRACKET;Ps;0;ON;;;;;Y;OPENING SQUARE BRACKET;;;;
+93      005C;REVERSE SOLIDUS;Po;0;ON;;;;;N;BACKSLASH;;;;
+94      005D;RIGHT SQUARE BRACKET;Pe;0;ON;;;;;Y;CLOSING SQUARE BRACKET;;;;
+95      005E;CIRCUMFLEX ACCENT;Sk;0;ON;;;;;N;SPACING CIRCUMFLEX;;;;
+96      005F;LOW LINE;Pc;0;ON;;;;;N;SPACING UNDERSCORE;;;;
+97      0060;GRAVE ACCENT;Sk;0;ON;;;;;N;SPACING GRAVE;;;;
+98      0061;LATIN SMALL LETTER A;Ll;0;L;;;;;N;;;0041;;0041
+99      0062;LATIN SMALL LETTER B;Ll;0;L;;;;;N;;;0042;;0042
+```
+
+
+; how could an explicit order
 
 > Closely related is the problem of how to represent arbitrary trees in RDBMSs that can handle insertions
 > and deletions without renumbering; see e.g. [*Static Trees and Binary Fractions in PostgreSQL* by M.
@@ -41,8 +69,6 @@ insert new characters?
 
 ## Vectors of Numbers
 
-
-**To Be Written**
 
 Sortierkriterium mit dem es möglich ist durch rein *lokale* Modifikationen unendlich viele neue Elemente
 *sowohl vor als auch nach* jedem gegebenen Element einzufügen; diese Einfügungen behalten in ihrem

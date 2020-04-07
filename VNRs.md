@@ -217,8 +217,19 @@ With xxxxxxxxx ordering,
 | Alexander | 987654321 |
 | _         |           |
 
+|Month|Savings|Spending|
+|--- |--- |--- |
+|January|$100|$900|
+|July|$750|$1000|
+|December|$250|$300|
+|April|$400|$700|
 
 
+<table>
+<tr><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>1</td><td>1</td><td>1</td></tr>
+</table>
 
 
 

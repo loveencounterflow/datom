@@ -214,8 +214,9 @@ With xxxxxxxxx ordering,
 <table>
 <th><td>𝖆</td><td>𝖇</td><td colspan=2>total</td><td colspan=2>partial</td><td colspan=2>xxxxxxxxx</td></th>
 <tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr>
-<tr><td>1</td><td>1</td><td>1</td></tr>
-<tr><td>1</td><td>1</td><td>1</td></tr>
+<tr><td>*[ 1, ]*</td><td>*[ 1, -1, ]*</td> <td>*-1*</td><td>*[ 1, ] ≺ [ 1, -1, ]*</td><<td>*+1*</td><td>*[ 1, ] ≻ [ 1, -1, ]*</td><td>*+1*</td><td>*[ 1, ] ≻ [ 1, -1, ]*</td></tr>
+<tr><td>*[ 1, ]*</td><td>*[ 1,  0, ]*</td> <td>*-1*</td><td>*[ 1, ] ≺ [ 1,  0, ]*</td><<td>* 0*</td><td>*[ 1, ] ≍ [ 1,  0, ]*</td><td>*-1*</td><td>*[ 1, ] ≺ [ 1,  0, ]*</td></tr>
+<tr><td>*[ 1, ]*</td><td>*[ 1, +1, ]*</td> <td>*-1*</td><td>*[ 1, ] ≺ [ 1, +1, ]*</td><<td>*-1*</td><td>*[ 1, ] ≺ [ 1, +1, ]*</td><td>*-1*</td><td>*[ 1, ] ≺ [ 1, +1, ]*</td></tr>
 </table>
 
 

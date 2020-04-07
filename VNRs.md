@@ -212,8 +212,8 @@ With xxxxxxxxx ordering,
 ```
 
 <table>
-<th><td>𝖆</td><td>𝖇</td><td colspan=2>total</td><td colspan=2>partial</td><td colspan=2>xxxxxxxxx</td></th>
-<tr><td><code style='white-space:nowrap;'>[ 1, ]</code></td><td><code>[ 1, -1, ]</code></td> <td><code>-1</code></td><td><code>[ 1, ] ≺ [ 1, -1, ]</code></td><<td><code>+1</code></td><td><code>[ 1, ] ≻ [ 1, -1, ]</code></td><td><code>+1</code></td><td><code>[ 1, ] ≻ [ 1, -1, ]</code></td></tr>
+<tr><th>𝖆</th><th>𝖇</th><th colspan=2>total</th><th colspan=2>partial</th><th colspan=2>xxxxxxxxx</th></tr>
+<tr><td><code>[ 1, ]</code></td><td><code>[ 1, -1, ]</code></td> <td><code>-1</code></td><td><code>[ 1, ] ≺ [ 1, -1, ]</code></td><<td><code>+1</code></td><td><code>[ 1, ] ≻ [ 1, -1, ]</code></td><td><code>+1</code></td><td><code>[ 1, ] ≻ [ 1, -1, ]</code></td></tr>
 <tr><td><code>[ 1, ]</code></td><td><code>[ 1,  0, ]</code></td> <td><code>-1</code></td><td><code>[ 1, ] ≺ [ 1,  0, ]</code></td><<td><code> 0</code></td><td><code>[ 1, ] ≍ [ 1,  0, ]</code></td><td><code>-1</code></td><td><code>[ 1, ] ≺ [ 1,  0, ]</code></td></tr>
 <tr><td><code>[ 1, ]</code></td><td><code>[ 1, +1, ]</code></td> <td><code>-1</code></td><td><code>[ 1, ] ≺ [ 1, +1, ]</code></td><<td><code>-1</code></td><td><code>[ 1, ] ≺ [ 1, +1, ]</code></td><td><code>-1</code></td><td><code>[ 1, ] ≺ [ 1, +1, ]</code></td></tr>
 </table>

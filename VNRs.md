@@ -213,9 +213,9 @@ With xxxxxxxxx ordering,
 
 <table>
 <tr><th>𝖆</th><th>total</th><th>partial</th><th>xxxxxxxxx</th> <th>𝖇</th></tr>
-<tr><td><pre>[ 1, ]</pre></td> <td><pre>-1  ≺ </pre></td>+1  ≻ </pre></td><td><pre>+1  ≻ </pre></td>  <td><pre>[ 1, -1, ]</pre></td></tr>
-<tr><td><pre>[ 1, ]</pre></td> <td><pre>-1  ≺ </pre></td> 0  ≍ </pre></td><td><pre>-1  ≺ </pre></td>  <td><pre>[ 1,  0, ]</pre></td></tr>
-<tr><td><pre>[ 1, ]</pre></td> <td><pre>-1  ≺ </pre></td>-1  ≺ </pre></td><td><pre>-1  ≺ </pre></td>  <td><pre>[ 1, +1, ]</pre></td></tr>
+<tr><td><pre>[ 1, ]</pre></td> <td><pre>-1  ≺ </pre></td> <td><pre>+1  ≻ </pre></td><td><pre>+1  ≻ </pre></td>  <td><pre>[ 1, -1, ]</pre></td></tr>
+<tr><td><pre>[ 1, ]</pre></td> <td><pre>-1  ≺ </pre></td> <td><pre> 0  ≍ </pre></td><td><pre>-1  ≺ </pre></td>  <td><pre>[ 1,  0, ]</pre></td></tr>
+<tr><td><pre>[ 1, ]</pre></td> <td><pre>-1  ≺ </pre></td> <td><pre>-1  ≺ </pre></td><td><pre>-1  ≺ </pre></td>  <td><pre>[ 1, +1, ]</pre></td></tr>
 </table>
 
 

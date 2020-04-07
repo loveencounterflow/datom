@@ -213,9 +213,9 @@ With xxxxxxxxx ordering,
 
 <table>
 <th><td>𝖆</td><td>𝖇</td><td colspan=2>total</td><td colspan=2>partial</td><td colspan=2>xxxxxxxxx</td></th>
-<tr><td><pre>[ 1, ]</pre></td><td><pre>[ 1, -1, ]</pre></td> <td><pre>-1</pre></td><td><pre>[ 1, ] ≺ [ 1, -1, ]</pre></td><<td><pre>+1</pre></td><td><pre>[ 1, ] ≻ [ 1, -1, ]</pre></td><td><pre>+1</pre></td><td><pre>[ 1, ] ≻ [ 1, -1, ]</pre></td></tr>
-<tr><td><pre>[ 1, ]</pre></td><td><pre>[ 1,  0, ]</pre></td> <td><pre>-1</pre></td><td><pre>[ 1, ] ≺ [ 1,  0, ]</pre></td><<td><pre> 0</pre></td><td><pre>[ 1, ] ≍ [ 1,  0, ]</pre></td><td><pre>-1</pre></td><td><pre>[ 1, ] ≺ [ 1,  0, ]</pre></td></tr>
-<tr><td><pre>[ 1, ]</pre></td><td><pre>[ 1, +1, ]</pre></td> <td><pre>-1</pre></td><td><pre>[ 1, ] ≺ [ 1, +1, ]</pre></td><<td><pre>-1</pre></td><td><pre>[ 1, ] ≺ [ 1, +1, ]</pre></td><td><pre>-1</pre></td><td><pre>[ 1, ] ≺ [ 1, +1, ]</pre></td></tr>
+<tr><td><code>[ 1, ]</code></td><td><code>[ 1, -1, ]</code></td> <td><code>-1</code></td><td><code>[ 1, ] ≺ [ 1, -1, ]</code></td><<td><code>+1</code></td><td><code>[ 1, ] ≻ [ 1, -1, ]</code></td><td><code>+1</code></td><td><code>[ 1, ] ≻ [ 1, -1, ]</code></td></tr>
+<tr><td><code>[ 1, ]</code></td><td><code>[ 1,  0, ]</code></td> <td><code>-1</code></td><td><code>[ 1, ] ≺ [ 1,  0, ]</code></td><<td><code> 0</code></td><td><code>[ 1, ] ≍ [ 1,  0, ]</code></td><td><code>-1</code></td><td><code>[ 1, ] ≺ [ 1,  0, ]</code></td></tr>
+<tr><td><code>[ 1, ]</code></td><td><code>[ 1, +1, ]</code></td> <td><code>-1</code></td><td><code>[ 1, ] ≺ [ 1, +1, ]</code></td><<td><code>-1</code></td><td><code>[ 1, ] ≺ [ 1, +1, ]</code></td><td><code>-1</code></td><td><code>[ 1, ] ≺ [ 1, +1, ]</code></td></tr>
 </table>
 
 

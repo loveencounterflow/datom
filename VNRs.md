@@ -211,22 +211,9 @@ With xxxxxxxxx ordering,
 [ 1, 0, ],  [ 1, +1, ]    -1    [ 1, 0, ] ≺ [ 1, +1, ]
 ```
 
-|    Name   |   Phone   |
-|-----------|-----------|
-| Anna      | 123456789 |
-| Alexander | 987654321 |
-| _         |           |
-
-|Month|Savings|Spending|
-|--- |--- |--- |
-|January|$100|$900|
-|July|$750|$1000|
-|December|$250|$300|
-|April|$400|$700|
-
-
 <table>
-<tr><td>1</td><td>1</td><td>1</td></tr>
+<th><td>𝖆</td><td>𝖇</td><td colspan=2>total</td><td colspan=2>partial</td><td colspan=2>xxxxxxxxx</td></th>
+<tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td></tr>
 <tr><td>1</td><td>1</td><td>1</td></tr>
 <tr><td>1</td><td>1</td><td>1</td></tr>
 </table>

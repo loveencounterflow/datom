@@ -79,45 +79,117 @@ test_basics = ( T, VNR ) ->
 
 #-----------------------------------------------------------------------------------------------------------
 @[ "VNR sort 2" ] = ( T, done ) ->
-  VNR     = ( require '../..' ).VNR
-  matcher = [ [ 1 ], [ 2, 1, ], [ 1, 0 ], [ 1, 0, -1 ], [ 1, 0, 1 ], [ 2 ], [ 2, -1 ], [ 2, 0 ] ]
-  matcher = [ [ 1 ], [ 2, 1, ], [ 1, 0 ], [ 1, 0, -1 ], [ 1, 0, 1 ],        [ 2, -1 ], [ 2, 0 ], [ 2 ], ]
-  for _ in [ 1 .. 1 ]
-    probe   = CND.shuffle [ matcher..., ]
-    result  = VNR.sort probe
-    # info  '^33987-15^', rpr probe
-    # debug '^33987-15^', rpr result
-    T.ok probe isnt matcher
-    T.ok probe isnt result
-    T.eq ( result ), matcher
-    debug rpr result
+  matchers =
+    total:    [
+      [ [ 1 ], [ 1, 0 ], [ 1, 0, -1 ], [ 1, 0, 1 ], [ 2 ], [ 2, -1 ], [ 2, 0 ], [ 2, 1, ] ]
+      [ [ Infinity ], [ Infinity, -1 ], [ Infinity, 1 ] ]
+      [ [ Infinity, -1, ], [ Infinity, 0, ], [ Infinity, 1, ], ]
+      ]
+    partial:  [
+      [ [ 1, 0, -1 ], [ 1 ], [ 1, 0 ], [ 1, 0, 1 ], [ 2, -1 ], [ 2, 0 ], [ 2 ], [ 2, 1 ] ]
+      [ [ 1, 0, -1 ], [ 1, 0 ], [ 1 ], [ 1, 0, 1 ], [ 2, -1 ], [ 2 ], [ 2, 0 ], [ 2, 1 ] ]
+      [ [ 2, 0 ], [ 2 ], ]
+      [ [ 2 ],    [ 2, 0 ], ]
+      [ [ Infinity, -1, ], [ Infinity, ], [ Infinity, 1, ], ]
+      [ [ Infinity, -1, ], [ Infinity, 0, ], [ Infinity, 1, ], ]
+      ]
+    fair:  [
+      [ [ 1, 0, -1 ], [ 1 ], [ 1, 0 ], [ 1, 0, 1 ], [ 2, -1 ], [ 2 ], [ 2, 0 ], [ 2, 1 ] ]
+      [ [ 2 ],    [ 2, 0 ], ]
+      [ [ Infinity, -1, ], [ Infinity, ], [ Infinity, 1, ], ]
+      [ [ Infinity, -1, ], [ Infinity, 0, ], [ Infinity, 1, ], ]
+      [ [ 1, ], ]
+      [ [ 1, ], [ 2, ] ]
+      ]
+  for ordering in [ 'total', 'partial', 'fair', ]
+    VNR     = new ( require '../..' ).VNR.Vnr { ordering, }
+    # VNR     = new ( require '../..' ).VNR.Vnr { ordering, validate: false, }
+    for matcher in matchers[ ordering ]
+      probe   = [ matcher..., ]
+      await T.perform probe, matcher, null, -> return new Promise ( resolve, reject ) ->
+        result  = VNR.sort probe
+        T.ok probe isnt matcher
+        T.ok probe isnt result
+        T.eq result, matcher
+        # debug '^334^', rpr result
+        resolve result
   done()
   return null
 
 #-----------------------------------------------------------------------------------------------------------
 @[ "VNR sort 3" ] = ( T, done ) ->
   VNR     = ( require '../..' ).VNR
-  debug "[ 1, ],     [ 1,  0, ]", VNR.cmp [ 1, ],     [ 1,  0, ]
-  debug "[ 1, ],     [ 1, -1, ]", VNR.cmp [ 1, ],     [ 1, -1, ]
-  debug "[ 1, ],     [ 1, +1, ]", VNR.cmp [ 1, ],     [ 1, +1, ]
-  debug "[ 1, 0, ],  [ 1,  0, ]", VNR.cmp [ 1, 0, ],  [ 1,  0, ]
-  debug "[ 1, 0, ],  [ 1, -1, ]", VNR.cmp [ 1, 0, ],  [ 1, -1, ]
-  debug "[ 1, 0, ],  [ 1, +1, ]", VNR.cmp [ 1, 0, ],  [ 1, +1, ]
-  info  "[ 1, ],     [ 1,  0, ]", VNR.cmp2 [ 1, ],     [ 1,  0, ]
-  info  "[ 1, ],     [ 1, -1, ]", VNR.cmp2 [ 1, ],     [ 1, -1, ]
-  info  "[ 1, ],     [ 1, +1, ]", VNR.cmp2 [ 1, ],     [ 1, +1, ]
-  info  "[ 1, 0, ],  [ 1,  0, ]", VNR.cmp2 [ 1, 0, ],  [ 1,  0, ]
-  info  "[ 1, 0, ],  [ 1, -1, ]", VNR.cmp2 [ 1, 0, ],  [ 1, -1, ]
-  info  "[ 1, 0, ],  [ 1, +1, ]", VNR.cmp2 [ 1, 0, ],  [ 1, +1, ]
+  info CND.blue   'cmp_total    ', "[ 1, ],     [ 1, -1, ]", VNR.cmp_total   [ 1, ],     [ 1, -1, ]
+  info CND.blue   'cmp_total    ', "[ 1, ],     [ 1,  0, ]", VNR.cmp_total   [ 1, ],     [ 1,  0, ]
+  info CND.blue   'cmp_total    ', "[ 1, ],     [ 1, +1, ]", VNR.cmp_total   [ 1, ],     [ 1, +1, ]
+  info CND.blue   'cmp_total    ', "----------------------"
+  info CND.blue   'cmp_total    ', "[ 1, 0, ],  [ 1, -1, ]", VNR.cmp_total   [ 1, 0, ],  [ 1, -1, ]
+  info CND.blue   'cmp_total    ', "[ 1, 0, ],  [ 1,  0, ]", VNR.cmp_total   [ 1, 0, ],  [ 1,  0, ]
+  info CND.blue   'cmp_total    ', "[ 1, 0, ],  [ 1, +1, ]", VNR.cmp_total   [ 1, 0, ],  [ 1, +1, ]
+  info()
+  info CND.lime   'cmp_partial  ', "[ 1, ],     [ 1, -1, ]", VNR.cmp_partial [ 1, ],     [ 1, -1, ]
+  info CND.lime   'cmp_partial  ', "[ 1, ],     [ 1,  0, ]", VNR.cmp_partial [ 1, ],     [ 1,  0, ]
+  info CND.lime   'cmp_partial  ', "[ 1, ],     [ 1, +1, ]", VNR.cmp_partial [ 1, ],     [ 1, +1, ]
+  info CND.lime   'cmp_partial  ', "----------------------"
+  info CND.lime   'cmp_partial  ', "[ 1, 0, ],  [ 1, -1, ]", VNR.cmp_partial [ 1, 0, ],  [ 1, -1, ]
+  info CND.lime   'cmp_partial  ', "[ 1, 0, ],  [ 1,  0, ]", VNR.cmp_partial [ 1, 0, ],  [ 1,  0, ]
+  info CND.lime   'cmp_partial  ', "[ 1, 0, ],  [ 1, +1, ]", VNR.cmp_partial [ 1, 0, ],  [ 1, +1, ]
+  info()
+  info CND.steel  'cmp_fair     ', "[ 1, ],     [ 1, -1, ]", VNR.cmp_fair    [ 1, ],     [ 1, -1, ]
+  info CND.steel  'cmp_fair     ', "[ 1, ],     [ 1,  0, ]", VNR.cmp_fair    [ 1, ],     [ 1,  0, ]
+  info CND.steel  'cmp_fair     ', "[ 1, ],     [ 1, +1, ]", VNR.cmp_fair    [ 1, ],     [ 1, +1, ]
+  info CND.steel  'cmp_fair     ', "----------------------"
+  info CND.steel  'cmp_fair     ', "[ 1, 0, ],  [ 1, -1, ]", VNR.cmp_fair    [ 1, 0, ],  [ 1, -1, ]
+  info CND.steel  'cmp_fair     ', "[ 1, 0, ],  [ 1,  0, ]", VNR.cmp_fair    [ 1, 0, ],  [ 1,  0, ]
+  info CND.steel  'cmp_fair     ', "[ 1, 0, ],  [ 1, +1, ]", VNR.cmp_fair    [ 1, 0, ],  [ 1, +1, ]
   done()
   return null
 
+#-----------------------------------------------------------------------------------------------------------
+@[ "test for stable sort 2" ] = ( T, done ) ->
+  n         = 1e4
+  m         = Math.floor n / 3
+  ds        = ( [ nr, ( CND.random_integer -m, +m ) ] for nr in [ 1 .. n ])
+  ds.sort ( a, b ) -> a[ 1 ] - b[ 1 ]
+  prv_r     = -Infinity
+  prv_nr    = -Infinity
+  is_stable = true
+  for [ nr, r, ] in ds
+    if r is prv_r
+      is_stable = is_stable and nr > prv_nr
+    prv_r   = r
+    prv_nr  = nr
+  T.ok is_stable
+  done()
 
+#-----------------------------------------------------------------------------------------------------------
+@[ "test VNR._first_nonzero_is_negative()" ] = ( T, done ) ->
+  VNR                       = require '../vnr'
+  #.........................................................................................................
+  probes_and_matchers = [
+    [[ [3,4,0,0,],        2, ], false, ]
+    [[ [3,4,0,-1,],       2, ], true, ]
+    [[ [3,4,0,-1,0,0,],   2, ], true, ]
+    [[ [3,4,0,1,-1,0,0,], 2, ], false, ]
+    [[ [3,4,0,1,-1,0,0,], 0, ], false, ]
+    [[ [3,4,0,0,],        3, ], false, ]
+    [[ [3,4,0,0,],        4, ], false, ]
+    ]
+  #.........................................................................................................
+  for [ probe, matcher, error, ] in probes_and_matchers
+    await T.perform probe, matcher, error, -> return new Promise ( resolve, reject ) ->
+      [ list, first_idx, ] = probe
+      resolve VNR._first_nonzero_is_negative list, first_idx
+  done()
+  return null
 
 ############################################################################################################
 if require.main is module then do =>
   test @
-  # test @[ "wrap_datom" ]
+  # test @[ "VNR sort 2" ]
+  # test @[ "VNR sort 3" ]
+  # @[ "VNR sort 3" ]()
+  # test @[ "test VNR._first_nonzero_is_negative()" ]
 
 
 

@@ -88,10 +88,7 @@ LFT                       = require 'letsfreezethat'
 
 #-----------------------------------------------------------------------------------------------------------
 @cmp_partial = ( a, b ) ->
-  # ≺≍≻
-  ###
-
-  XXX Like `cmp_total()`, but returns `0` in case either VNR is a prefix of the other, that is to say, e.g.
+  ### Like `cmp_total()`, but returns `0` in case either VNR is a prefix of the other, that is to say, e.g.
   `[ 4, 7, ]` is equivalent to `[ 4, 7, 0, ]`, `[ 4, 7, 0, 0, ]` and so on. This is not a total ordering
   because `[ 4, 7, ]` is clearly not equal to `[ 4, 7, 0, ]` and so on, yet is considered to be in the same
   position; therefore, the relative ordering of these two VNRs is undefined. Since such an ordering is
@@ -101,7 +98,6 @@ LFT                       = require 'letsfreezethat'
   items in a sequence before or after a given position (the reference) *without having to modify any
   existing item*, only by knowing the reference's VNR. This is because `[ x, -1, ] ≺ ( [ x, 0, ] ≍ [ x, ] )
   ≺ [ x, +1, ]` in partial ordering ###
-
   if @settings.validate
     validate.vnr a
     validate.vnr b
@@ -114,11 +110,40 @@ LFT                       = require 'letsfreezethat'
   return  0
 
 #-----------------------------------------------------------------------------------------------------------
-@_cmp = null
+@_first_nonzero_is_negative = ( list, first_idx ) ->
+  idx = first_idx
+  loop
+    if ( R = list[ idx ] ) is 0
+      idx++
+      continue
+    return false if ( R is undefined ) or ( R > 0 )
+    return true
+
+#-----------------------------------------------------------------------------------------------------------
+@cmp_fair = ( a, b ) ->
+  if @settings.validate
+    validate.vnr a
+    validate.vnr b
+  a_length  = a.length
+  b_length  = b.length
+  min_idx   = ( Math.min a_length, b_length ) - 1
+  for idx in [ 0 .. min_idx ]
+    ai = a[ idx ]
+    bi = b[ idx ]
+    return -1 if ai < bi
+    return +1 if ai > bi
+  return  0 if a_length is b_length
+  if a_length < b_length
+    return +1 if @_first_nonzero_is_negative b, min_idx + 1
+    return -1
+  return -1 if @_first_nonzero_is_negative a, min_idx + 1
+  return +1
+
+#-----------------------------------------------------------------------------------------------------------
 @sort = ( vnrs ) ->
   ### Given a list of VNRs, return a copy of the list with the VNRs lexicographically sorted. ###
   validate.list vnrs if @settings.validate
-  return ( assign [], vnrs ).sort @_cmp ?= @cmp2.bind @
+  return ( assign [], vnrs ).sort @_cmp
 
 
 #===========================================================================================================
@@ -134,6 +159,11 @@ class Vnr extends Multimix
     validate.datom_vnr_settings settings = { defaults.vnr_settings..., settings..., }
     @settings = LFT.freeze settings
     @Vnr      = Vnr
+    @_cmp     = switch @settings.ordering
+      when 'fair'     then @cmp_fair.bind     @
+      when 'partial'  then @cmp_partial.bind  @
+      when 'total'    then @cmp_total.bind    @
+      else throw new Error "^409883^ internal error: illegal value for settings.ordering: #{rpr @settings.ordering}"
     return @
 
 module.exports = new Vnr()

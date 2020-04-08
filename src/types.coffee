@@ -29,8 +29,9 @@ intertype                 = new Intertype module.exports
 #-----------------------------------------------------------------------------------------------------------
 @declare 'datom_vnr_settings',
   tests:
-    "x is a object":                  ( x ) -> @isa.object x
-    "x.validate is a ?boolean":       ( x ) -> ( not x.validate? ) or @isa.boolean x.validate
+    "x is a object":                              ( x ) -> @isa.object x
+    "x.ordering is 'fair', 'total' or 'partial":  ( x ) -> x.ordering in [ 'fair', 'total', 'partial', ]
+    "x.validate is a ?boolean":                   ( x ) -> ( not x.validate? ) or @isa.boolean x.validate
 
 #-----------------------------------------------------------------------------------------------------------
 @declare 'datom_nonempty_list_of_positive_integers', ( x ) ->
@@ -72,6 +73,8 @@ intertype                 = new Intertype module.exports
     dirty:        true
   vnr_settings:
     validate:     true
+    ordering:     'fair'
+
 
 #-----------------------------------------------------------------------------------------------------------
 @cast = {}

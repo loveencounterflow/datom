@@ -5,6 +5,7 @@
 - [Vectorial NumbeRs (VNRs)](#vectorial-numbers-vnrs)
   - [The Problem](#the-problem)
   - [Vectors of Numbers](#vectors-of-numbers)
+  - [VNRs with Infinity](#vnrs-with-infinity)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -89,13 +90,30 @@ has additional positions added wherever a processing step inserted material)"
 
 
 * submodule `vnr`, available as `DATOM.VNR`
-* lists of integers
+* lists of numbers; most frequently positive integers, but negative integers, fractional numbers and
+  infinity may also be used
 * used to order datoms, standard property name is `$vnr`
 * ordering done per position in a lexicographic fashion, so
   * `[ 1, 2, ]` comes after `[ 1, 1, ]` and before `[ 1, 3, ]` (`[ 1, 2, ] ≺ [ 1, 1, ] ≺ [ 1, 3, ]`)
   * can extend to insert arbitrary number of elements in between any two given ones, e.g.
     `[ 1, 2, 0, ]`, `[ 1, 2, 1, ]`, `[ 1, 2, 2, ]` all come after `[ 1, 2, ]` but before `[ 1, 3, ]`
   * this is embodied in the `VNR.cmp a, b` method
+* VNRs like `[ -Infinity, ]` and `[ Infinity, ]` may be used to anchor elements at the beginning or the end
+  of a sequence of arbitrary length
+
+## VNRs with Infinity
+
+Observe that arbitrary amounts may be subtracted from or added to infinity without decreasing or increasing
+it, i.e. (`∞ = ∞ - 1`. `∞ = ∞ + 1`), which entails that the sorting order of two elements `{ id: 'A', nr:
+Infinity, }`, `{ id: 'B', nr: Infinity + 1, }` is undefined with respect to `nr`. However, with vectorial
+numbers elements *can* be ordered both before and behind negative and positive infinity, which means that `{
+id: 'A', $vnr: [ Infinity, ], }` will be sorted before `{ id: 'B', $vnr: [ Infinity, 1, ], }`, so in a sense
+there are vectorial numbers 'greater than infinity' when `[ Infinity, ] ≺ [ Infinity, 1, ]` (with `≺`
+'precedes') is interpreted as `[ Infinity, ] < [ Infinity, 1, ]` (with `<` 'less than').
+
+The practical utility for using `Infinity` as a VNR element lies in the ability to unambiguously anchor
+datoms to the beginning or the end of a given sequence.
+
 
 **`### TAINT reformulate: ###`**
 

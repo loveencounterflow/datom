@@ -105,8 +105,10 @@ has additional positions added wherever a processing step inserted material)"
 
 Observe that while arbitrary amounts may be subtracted from or added to infinity without decreasing or
 increasing it (that is, `∞ = ∞ - 1`. `∞ = ∞ + 1`, which entails that the sorting order of two elements `{
-id: 'A', nr: Infinity, }`, `{ id: 'B', nr: Infinity + 1, }` is undefined with respect to `nr`). with
-vectorial numbers, elements *can* be ordered both before and behind negative and positive infinity.
+id: 'A', nr: Infinity, }`, `{ id: 'B', nr: Infinity + 1, }` is undefined with respect to `nr`).
+
+However, with vectorial numbers, elements *can* be ordered both before and behind negative and positive
+infinity.
 
 This means that `{ id: 'A', $vnr: [ Infinity, ], }` will be sorted before `{ id: 'B', $vnr: [ Infinity, 1,
 ], }`, so in a sense there are vectorial numbers 'greater than infinity' when `[ Infinity, ] ≺ [ Infinity,

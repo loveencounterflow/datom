@@ -104,6 +104,9 @@ has additional positions added wherever a processing step inserted material)"
   with rational numbers that, although there are only countably many of them, there are still arbitrarily
   many of them between any two distinct points.
 
+* VNRs may also be used in the form `[ linenr, colnr, ]` where the first two numbers identify the location
+  of the origin of some piece of data in a data source file.
+
 -----------------------------------------------------------------
 
 * **`cmp_total = ( 𝖆, 𝖇 ) ->`**
@@ -115,21 +118,28 @@ has additional positions added wherever a processing step inserted material)"
   over all VNRs—that is, any two VNRs are either identical (`𝖆 ≍ 𝖇 ⇔ 𝖆 = 𝖇`) or else the one comes before
   the other—it is called `cmp_total`.
 
-
 -----------------------------------------------------------------
 
 * **`cmp_partial = ( 𝖆, 𝖇 ) ->`**
 
   Like `cmp_total()`, but returns `0` in case either VNR is a prefix of the other, that is to say, e.g. `[
   4, 7, ]` is equivalent to `[ 4, 7, 0, ]`, `[ 4, 7, 0, 0, ]` and so on. This is not a total ordering
-  because `[ 4, 7, ]` is clearly not equal to `[ 4, 7, 0, ]` and so on, yet is considered to be in the same
-  position; therefore, the relative ordering of these two VNRs is undefined. Since such an ordering is
-  called partial this method has been called `cmp_partial`.
+  because `[ 4, 7, ]` is clearly not equal to `[ 4, 7, 0, ]` and so on, yet is considered to be equivalent
+  (in the same position).
 
-`cmp_partial()` is the default ordering method for VNRs because it allows to add arbitrary numbers of
+-----------------------------------------------------------------
+
+* **`cmp_fair = ( 𝖆, 𝖇 ) ->`**
+
+  Like `cmp_total()`, except for two unequal VNRs where one is the prefix of the other; in that case,
+  the *longer* VNR is considered the *smaller* one if and only if its first non-zero element after the
+  prefix is negative. For example, `cmp_fair [ 3, 5, 8, ], [ 3, 5, 8, 0, -11, ]` returns `+1` because
+  the second VNR's first non-zero element after the common prefix `3, 5, 8` is `-11 < 0`.
+
+`cmp_fair()` is the default ordering method for VNRs because it allows to add arbitrary numbers of
 items in a sequence before or after a given position (the reference) *without having to modify any
-existing item*, only by knowing the reference's VNR. This is because `[ x, -1, ] ≺ ( [ x, 0, ] ≍ [ x, ] )
-≺ [ x, +1, ]` in partial ordering ###
+existing item*, only by knowing the reference's VNR. This is because `[ x, -1, ] ≺ ( [ x, ] ≍ [ x, ] )
+≺ [ x, +1, ]` in fair ordering.
 
 > **NB**
 > > "Previously, V8 used an unstable QuickSort for arrays with more than 10 elements. As of V8 v7.0 / Chrome
@@ -182,10 +192,10 @@ With partial lexicographical ordering,
 [ 1, 0, ],  [ 1, +1, ]    -1
 ```
 
-With xxxxxxxxx ordering,
+With fair ordering,
 
 ```
-𝖆           𝖇             cmp_xxxxxxxxx( 𝖆, 𝖇 )
+𝖆           𝖇             cmp_fair( 𝖆, 𝖇 )
 —————————————————————————————
 [ 1, ],     [ 1, -1, ]    +1
 [ 1, ],     [ 1,  0, ]    -1
@@ -198,7 +208,7 @@ With xxxxxxxxx ordering,
 
 
 ```
- 𝖆         𝖇         ║      total                 ║       partial               ║      xxxxxxxxx
+ 𝖆         𝖇         ║      total                 ║       partial               ║      fair
 ═════════════════════╬════╪═══════════════════════╬════╪════════════════════════╬════╪════════════════════════
 [ 1, ]    [ 1, -1, ] ║ -1 │  [ 1, ] ≺ [ 1, -1, ]  ║ +1 │  [ 1, ] ≻ [ 1, -1, ]  ║ +1 │  [ 1, ] ≻ [ 1, -1, ]
 [ 1, ]    [ 1,  0, ] ║ -1 │  [ 1, ] ≺ [ 1,  0, ]  ║  0 │  [ 1, ] ≍ [ 1,  0, ]  ║ -1 │  [ 1, ] ≺ [ 1,  0, ]
@@ -212,7 +222,7 @@ With xxxxxxxxx ordering,
 ```
 
 <table>
-<tr><th>𝖆</th><th>total</th><th>partial</th><th>xxxxxxxxx</th> <th>𝖇</th></tr>
+<tr><th>𝖆</th><th>total</th><th>partial</th><th>fair</th> <th>𝖇</th></tr>
 <tr><td><code>[ 1, ]</code></td> <td><code>-1  ≺ </code></td> <td><code>+1  ≻ </code></td><td><code>+1  ≻ </code></td>  <td><code>[ 1, -1, ]</code></td></tr>
 <tr><td><code>[ 1, ]</code></td> <td><code>-1  ≺ </code></td> <td><code> 0  ≍ </code></td><td><code>-1  ≺ </code></td>  <td><code>[ 1,  0, ]</code></td></tr>
 <tr><td><code>[ 1, ]</code></td> <td><code>-1  ≺ </code></td> <td><code>-1  ≺ </code></td><td><code>-1  ≺ </code></td>  <td><code>[ 1, +1, ]</code></td></tr>

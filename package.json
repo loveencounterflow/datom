@@ -35,6 +35,6 @@
     "multimix": "^2.2.0"
   },
   "devDependencies": {
-    "guy-test": "^1.4.2"
+    "guy-test": "^2.0.1"
   }
 }

@@ -70,7 +70,7 @@ intertype                 = new Intertype module.exports
   settings:
     merge_values: true
     freeze:       true
-    dirty:        true
+    dirty:        false
   vnr_settings:
     validate:     true
     ordering:     'fair'

@@ -280,13 +280,27 @@ types                     = require '../types'
   and select-benchmark in this project
   ###
 
+#-----------------------------------------------------------------------------------------------------------
+@[ "dirty" ] = ( T, done ) ->
+  DATOM_DIRTY                         = new ( require '../..' ).Datom { dirty: true, }
+  DATOM_NODIRTY                       = new ( require '../..' ).Datom { dirty: false, }
+  DATOM_DEFAULT                       = new ( require '../..' ).Datom()
+  #.........................................................................................................
+  d = DATOM_DEFAULT.new_datom '^foo', { x: 42, y: 108, }
+  T.eq ( DATOM_DIRTY.lets d,    ( d ) -> delete d.x ), { $key: '^foo', y: 108, $dirty: true,  }
+  T.eq ( DATOM_NODIRTY.lets d,  ( d ) -> delete d.x ), { $key: '^foo', y: 108,                }
+  T.eq ( DATOM_DEFAULT.lets d,  ( d ) -> delete d.x ), { $key: '^foo', y: 108,                }
+  done()
+  return null
+
 
 
 
 ############################################################################################################
 if require.main is module then do =>
   # test @
-  test @[ "wrap_datom" ]
+  test @[ "dirty" ]
+  # test @[ "wrap_datom" ]
   # test @[ "new_datom complains when value has `$key`" ]
   # test @[ "selector keypatterns" ]
   # test @[ "select 2" ]

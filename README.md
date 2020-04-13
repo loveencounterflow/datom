@@ -415,7 +415,7 @@ insert arbitrarily many new elements between any two given elements.
   * [ ] `$pos`? `$range`? for `[ start, stop, ]` pairs, indices into a source; use inclusive or exclusive
     upper bound?
   * [ ] `$loc`? for `[ line_nr, col_nr, ]` pairs; NB might also want to use stop position of ranges
-
+* [X] make `{ dirty: false, }` the default setting (i.e. not marking changed datoms)
 
 
 

@@ -6,6 +6,8 @@
   - [The Problem](#the-problem)
   - [Vectors of Numbers](#vectors-of-numbers)
   - [VNRs with Infinity](#vnrs-with-infinity)
+  - [Prefixing and Suffixing (Deepening)](#prefixing-and-suffixing-deepening)
+- [XXXX](#xxxx)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -117,6 +119,19 @@ This means that `{ id: 'A', $vnr: [ Infinity, ], }` will be sorted before `{ id:
 The practical utility for using `Infinity` as a VNR element lies in the ability to unambiguously anchor
 datoms to the beginning or the end of a given sequence.
 
+## Prefixing and Suffixing (Deepening)
+
+* Prefix VNRs with source numbers when two streams (sequences) are to be concatenated while keeping elements
+  from different sources in separate segments
+
+* Suffix ('deepen') VNRs to
+  * break apart a given datom, replacing it with several derived datoms
+  * add one or several datoms behind or before a given datom
+
+* Use 'negative deepening' (i.e. suffix VNRs of new datoms with a negative number) to prepend, 'positive
+  deepening' to append datoms with respect to a given datom; do both to surround it
+
+# XXXX
 
 **`### TAINT reformulate: ###`**
 

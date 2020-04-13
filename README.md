@@ -410,7 +410,7 @@ insert arbitrarily many new elements between any two given elements.
 * [ ] implement & document standard attributes, `$`-prefixed and otherwise (?), such as
   * [ ] `^text`—key for 'text datoms'
   * [ ] `text`—the underlying source text where code, data is parsed
-  * [ ] `$`
+  * [ ] `$`—'produced by'
   * [ ] `$ref`—do we still use this? See DataMill
   * [ ] `$pos`? `$range`? for `[ start, stop, ]` pairs, indices into a source; use inclusive or exclusive
     upper bound?

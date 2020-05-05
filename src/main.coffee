@@ -99,6 +99,9 @@ LFT_nofreeze              = LFT.nofreeze
   return @freeze R
 
 #-----------------------------------------------------------------------------------------------------------
+@fresh_datom = ( P... ) -> @new_datom P..., { $fresh: true, }
+
+#-----------------------------------------------------------------------------------------------------------
 @wrap_datom = ( $key, $value ) ->
   ### TAINT code duplication ###
   validate.datom_key    $key

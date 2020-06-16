@@ -5,8 +5,7 @@
   "main": "lib/main.js",
   "scripts": {
     "build": "coffee --map -o lib -c src",
-    "doctoc": "doctoc README.md",
-    "test": "node lib/tests/main.js"
+    "test": "echo 'see https://github.com/loveencounterflow/hengist/tree/master/dev/datom'"
   },
   "repository": {
     "type": "git",
@@ -29,12 +28,11 @@
   "homepage": "https://github.com/loveencounterflow/datom#readme",
   "dependencies": {
     "cnd": "^9.0.0",
+    "cupofjoe": "^0.1.0",
     "emittery": "^0.7.0",
     "intertype": "^7.0.1",
     "letsfreezethat": "^2.2.5",
     "multimix": "^4.0.0"
   },
-  "devDependencies": {
-    "guy-test": "^4.0.1"
-  }
+  "devDependencies": {}
 }

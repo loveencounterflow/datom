@@ -6,7 +6,7 @@
   "scripts": {
     "build": "coffee --map -o lib -c src",
     "doctoc": "doctoc README.md",
-    "test": "npm run build && node lib/tests/main.js"
+    "test": "node lib/tests/main.js"
   },
   "repository": {
     "type": "git",
@@ -28,11 +28,11 @@
   },
   "homepage": "https://github.com/loveencounterflow/datom#readme",
   "dependencies": {
-    "cnd": "^5.3.1",
+    "cnd": "^6.0.0",
     "emittery": "^0.6.0",
-    "intertype": "^3.4.0",
+    "intertype": "^3.4.1",
     "letsfreezethat": "^2.2.5",
-    "multimix": "^2.2.0"
+    "multimix": "^2.2.1"
   },
   "devDependencies": {
     "guy-test": "^2.0.1"

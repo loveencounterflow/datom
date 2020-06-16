@@ -25,6 +25,8 @@ Multimix                  = require 'multimix'
 LFT                       = require 'letsfreezethat'
 LFT_nofreeze              = LFT.nofreeze
 @_copy                    = LFT_nofreeze._copy.bind LFT
+{ Cupofjoe }              = require 'cupofjoe'
+
 
 #-----------------------------------------------------------------------------------------------------------
 @freeze = ( d ) -> if @settings.freeze then LFT.freeze d else LFT_nofreeze.freeze d
@@ -166,6 +168,35 @@ p2 = /// # `\x23` used instead of `\#` which causes syntax error (???)
   return ( d.$key is g.skey ) if g.key?
   return false unless d.$key.startsWith g.sigil
   return true
+
+
+#===========================================================================================================
+#
+#-----------------------------------------------------------------------------------------------------------
+class @Cupofdatom extends Cupofjoe
+  _defaults: { flatten: true, DATOM: null, }
+
+  #---------------------------------------------------------------------------------------------------------
+  constructor: ( settings ) ->
+    super settings
+    @settings         = Object.assign @settings, @_defaults
+    @settings.DATOM  ?= module.exports
+
+  #---------------------------------------------------------------------------------------------------------
+  cram: ( name, content... ) ->
+    return super @settings.DATOM.new_datom "^#{name}" unless content.length > 0
+    return super content... if name is null
+    d1 = @settings.DATOM.new_datom "<#{name}"
+    d2 = @settings.DATOM.new_datom ">#{name}"
+    return super d1, content..., d2
+
+  #---------------------------------------------------------------------------------------------------------
+  expand: ->
+    R = super()
+    for text, idx in R
+      continue unless isa.text text
+      R[ idx ] = @settings.DATOM.new_datom '^text', { text, }
+    return R
 
 
 #===========================================================================================================

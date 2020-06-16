@@ -199,7 +199,6 @@ class @Cupofdatom extends Cupofjoe
         has_attributes = true
         Object.assign attributes, part
         content.splice idx, 1
-    debug '^7776^', { name, content, template, attributes, }
     if name is null
       return super content... if ( not has_attributes ) and ( not template? )
       if template?
@@ -216,7 +215,6 @@ class @Cupofdatom extends Cupofjoe
     else
       if has_attributes then  d1 = @settings.DATOM.new_open_datom   name, attributes
       else                    d1 = @settings.DATOM.new_open_datom   name
-    debug '^3334^', { name, content, }
     d2 = @settings.DATOM.new_close_datom  name
     return super d1, content..., d2
 

@@ -27,6 +27,7 @@
     - [Sample](#sample)
     - [Managing Scope](#managing-scope)
 - [Vectorial NumbeRs (VNRs)](#vectorial-numbers-vnrs)
+- [Cup Of Datom](#cup-of-datom)
 - [To Do](#to-do)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -398,6 +399,37 @@ get deleted and inserted at some mid-stream point, [Vectorial Numbers (VNRs)](./
 are implemented as lists of integers, can be used to avoid a re-numbering of elements and still be able to
 insert arbitrarily many new elements between any two given elements.
 
+# Cup Of Datom
+
+Class `Cupofdatom` is a derivative of [`Cupofjoe`](https://github.com/loveencounterflow/cupofjoe) that is
+geared towards easy declarative generation of nested sequences of datoms with a
+[teacup](https://github.com/goodeggs/teacup)-like syntax:
+
+```coffee
+c = new DATOM.Cupofdatom()
+c.cram 'helo', 'world'
+c.cram 'foo', ->
+  c.cram 'bold', ->
+    c.cram null, 'content'
+ds = c.expand()
+# `ds` is now a list of datoms:
+[
+  { '$key': '<helo' },
+  { '$key': '^text', text: 'world' },
+  { '$key': '>helo' },
+  { '$key': '<foo' },
+  { '$key': '<bold' },
+  { '$key': '^text', text: 'content' },
+  { '$key': '>bold' },
+  { '$key': '>foo' } ]
+```
+
+* First argument to `cram()` becomes key of datom
+* therefor, must be a valid datom name
+* sigil will be `^` if called with no further arguments
+* or else two datoms with sigils `<` and `>` will be generated that surround their contents
+* text arguments will be turned into `^text` datoms
+* as with `Cupofjoe`, functions will be called, may either call `cram()` method or return value
 
 # To Do
 

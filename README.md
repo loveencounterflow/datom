@@ -405,12 +405,21 @@ insert arbitrarily many new elements between any two given elements.
   `validate()` method an error will be thrown as soon as unbalanced regions (delimeted by `{ $key: '<token',
   ..., }` and `{ $key: '>token', ..., }`) are encountered.
 
-* [X] implement Vectorial NumbeRs (VNRs)
-* [ ] document Vectorial NumbeRs (VNRs)
+* [ ] VNRs:
+  * [X] implement Vectorial NumbeRs (VNRs)
+  * [ ] document Vectorial NumbeRs (VNRs)
+  * [ ] remove either `cmp_total()` or `cmp_partial()` for simplification
+  * [ ] assert and document that VNRs may be sorted element-wise lexicographically (e.g in Postgres, but
+    also in JS) by appending a single zero element (or, for that matter, by padding as many zeroes as needed
+    to make all VNRs the same length)
+  * [ ] consider to disallow giving VNRs a final zero element
+  * [ ] consider to store VNRs with an apended zero element
 * [ ] implement & document standard attributes, `$`-prefixed and otherwise (?), such as
   * [ ] `^text`—key for 'text datoms'
   * [ ] `text`—the underlying source text where code, data is parsed
-  * [ ] `$`—'produced by'
+  * [ ] `$`—'produced by', contains short label to point to source position, may be left-chained (most
+    recent first) to obtain breadcrumbs path of responsible source locations
+  * [ ] `$vnr`—for VNRs, the primary ordering criterium
   * [ ] `$ref`—do we still use this? See DataMill
   * [ ] `$pos`? `$range`? for `[ start, stop, ]` pairs, indices into a source; use inclusive or exclusive
     upper bound?

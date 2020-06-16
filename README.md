@@ -463,6 +463,11 @@ gives
 { $key: '>greeting'                                                                 }
 ```
 
+* if first argument is an object, it is taken as 'template' for the datom
+* this is only available when `Cupofdatom` has been instantiated with `{ absorb: true, }` (the default)
+* no content may appear together with a template in the same `cram()` call
+* the template *must* have a valid datom `$key` attribute
+
 
 # To Do
 

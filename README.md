@@ -414,22 +414,55 @@ c.cram 'foo', ->
 ds = c.expand()
 # `ds` is now a list of datoms:
 [
-  { '$key': '<helo' },
-  { '$key': '^text', text: 'world' },
-  { '$key': '>helo' },
-  { '$key': '<foo' },
-  { '$key': '<bold' },
-  { '$key': '^text', text: 'content' },
-  { '$key': '>bold' },
-  { '$key': '>foo' } ]
+  { $key: '<helo' },
+  { $key: '^text', text: 'world' },
+  { $key: '>helo' },
+  { $key: '<foo' },
+  { $key: '<bold' },
+  { $key: '^text', text: 'content' },
+  { $key: '>bold' },
+  { $key: '>foo' } ]
 ```
 
 * First argument to `cram()` becomes key of datom
-* therefor, must be a valid datom name
+* therefore, must be a valid datom name
 * sigil will be `^` if called with no further arguments
 * or else two datoms with sigils `<` and `>` will be generated that surround their contents
 * text arguments will be turned into `^text` datoms
 * as with `Cupofjoe`, functions will be called, may either call `cram()` method or return value
+* also possible to provide objects whose members will become attributes of the respective datom:
+
+```coffee
+c = new DATOM.Cupofdatom { absorb: true, } # default value; Note: turn attributes off with { absorb: false, }
+c.cram 'greeting', 'helo', 'world'
+c.cram 'greeting', '早安', { lang: 'zh_CN', }
+c.cram { $key: '^greeting', lang: 'zh_CN', 问候: '早安', time_of_day: 'morning', }
+c.cram { $key: '^text', lang: 'hi', text: 'नमस्ते', }
+c.cram 'greeting', ->
+  c.cram 'language',    { $value: 'Japanese', }
+  c.cram 'time_of_day', { $value: 'morning', }
+  c.cram null, 'お早うございます'
+```
+
+gives
+
+```
+{ $key: '<greeting'                                                                 }
+{ $key: '^text',          text:   'helo',                                           }
+{ $key: '^text',          text:   'world',                                          }
+{ $key: '>greeting'                                                                 }
+{ $key: '<greeting',      lang:   'zh_CN',                                          }
+{ $key: '^text',          text:   '早安',                                           }
+{ $key: '>greeting'                                                                 }
+{ $key: '^greeting',      lang:   'zh_CN', '问候': '早安', time_of_day: 'morning',  }
+{ $key: '^text',          text:   'नमस्ते', lang: 'hi',                              }
+{ $key: '<greeting'                                                                 }
+{ $key: '^language',      $value: 'Japanese',                                       }
+{ $key: '^time_of_day',   $value: 'morning',                                        }
+{ $key: '^text',          text:   'お早うございます',                                 }
+{ $key: '>greeting'                                                                 }
+```
+
 
 # To Do
 

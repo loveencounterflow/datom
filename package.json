@@ -1,6 +1,6 @@
 {
   "name": "datom",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "description": "standardized immutable objects in the spirit of datomic, especially suited for use in data pipelines",
   "main": "lib/main.js",
   "scripts": {

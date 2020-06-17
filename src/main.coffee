@@ -187,81 +187,42 @@ class @Cupofdatom extends Cupofjoe
     @settings.DATOM  ?= module.exports
 
   #---------------------------------------------------------------------------------------------------------
-  cram: ( name, content... ) ->
-    debug '^3337^', { name, content, }
-    return super @settings.DATOM.new_single_datom name if ( isa.text name ) and ( content.length is 0 )
-    has_attributes  = false
-    template        = null
-    if @settings.absorb
-      [ name, template, ] = [ null, name, ] if isa.object name
-      attributes = {}
-      for part, idx in content
-        continue unless isa.object part
-        has_attributes = true
-        Object.assign attributes, part
-        content.splice idx, 1
-    if name is null
-      return super content... if ( not has_attributes ) and ( not template? )
-      if template?
-        if content.length > 0
-          throw new Error "^datom/cupofjoe@3412^ cannot have template and content, got #{rpr { template, content, }}"
-        template = Object.assign {}, template, attributes
-        if not ( $key = template.$key )?
-          throw new Error "^datom/cupofjoe@3442^ cannot have template without $key, got #{rpr { template, }}"
-        delete template.$key
-        return super @settings.DATOM.new_datom $key, template
-    else if content.length is 0
-      return super @settings.DATOM.new_single_datom name, attributes if has_attributes
-      return super @settings.DATOM.new_single_datom name
-    else
-      if has_attributes then  d1 = @settings.DATOM.new_open_datom   name, attributes
-      else                    d1 = @settings.DATOM.new_open_datom   name
-    d2 = @settings.DATOM.new_close_datom  name
-    return super d1, content..., d2
-
-  #---------------------------------------------------------------------------------------------------------
   _analyze: ( name, tail ) ->
+    ### NOTE to be overriden by derivatives as seen necessary ###
     attributes  = []
     content     = []
     for part, idx in tail
       switch type = type_of part
         when 'object'   then  attributes.push part
-        when 'function' then  content.push part
+        when 'function' then  content.push part ### NOTE always leave as-is, expanded by Cupofjoe ###
         when 'text'     then  content.push @settings.DATOM.new_single_datom 'text',  { text: part, }
         else                  content.push @settings.DATOM.new_single_datom 'value', { $value: part, }
     return { name, attributes, content, }
 
   #---------------------------------------------------------------------------------------------------------
-  cram2: ( name, tail... ) ->
+  cram: ( name, tail... ) ->
     # XXX_SUPER = @Cupofjoe.
     { name, attributes, content, } = @_analyze name, tail
     has_attributes = false
     #.......................................................................................................
     if attributes? and attributes.length > 0
-      if not name?
-        v = rpr { name, attributes, content, }
-        throw new Error "^datom/cupofjoe@3498^ cannot have attributes without name, got #{v}"
       has_attributes  = true
       attributes      = Object.assign {}, attributes...
     #.......................................................................................................
+    if has_attributes and name is null
+      v = rpr { name, attributes, content, }
+      throw new Error "^datom/cupofjoe@3498^ cannot have attributes without name, got #{v}"
+    #.......................................................................................................
     if content? and content.length > 0
-      if name?
-        if has_attributes then  d1 = @settings.DATOM.new_open_datom name, attributes
-        else                    d1 = @settings.DATOM.new_open_datom name
-        return super.cram d1, content..., ( @settings.DATOM.new_close_datom name )
-      return super.cram content...
+      return super.cram content... if name is null
+      if has_attributes then  d1 = @settings.DATOM.new_open_datom name, attributes
+      else                    d1 = @settings.DATOM.new_open_datom name
+      return super.cram d1, content..., ( @settings.DATOM.new_close_datom name )
     #.......................................................................................................
     if has_attributes
       return super.cram @settings.DATOM.new_single_datom name, attributes
-    return super.cram @settings.DATOM.new_single_datom name
-
-  # #---------------------------------------------------------------------------------------------------------
-  # expand: ->
-  #   R = super()
-  #   for text, idx in R
-  #     continue unless isa.text text
-  #     R[ idx ] = @settings.DATOM.new_datom '^text', { text, }
-  #   return R
+    return super.cram @settings.DATOM.new_single_datom name if name isnt null
+    return null
 
 
 #===========================================================================================================

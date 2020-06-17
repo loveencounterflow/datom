@@ -188,6 +188,7 @@ class @Cupofdatom extends Cupofjoe
 
   #---------------------------------------------------------------------------------------------------------
   cram: ( name, content... ) ->
+    debug '^3337^', { name, content, }
     return super @settings.DATOM.new_single_datom name if ( isa.text name ) and ( content.length is 0 )
     has_attributes  = false
     template        = null

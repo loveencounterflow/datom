@@ -505,6 +505,8 @@ cram name, content1, ( -> cram ... ), ...
 cram name, { key: value, }, content1, ( -> cram ... ), ...
 ```
 
+> **TAINT** should content inserted via return value be subject to same process as `cram()`med content?
+
 
 # To Do
 

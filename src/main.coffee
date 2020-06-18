@@ -200,6 +200,9 @@ class @Cupofdatom extends Cupofjoe
     return { name, attributes, content, }
 
   #---------------------------------------------------------------------------------------------------------
+  _cram: ( P... ) -> super.cram P...
+
+  #---------------------------------------------------------------------------------------------------------
   cram: ( name, tail... ) ->
     # XXX_SUPER = @Cupofjoe.
     { name, attributes, content, } = @_analyze name, tail

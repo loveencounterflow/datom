@@ -430,14 +430,16 @@ ds = c.expand()
 * or else two datoms with sigils `<` and `>` will be generated that surround their contents
 * text arguments will be turned into `^text` datoms
 * as with `Cupofjoe`, functions will be called, may either call `cram()` method or return value
-* also possible to provide objects whose members will become attributes of the respective datom:
+* return values will *not* be further analyzed but be kept as-is in the list returned by `expand()`
+* also possible to provide (in non-initial positions) objects whose members will become attributes of the
+  respective datom:
 
 ```coffee
 c = new DATOM.Cupofdatom { absorb: true, } # default value; Note: turn attributes off with { absorb: false, }
 c.cram 'greeting', 'helo', 'world'
 c.cram 'greeting', '早安', { lang: 'zh_CN', }
-c.cram { $key: '^greeting', lang: 'zh_CN', 问候: '早安', time_of_day: 'morning', }
-c.cram { $key: '^text', lang: 'hi', text: 'नमस्ते', }
+c.cram 'greeting', { lang: 'zh_CN', 问候: '早安', time_of_day: 'morning', }
+c.cram 'text', { lang: 'hi', text: 'नमस्ते', }
 c.cram 'greeting', ->
   c.cram 'language',    { $value: 'Japanese', }
   c.cram 'time_of_day', { $value: 'morning', }
@@ -463,39 +465,34 @@ gives
 { $key: '>greeting'                                                                 }
 ```
 
-* if first argument is an object, it is taken as 'template' for the datom
-* this is only available when `Cupofdatom` has been instantiated with `{ absorb: true, }` (the default)
-* no content may appear together with a template in the same `cram()` call
-* the template *must* have a valid datom `$key` attribute
-
 Call patterns:
 
 * first argument is always:
   * the **basic name** (the `$key` of the datom minus the sigil) of the datom,
-  * or else the **extended name**, where implemented (for example in InterText `CupOfHtml`, this means one
-    can give `div#c59.draggable.hilite` as first argument to produce elements with a tag name (`div`), an ID
-    (`c59`), and HTML `class` attribute (`draggable hilite`) in one go
+  * or else the **comprehensive name**, where implemented (for example in InterText `CupOfHtml`, this means
+    one can give `div#c59.draggable.hilite` as first argument to produce elements with a tag name (`div`),
+    an ID (`c59`), and HTML `class` attribute (`draggable hilite`) in one go
   * or else **`null`** to indicate absence of a specific name
   * when a name has been given
     * and there are content arguments, then a pair of `{ $key: '<name', }`, `{ $key: '>name', }` datoms
     will be produced, with the content arguments coming in between
     * in case no content has been given, a single `{ $key: '^name', }` datom will be produced
-* of second and following arguments,
-  * if the instance has been set to `{ absorb: true, }` and the second argument is an object, then the
-    second argument—and only the second one—is treated as an attributes arguments to the datom that is to be
-    produced (similar to how `DATOM.new_datom()` works), so `cram 'foo', { id: 'c221', frob: true, }` will
-    produce `{ $key: '^foo', id: 'c221', frob: true, }`.
-    * In case a key/value pair attributes argument conflicts with one set by an extended name (as in `cram
-      'foo#IDA', { id: 'IDB', }`), the one in the attributes argument wins (as it would in a similar
-      situation when using `Object.assign()`)
-  * in case a content argument is a function, that function will be called without arguments.
-    * if the function itself calls `cram()` from the same instance, its return value will be discarded;
+* as for arguments in non-initial positions:
+  * objects will be merged with `Object.assign()` and passed on to `DATOM.new_datom()`, so `cram 'foo', {
+    id: 'c221', frob: true, x: 1, }, ... { x: 2, }` will produce `{ $key: '^foo', id: 'c221', frob: true, x:
+    2, }`.
+  * In case a key/value pair attributes argument conflicts with one set by an comprehensive name (as in
+    `cram 'foo#IDA', { id: 'IDB', }`), the one in the attributes argument wins (as it would in a similar
+    situation when using `Object.assign()`)
+  * functions will be called without arguments
+    * if a function itself calls `cram()` from the same instance, its return value will be discarded;
     * in case it does not call `cram()`, its return value will be discarded if it is `null` or `undefined`,
-      and otherwise become a content argument.
-  * in the base implemention, content arguments produce a series of 'value datoms'; e.g. `cram null, 42,
-    'some text', true` will emit `{ $key: '^value', $value: 42, }, { $key: '^value', $value: 'some text', },
-    { $key: '^value', $value: true, }`
-    * derivatives may emit other datoms for calls with `null`, e.g. `CupOfHtml` will produce `^text` datoms
+      and otherwise become a content argument *without being processed*, so contained functions will not be
+      called and text values will not be wrapped in `{ $key: '^text', }` datoms
+  * texts will be wrapped in `{ $key: '^text', 'text': ..., }` datoms
+  * other values will be wrapped in `{ $key: '^value', '$value': ..., }` datoms, e.g. `cram null, 42, 'some
+    text', true` will emit `{ $key: '^value', $value: 42, }, { $key: '^text', $text: 'some text', }, { $key:
+    '^value', $value: true, }`
 
 ```coffee
 cram name
@@ -504,8 +501,6 @@ cram name, content1, ( -> function ), ...
 cram name, content1, ( -> cram ... ), ...
 cram name, { key: value, }, content1, ( -> cram ... ), ...
 ```
-
-> **TAINT** should content inserted via return value be subject to same process as `cram()`med content?
 
 
 # To Do

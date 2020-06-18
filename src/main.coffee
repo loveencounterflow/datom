@@ -214,14 +214,14 @@ class @Cupofdatom extends Cupofjoe
       throw new Error "^datom/cupofjoe@3498^ cannot have attributes without name, got #{v}"
     #.......................................................................................................
     if content? and content.length > 0
-      return super.cram content... if name is null
+      return super content... if name is null
       if has_attributes then  d1 = @settings.DATOM.new_open_datom name, attributes
       else                    d1 = @settings.DATOM.new_open_datom name
-      return super.cram d1, content..., ( @settings.DATOM.new_close_datom name )
+      return super d1, content..., ( @settings.DATOM.new_close_datom name )
     #.......................................................................................................
     if has_attributes
-      return super.cram @settings.DATOM.new_single_datom name, attributes
-    return super.cram @settings.DATOM.new_single_datom name if name isnt null
+      return super @settings.DATOM.new_single_datom name, attributes
+    return super @settings.DATOM.new_single_datom name if name isnt null
     return null
 
 

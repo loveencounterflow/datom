@@ -178,7 +178,7 @@ p2 = /// # `\x23` used instead of `\#` which causes syntax error (???)
 #
 #-----------------------------------------------------------------------------------------------------------
 class @Cupofdatom extends Cupofjoe
-  _defaults: { flatten: true, absorb: true, DATOM: null, }
+  _defaults: { flatten: true, DATOM: null, }
 
   #---------------------------------------------------------------------------------------------------------
   constructor: ( settings ) ->

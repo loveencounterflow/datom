@@ -184,7 +184,8 @@ class @Cupofdatom extends Cupofjoe
   constructor: ( settings ) ->
     super settings
     @settings         = Object.assign @settings, @_defaults
-    @settings.DATOM  ?= module.exports
+    @DATOM            = @settings.DATOM ?= module.exports
+    delete @settings.DATOM
 
   #---------------------------------------------------------------------------------------------------------
   _analyze: ( name, tail ) ->
@@ -195,8 +196,8 @@ class @Cupofdatom extends Cupofjoe
       switch type = type_of part
         when 'object'   then  attributes.push part
         when 'function' then  content.push part ### NOTE always leave as-is, expanded by Cupofjoe ###
-        when 'text'     then  content.push @settings.DATOM.new_single_datom 'text',  { text: part,   $: '^ð1^', }
-        else                  content.push @settings.DATOM.new_single_datom 'value', { $value: part, $: '^ð2^', }
+        when 'text'     then  content.push @DATOM.new_single_datom 'text',  { text: part,   $: '^ð1^', }
+        else                  content.push @DATOM.new_single_datom 'value', { $value: part, $: '^ð2^', }
     return { name, attributes, content, }
 
   #---------------------------------------------------------------------------------------------------------
@@ -219,16 +220,16 @@ class @Cupofdatom extends Cupofjoe
     if content? and content.length > 0
       return super content... if name is null
       if has_attributes
-        d1 = @settings.DATOM.new_open_datom   name, attributes, { $: '^ð3^', }
-        d2 = @settings.DATOM.new_close_datom  name, attributes, { $: '^ð4^', }
+        d1 = @DATOM.new_open_datom   name, attributes, { $: '^ð3^', }
+        d2 = @DATOM.new_close_datom  name, attributes, { $: '^ð4^', }
       else
-        d1 = @settings.DATOM.new_open_datom   name, { $: '^ð5^', }
-        d2 = @settings.DATOM.new_close_datom  name, { $: '^ð6^', }
+        d1 = @DATOM.new_open_datom   name, { $: '^ð5^', }
+        d2 = @DATOM.new_close_datom  name, { $: '^ð6^', }
       return super d1, content..., d2
     #.......................................................................................................
     if has_attributes
-      return super @settings.DATOM.new_single_datom name, attributes, { $: '^ð7^', }
-    return super @settings.DATOM.new_single_datom name, { $: '^ð8^', } if name isnt null
+      return super @DATOM.new_single_datom name, attributes, { $: '^ð7^', }
+    return super @DATOM.new_single_datom name, { $: '^ð8^', } if name isnt null
     return null
 
 

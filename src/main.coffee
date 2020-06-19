@@ -195,8 +195,8 @@ class @Cupofdatom extends Cupofjoe
       switch type = type_of part
         when 'object'   then  attributes.push part
         when 'function' then  content.push part ### NOTE always leave as-is, expanded by Cupofjoe ###
-        when 'text'     then  content.push @settings.DATOM.new_single_datom 'text',  { text: part, }
-        else                  content.push @settings.DATOM.new_single_datom 'value', { $value: part, }
+        when 'text'     then  content.push @settings.DATOM.new_single_datom 'text',  { text: part,   $: '^ð1^', }
+        else                  content.push @settings.DATOM.new_single_datom 'value', { $value: part, $: '^ð2^', }
     return { name, attributes, content, }
 
   #---------------------------------------------------------------------------------------------------------

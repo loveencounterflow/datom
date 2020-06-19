@@ -218,13 +218,17 @@ class @Cupofdatom extends Cupofjoe
     #.......................................................................................................
     if content? and content.length > 0
       return super content... if name is null
-      if has_attributes then  d1 = @settings.DATOM.new_open_datom name, attributes
-      else                    d1 = @settings.DATOM.new_open_datom name
-      return super d1, content..., ( @settings.DATOM.new_close_datom name )
+      if has_attributes
+        d1 = @settings.DATOM.new_open_datom   name, attributes, { $: '^ð3^', }
+        d2 = @settings.DATOM.new_close_datom  name, attributes, { $: '^ð4^', }
+      else
+        d1 = @settings.DATOM.new_open_datom   name, { $: '^ð5^', }
+        d2 = @settings.DATOM.new_close_datom  name, { $: '^ð6^', }
+      return super d1, content..., d2
     #.......................................................................................................
     if has_attributes
-      return super @settings.DATOM.new_single_datom name, attributes
-    return super @settings.DATOM.new_single_datom name if name isnt null
+      return super @settings.DATOM.new_single_datom name, attributes, { $: '^ð7^', }
+    return super @settings.DATOM.new_single_datom name, { $: '^ð8^', } if name isnt null
     return null
 
 

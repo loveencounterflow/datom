@@ -183,7 +183,7 @@ class @Cupofdatom extends Cupofjoe
   #---------------------------------------------------------------------------------------------------------
   constructor: ( settings ) ->
     super settings
-    @settings         = Object.assign @settings, @_defaults
+    @settings         = Object.assign @_defaults, @settings
     @DATOM            = @settings.DATOM ?= module.exports
     delete @settings.DATOM
 

@@ -28,11 +28,11 @@
   "homepage": "https://github.com/loveencounterflow/datom#readme",
   "dependencies": {
     "cnd": "^9.0.0",
-    "cupofjoe": "^0.1.0",
+    "cupofjoe": "^0.1.1",
     "emittery": "^0.7.0",
     "intertype": "^7.0.2",
     "letsfreezethat": "^2.2.5",
-    "multimix": "^4.0.0"
+    "multimix": "^4.1.0"
   },
   "devDependencies": {}
 }

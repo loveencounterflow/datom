@@ -530,7 +530,9 @@ cram name, { key: value, }, content1, ( -> cram ... ), ...
   * [ ] `$loc`? for `[ line_nr, col_nr, ]` pairs; NB might also want to use stop position of ranges
 * [X] make `{ dirty: false, }` the default setting (i.e. not marking changed datoms)
 
-
+* [ ] Dependency [`emittery@0.7.0`](https://github.com/sindresorhus/emittery/releases/tag/v0.7.0) changed
+  behavior: "Ensure `.emit()` doesn't return a value" which breaks contracts. The fix currently consists in
+  not upgrading from 0.6.0 until a workaround has been implemented.
 
 
 

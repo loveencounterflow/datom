@@ -54,7 +54,7 @@ provide_library = ->
     unless ( arity = P.length ) is 1
       throw new Error "µ44422 expected single argument unless first is key, got #{arity}"
     unless DATOM.is_datom d = P[ 0 ]
-      throw new Error "µ44422 expected a text or a datom got a #{type_of key}"
+      throw new Error "µ44422 expected a text or a datom got a #{type_of d}"
     return d
 
 

@@ -28,6 +28,7 @@
     - [Managing Scope](#managing-scope)
 - [Vectorial NumbeRs (VNRs)](#vectorial-numbers-vnrs)
 - [Cup Of Datom](#cup-of-datom)
+- [Benchmarks](#benchmarks)
 - [To Do](#to-do)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -502,6 +503,38 @@ cram name, content1, ( -> cram ... ), ...
 cram name, { key: value, }, content1, ( -> cram ... ), ...
 ```
 
+# Benchmarks
+
+Here is a speed comparison ([code on GitHub](https://github.com/loveencounterflow/hengist/tree/master/dev/datom)) between Datom versions 7 and 8, using two methods of dealing with object freezing
+and two Datom configurations, `f1` standing for the standard configuration (i.e. either `DATOM = require
+'datom'` or `DATOM = ( require 'datom' ).new { freeze: true, }`) and `f0` for the non-freezing configuration
+(obtained by `DATOM = ( require 'datom' ).new { freeze: true, }`). `datom_v7_thaw_freeze_f0` is missing here
+because of a bug in the `thaw` method used in v7. Each run involved thawing 100 datoms with 5 key/value
+pairs each (ex.: `{ '$key': '^vapeurs', '𤭨': 447, '媑': true, escamote: false, auditionnerais: true,
+exacerbant: true, }`), changing 3 values and freezing the object again. Tests marked `...thaw_freeze...` use
+explicit calls to `d = thaw d; ...; d = freeze d` to do this, the ones marked `...lets...` use a single call
+`d = lets d, ( d ) -> ...` to accomplish the same.
+
+We see an overall improvement in the performance of v8 as compared to v7 which can be ascribed to the update
+of the [`letsfreezethat`](https://github.com/loveencounterflow/letsfreezethat) dependency which represents a
+complete overhaul of that library:
+
+```
+datom_v8_thaw_freeze_f0                          144,938 Hz   100.0 % │████████████▌│
+datom_v8_lets_f0                                 128,930 Hz    89.0 % │███████████▏ │
+datom_v8_thaw_freeze_f1                          126,920 Hz    87.6 % │███████████  │
+datom_v7_lets_f0                                  92,669 Hz    63.9 % │████████     │
+datom_v8_lets_f1                                  81,917 Hz    56.5 % │███████▏     │
+datom_v7_lets_f1                                  40,063 Hz    27.6 % │███▌         │
+datom_v7_thaw_freeze_f1                           39,334 Hz    27.1 % │███▍         │
+```
+
+For best performance, it is recommended to
+
+* prefer `d = thaw d; ...; d = freeze d` over `lets()` although the latter is more elegant and prevents
+  one from forgetting to `freeze()` a `thaw()`ed value, and to
+* configure the `DATOM` library to forego actual freezing when moving from development to production, where
+  appropriate, for a speed gain of around 10%.
 
 # To Do
 

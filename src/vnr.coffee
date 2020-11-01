@@ -22,12 +22,12 @@ types                     = require './types'
   defaults
   validate }              = types
 Multimix                  = require 'multimix'
-LFT                       = require 'letsfreezethat'
 
 #-----------------------------------------------------------------------------------------------------------
 @new_vnr = ( source = null ) ->
-  if source? then validate.vnr source else source = [ 0, ]
-  return assign [], source
+  return [ 0, ] unless source?
+  validate.vnr source if @settings.validate
+  return [ source..., ]
 
 #-----------------------------------------------------------------------------------------------------------
 @deepen = ( d, nr = 0 ) ->
@@ -61,7 +61,7 @@ LFT                       = require 'letsfreezethat'
   `vnr0`, which has its last index incremented by `1`, thus representing the vectorial line number of the
   next line in the same level that is derived from the same line as its predecessor. ###
   validate.vnr d if @settings.validate
-  R                   = assign [], d
+  R                   = [ d..., ]
   R[ d.length - 1 ]  += delta
   return R
 
@@ -143,7 +143,7 @@ LFT                       = require 'letsfreezethat'
 @sort = ( vnrs ) ->
   ### Given a list of VNRs, return a copy of the list with the VNRs lexicographically sorted. ###
   validate.list vnrs if @settings.validate
-  return ( assign [], vnrs ).sort @_cmp
+  return [ vnrs..., ].sort @_cmp
 
 
 #===========================================================================================================
@@ -157,13 +157,12 @@ class Vnr extends Multimix
   constructor: ( settings = null ) ->
     super()
     validate.datom_vnr_settings settings = { defaults.vnr_settings..., settings..., }
-    @settings = LFT.freeze settings
+    @settings = ( require 'letsfreezethat' ).freeze settings
     @Vnr      = Vnr
     @_cmp     = switch @settings.ordering
       when 'fair'     then @cmp_fair.bind     @
       when 'partial'  then @cmp_partial.bind  @
       when 'total'    then @cmp_total.bind    @
-      else throw new Error "^409883^ internal error: illegal value for settings.ordering: #{rpr @settings.ordering}"
     return @
 
 module.exports = new Vnr()

@@ -22,27 +22,12 @@ Multimix                  = require 'multimix'
   validate
   defaults
   type_of }               = @types
-LFT                       = require 'letsfreezethat'
-LFT_nofreeze              = LFT.nofreeze
-@_copy                    = LFT_nofreeze._copy.bind LFT
 { Cupofjoe }              = require 'cupofjoe'
 
 
-#-----------------------------------------------------------------------------------------------------------
-@freeze = ( d ) -> if @settings.freeze then LFT.freeze d else LFT_nofreeze.freeze d
-@thaw   = ( d ) -> if @settings.freeze then LFT.thaw   d else LFT_nofreeze.thaw   d
 
 #-----------------------------------------------------------------------------------------------------------
 @lets = ( original, modifier ) ->
-  unless @settings.freeze
-    draft = @_copy original
-    if modifier?
-      modifier draft
-      ### TAINT simplify logic by rewriting as single term without double negatives ###
-      if @settings.dirty
-        draft.$dirty = true unless draft.$dirty isnt original.dirty
-    return draft
-  #.........................................................................................................
   draft = @thaw original
   if modifier?
     modifier draft
@@ -245,7 +230,10 @@ class Datom extends Multimix
   constructor: ( settings = null ) ->
     super()
     validate.datom_settings settings = { defaults.settings..., settings..., }
-    @settings = LFT.freeze settings
+    @LFT      = require if settings.freeze then 'letsfreezethat' else 'letsfreezethat/nofreeze'
+    @freeze   = @LFT.freeze
+    @thaw     = @LFT.thaw
+    @settings = @freeze settings
     @VNR      = require './vnr'
     @Datom    = Datom
     return @

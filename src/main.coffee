@@ -112,9 +112,8 @@ LFT_nofreeze              = LFT.nofreeze
   ### TAINT code duplication ###
   validate.datom_key    $key
   validate.datom_datom  $value
-  R = assign {}, { $key, $value, }
-  while ( isa.object R.$ ) and ( isa.object R.$.$ ) then R.$ = copy R.$.$
-  return @freeze R
+  # while ( isa.object R.$ ) and ( isa.object R.$.$ ) then R.$ = copy R.$.$
+  return @freeze { $key, $value: ( @thaw $value ), }
 
 #-----------------------------------------------------------------------------------------------------------
 @new_single_datom = ( name, P... ) -> validate.datom_name name; @_new_datom "^#{name}",  P...

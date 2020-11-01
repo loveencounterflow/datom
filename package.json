@@ -31,8 +31,7 @@
     "cupofjoe": "^0.1.1",
     "emittery": "0.6.0",
     "intertype": "^7.0.2",
-    "letsfreezethat": "^2.2.5",
+    "letsfreezethat": "^3.0.2",
     "multimix": "^4.1.0"
-  },
-  "devDependencies": {}
+  }
 }

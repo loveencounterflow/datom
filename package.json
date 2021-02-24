@@ -29,7 +29,7 @@
   "dependencies": {
     "cnd": "^9.2.1",
     "cupofjoe": "^0.1.1",
-    "emittery": "0.8.1",
+    "emittery": "0.6.0",
     "intertype": "7.6.3",
     "letsfreezethat": "^3.0.3",
     "multimix": "5.0.0"

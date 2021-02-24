@@ -1,0 +1,55 @@
+dependencies:
+  cnd: 9.2.1
+  cupofjoe: 0.1.1
+  emittery: 0.8.1
+  intertype: 7.6.3
+  letsfreezethat: 3.0.3
+  multimix: 5.0.0
+lockfileVersion: 5.2
+packages:
+  /cnd/9.2.1:
+    dev: false
+    hasBin: true
+    resolution:
+      integrity: sha512-JszZtSlOCxkIvNPKpw1PmIcQUjYO+pBqVoKVH2STHLtG4JHHJ1NHowv39lhyxzlPxUTZk7pZ3qO7CfrfJ8ZSKw==
+  /cupofjoe/0.1.1:
+    dependencies:
+      cnd: 9.2.1
+      intertype: 7.6.3
+      multimix: 4.1.0
+    dev: false
+    resolution:
+      integrity: sha512-lNapdhUmwN0y94FGYvGubow+ZznI/A8+AlETPRli5+N4WkSnCys9Md1MiG8ZFPhjpS5Z+/NYC8nWdu+sLOOd/Q==
+  /emittery/0.8.1:
+    dev: false
+    engines:
+      node: '>=10'
+    resolution:
+      integrity: sha512-uDfvUjVrfGJJhymx/kz6prltenw1u7WrCg1oa94zYY8xxVpLLUu045LAT0dhDZdXG58/EpPL/5kA180fQ/qudg==
+  /intertype/7.6.3:
+    dependencies:
+      multimix: 5.0.0
+    dev: false
+    resolution:
+      integrity: sha512-77FmgaqGydWBc5OIde+geMj4+dGZ1i5UIFXM4C9QHiEIBjh+Gojycsb7XtRYYLNhNJepa+jotHXfAGPngHatzw==
+  /letsfreezethat/3.0.3:
+    dev: false
+    resolution:
+      integrity: sha512-Ckrod5Pcp056zgpEZNEk8P+m7QqHWLOU7NwoCLdSpJutdDvE8MIUPVYIUZpewbHZKFS6hfOCcbk3E4AC7fu4hg==
+  /multimix/4.1.0:
+    dependencies:
+      cnd: 9.2.1
+    dev: false
+    resolution:
+      integrity: sha512-GUV1SMXk7ZS/DiLHNYA6G43I+ORymTRvixCXBebR8kIFWy/1Syl7WmoI0dBvPzvs7goIK3VbCRO+EtIEP2R11w==
+  /multimix/5.0.0:
+    dev: false
+    resolution:
+      integrity: sha512-N9cdGSDDD7kxOV7R6e4iZqsHTZ4F4iiSDWqMcVqx4gEH6HBtRXav39Gj3fgT1YqvBcwPCQuf0Oa5R2cDaLWK8A==
+specifiers:
+  cnd: ^9.2.1
+  cupofjoe: ^0.1.1
+  emittery: 0.8.1
+  intertype: 7.6.3
+  letsfreezethat: ^3.0.3
+  multimix: 5.0.0

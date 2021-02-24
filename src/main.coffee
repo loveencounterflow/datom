@@ -13,7 +13,6 @@ help                      = CND.get_logger 'help',      badge
 whisper                   = CND.get_logger 'whisper',   badge
 echo                      = CND.echo.bind CND
 { assign
-  copy
   jr }                    = CND
 #...........................................................................................................
 Multimix                  = require 'multimix'
@@ -86,7 +85,7 @@ Multimix                  = require 'multimix'
     R       = assign {}, $value,  other..., { $key, }
   else
     R       = assign {},          other..., { $key, }
-  while ( isa.object R.$ ) and ( isa.object R.$.$ ) then R.$ = copy R.$.$
+  while ( isa.object R.$ ) and ( isa.object R.$.$ ) then R.$ = @LFT._deep_copy R.$.$
   return @freeze R
 
 #-----------------------------------------------------------------------------------------------------------

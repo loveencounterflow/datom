@@ -29,6 +29,9 @@ provide_library = ->
   Emittery                  = require 'emittery'
   DATOM                     = require '..'
 
+  unless ( version = ( require 'emittery/package.json' ).version ) is '0.6.0'
+    throw new Error "due to changes in https://github.com/sindresorhus/emittery/releases, emittery version is fixed at 0.6.0, got #{version}"
+
   #=========================================================================================================
   # IMPLEMENTATION DETAILS
   #---------------------------------------------------------------------------------------------------------

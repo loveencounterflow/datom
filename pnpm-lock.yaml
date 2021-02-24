@@ -3,7 +3,7 @@ dependencies:
   cupofjoe: 0.1.1
   emittery: 0.6.0
   intertype: 7.6.3
-  letsfreezethat: 3.0.3
+  letsfreezethat: 3.1.0
   multimix: 5.0.0
 lockfileVersion: 5.2
 packages:
@@ -32,10 +32,10 @@ packages:
     dev: false
     resolution:
       integrity: sha512-77FmgaqGydWBc5OIde+geMj4+dGZ1i5UIFXM4C9QHiEIBjh+Gojycsb7XtRYYLNhNJepa+jotHXfAGPngHatzw==
-  /letsfreezethat/3.0.3:
+  /letsfreezethat/3.1.0:
     dev: false
     resolution:
-      integrity: sha512-Ckrod5Pcp056zgpEZNEk8P+m7QqHWLOU7NwoCLdSpJutdDvE8MIUPVYIUZpewbHZKFS6hfOCcbk3E4AC7fu4hg==
+      integrity: sha512-jJ1nvvQi6unW0WifjNPMIb64Byom0EXzSKWFYA++EpyjK3qv1J2pqeSoEJ61tGJoNG0GoNjPoeLYhxW16riZaA==
   /multimix/4.1.0:
     dependencies:
       cnd: 9.2.1
@@ -51,5 +51,5 @@ specifiers:
   cupofjoe: ^0.1.1
   emittery: 0.6.0
   intertype: 7.6.3
-  letsfreezethat: ^3.0.3
+  letsfreezethat: ^3.1.0
   multimix: 5.0.0

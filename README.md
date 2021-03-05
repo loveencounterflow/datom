@@ -562,6 +562,10 @@ For best performance, it is recommended to
     upper bound?
   * [ ] `$loc`? for `[ line_nr, col_nr, ]` pairs; NB might also want to use stop position of ranges
 * [X] make `{ dirty: false, }` the default setting (i.e. not marking changed datoms)
+* [ ] consider to remove `$dirty` altogether; datoms-as-immutable-values can not be updated anyway, and
+  whether an operation like `d2 = lets d1, ( d ) -> ...` has or has not caused any differences between `d1`
+  and `d2` (short of a Turing-complete analysis of the function passed in to `lets()`) is only answerable
+  by comparing all members of both datoms.
 
 * [ ] Dependency [`emittery@0.7.0`](https://github.com/sindresorhus/emittery/releases/tag/v0.7.0) changed
   behavior: "Ensure `.emit()` doesn't return a value" which breaks contracts. The fix currently consists in

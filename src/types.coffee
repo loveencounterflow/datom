@@ -27,13 +27,6 @@ intertype                 = new Intertype module.exports
     "x.freeze is a ?boolean":         ( x ) -> ( not x.freeze?       ) or @isa.boolean x.freeze
 
 #-----------------------------------------------------------------------------------------------------------
-@declare 'datom_vnr_settings',
-  tests:
-    "x is a object":                              ( x ) -> @isa.object x
-    "x.ordering is 'fair', 'total' or 'partial":  ( x ) -> x.ordering in [ 'fair', 'total', 'partial', ]
-    "x.validate is a ?boolean":                   ( x ) -> ( not x.validate? ) or @isa.boolean x.validate
-
-#-----------------------------------------------------------------------------------------------------------
 @declare 'datom_nonempty_list_of_positive_integers', ( x ) ->
   return false unless @isa.nonempty_list x
   return x.every ( xx ) => @isa.positive_integer xx
@@ -77,9 +70,6 @@ intertype                 = new Intertype module.exports
     merge_values: true
     freeze:       true
     dirty:        false
-  vnr_settings:
-    validate:     true
-    ordering:     'fair'
 
 
 #-----------------------------------------------------------------------------------------------------------

@@ -233,7 +233,6 @@ class Datom extends Multimix
     @freeze   = @LFT.freeze
     @thaw     = @LFT.thaw
     @settings = @freeze settings
-    @VNR      = require './vnr'
     @Datom    = Datom
     return @
 

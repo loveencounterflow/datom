@@ -22,6 +22,8 @@ Multimix                  = require 'multimix'
   defaults
   type_of }               = @types
 { Cupofjoe }              = require 'cupofjoe'
+letsfreezethat            = require 'letsfreezethat'
+letsfreezethat_nofreeze   = require 'letsfreezethat/nofreeze'
 
 
 
@@ -229,7 +231,7 @@ class Datom extends Multimix
   constructor: ( settings = null ) ->
     super()
     validate.datom_settings settings = { defaults.settings..., settings..., }
-    @LFT      = require if settings.freeze then 'letsfreezethat' else 'letsfreezethat/nofreeze'
+    @LFT      = if settings.freeze then letsfreezethat else letsfreezethat_nofreeze
     @freeze   = @LFT.freeze
     @thaw     = @LFT.thaw
     @settings = @freeze settings

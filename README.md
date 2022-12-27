@@ -26,7 +26,6 @@
     - [XE Receiving API](#xe-receiving-api)
     - [Sample](#sample)
     - [Managing Scope](#managing-scope)
-- [Vectorial NumbeRs (VNRs)](#vectorial-numbers-vnrs)
 - [Cup Of Datom](#cup-of-datom)
 - [Benchmarks](#benchmarks)
 - [To Do](#to-do)
@@ -392,13 +391,6 @@ Typically, you'll start using XEmitter with `XE = PD.XE.new_scope()`; this creat
 Only methods that emit and listen to the same scope can exchange messages. When used within an application,
 you will want to publish that scope to all participating modules; one way to do so is to write a dedicated
 module with a single line in it, `module.exports = ( require 'pipedreams' ).XE.new_scope()`.
-
-# Vectorial NumbeRs (VNRs)
-
-Where a consistent relative ordering of streams of datoms is needed, especially if any number of datoms may
-get deleted and inserted at some mid-stream point, [Vectorial Numbers (VNRs)](./VNRs.md), which
-are implemented as lists of integers, can be used to avoid a re-numbering of elements and still be able to
-insert arbitrarily many new elements between any two given elements.
 
 # Cup Of Datom
 

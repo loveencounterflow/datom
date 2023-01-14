@@ -26,7 +26,7 @@ provide_library = ->
 
   #=========================================================================================================
   ### https://github.com/sindresorhus/emittery ###
-  Emittery                  = require 'emittery'
+  Emittery                  = require '../deps/emittery.js'
   DATOM                     = require '..'
 
   unless ( version = ( require 'emittery/package.json' ).version ) is '0.6.0'

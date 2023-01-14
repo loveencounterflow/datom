@@ -3,7 +3,6 @@ lockfileVersion: 5.4
 specifiers:
   cnd: 9.2.2
   cupofjoe: 0.2.1
-  emittery: 0.6.0
   intertype: 7.7.0
   letsfreezethat: ^3.1.0
   multimix: 5.0.0
@@ -11,7 +10,6 @@ specifiers:
 dependencies:
   cnd: 9.2.2
   cupofjoe: 0.2.1
-  emittery: 0.6.0
   intertype: 7.7.0
   letsfreezethat: 3.1.0
   multimix: 5.0.0
@@ -36,11 +34,6 @@ packages:
       cnd: 9.2.1
       intertype: 7.6.5
       multimix: 5.0.0
-    dev: false
-
-  /emittery/0.6.0:
-    resolution: {integrity: sha512-6EMRGr9KzYWp8DzHFZsKVZBsMO6QhAeHMeHND8rhyBNCHKMLpgW9tZv40bwN3rAIKRS5CxcK8oLRKUJSB9h7yQ==}
-    engines: {node: '>=10'}
     dev: false
 
   /intertype/7.6.5:

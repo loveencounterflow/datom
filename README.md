@@ -562,6 +562,8 @@ For best performance, it is recommended to
 * [ ] Dependency [`emittery@0.7.0`](https://github.com/sindresorhus/emittery/releases/tag/v0.7.0) changed
   behavior: "Ensure `.emit()` doesn't return a value" which breaks contracts. The fix currently consists in
   not upgrading from 0.6.0 until a workaround has been implemented.
+* [ ] Allow to instantiate with configuration for freezing (`Object.freeze()`, `letsfreezethat.freeze()`)
+  and cloning (`strcuturedClone()`, `Object.assign()`, `GUY.props.nonull_assign()`)
 
 
 

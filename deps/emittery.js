@@ -1,5 +1,7 @@
 'use strict';
 
+/* thx to https://github.com/sindresorhus/emittery/blob/540339bcb3350ddb3f442a2930bc9c4c302367a9/index.js */
+
 const anyMap = new WeakMap();
 const eventsMap = new WeakMap();
 const producersMap = new WeakMap();

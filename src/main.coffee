@@ -24,7 +24,6 @@ GUY                       = require 'guy'
 { get_base_types }        = require './types'
 letsfreezethat            = require 'letsfreezethat'
 letsfreezethat_nofreeze   = require 'letsfreezethat/nofreeze'
-minimatch                 = require 'minimatch'
 matcher_cache             = new Map()
 
 
@@ -117,11 +116,11 @@ class Datom
   _get_matcher: ( selector ) ->
     ### TAINT might make this method part of API ###
     return R if ( R = matcher_cache.get selector )?
-    cfg =
-      nocomment:                true
-      preserveMultipleSlashes:  true
-    re  = new RegExp ( minimatch.makeRe selector, cfg ).source, 'u'
-    R   = ( x ) -> re.test x
+    selector  = selector.replace /(?<!\\)\?/g, '.?'
+    selector  = selector.replace /(?<!\\)\*/g, '.*'
+    selector  = "^(?:#{selector})$"
+    re        = new RegExp selector, 'u'
+    R         = ( x ) -> re.test x
     matcher_cache.set selector, R
     return R
 

@@ -30,6 +30,6 @@
     "guy": "^13.5.0",
     "intertype": "0.114.0",
     "letsfreezethat": "^3.1.0",
-    "micromatch": "^4.0.5"
+    "minimatch": "^7.4.3"
   }
 }

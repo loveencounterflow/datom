@@ -83,25 +83,9 @@ class Datom
   is_datom:   ( x ) => @types.isa.datom_datom x
 
   #---------------------------------------------------------------------------------------------------------
-  new_datom: ( $key, $value, other... ) =>
-    ### When `other` contains a key `$`, it is treated as a hint to copy
-    system-level attributes; if the value of key `$` is a POD that has itself a
-    key `$`, then a copy of that value is used. This allows to write `new_datom
-    ..., $: d` to copy system-level attributes such as source locations to a new
-    datom. ###
+  new_datom: ( $key, P... ) =>
     @types.validate.datom_key $key
-    return @_new_datom $key, $value, other...
-
-  #---------------------------------------------------------------------------------------------------------
-  _new_datom: ( $key, $value, other... ) =>
-    if $value?
-      $value  = { $value, } if ( not @cfg.merge_values ) or ( not @types.isa.object $value )
-      throw new Error "µ55632 value must not have attribute '$key'" if '$key' in Object.keys $value
-      R       = assign {}, $value,  other..., { $key, }
-    else
-      R       = assign {},          other..., { $key, }
-    while ( @types.isa.object R.$ ) and ( @types.isa.object R.$.$ ) then R.$ = @LFT._deep_copy R.$.$
-    return @freeze R
+    return @freeze assign {}, P..., { $key, }
 
   #---------------------------------------------------------------------------------------------------------
   new_fresh_datom: ( P... ) => @new_datom P..., { $fresh: true, }

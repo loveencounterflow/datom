@@ -58,7 +58,7 @@ DATOM         = new _DATOM.Datom settings
   select }    = DATOM.export()
 ```
 
-Or, mode idiomatically:
+Or, more idiomatically:
 
 ```coffee
 DATOM         = new ( require 'datom' ).Datom { merge_values: false, }
@@ -387,6 +387,8 @@ For best performance, it is recommended to
   not upgrading from 0.6.0 until a workaround has been implemented.
 * [ ] Allow to instantiate with configuration for freezing (`Object.freeze()`, `letsfreezethat.freeze()`)
   and cloning (`strcuturedClone()`, `Object.assign()`, `GUY.props.nonull_assign()`)
+* [ ] re-implement (syntax or method for) selecting stamped datoms
+* [ ] implement wildcards for `select()`; cache selectors to avoid re-interpretation of recurrent patterns
 
 
 

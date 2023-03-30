@@ -27,29 +27,6 @@ letsfreezethat_nofreeze   = require 'letsfreezethat/nofreeze'
 
 
 
-#===========================================================================================================
-# SELECT
-#-----------------------------------------------------------------------------------------------------------
-p1 = /// # `\x23` used instead of `\#` which causes syntax error (???)
-  ^
-    (?<skey>
-      (?<sigil>            [  < ^ > \[ ~ \] \x23 ]  )
-      (?<key>              [^ < ^ > \[ ~ \] \x23 ]* )
-    )
-  $ ///u
-p2 = /// # `\x23` used instead of `\#` which causes syntax error (???)
-  ^
-    (?<skey>
-      (?<sigil>            [  < ^ > \[ ~ \] \x23 ]  )
-      (?<key>              [^ < ^ > \[ ~ \] \x23 ]* )
-    ) \x23
-    (?<attribute>        [^ < ^ > \[ ~ \] \x23 ]+ ) :
-    (?<value>            [^ < ^ > \[ ~ \] \x23 ]+ )
-  $ ///u
-
-
-
-
 
 #===========================================================================================================
 # EXPORT
@@ -89,7 +66,7 @@ class Datom
 
   #---------------------------------------------------------------------------------------------------------
   stamp: ( d, P... ) =>
-    ### Set the `$stamped` attribute on datom to sigil it as processed. Stamped datoms will not be selected
+    ### Set the `$stamped` attribute on datom to mark it as processed. Stamped datoms will not be selected
     by the `select` method unless tag '#stamped' is used. ###
     return @lets d, ( d ) -> assign d, P..., { $stamped: true, }
 
@@ -97,11 +74,6 @@ class Datom
   unstamp: ( d ) =>
     return d unless d.$stamped
     return @lets d, ( d ) -> delete d.$stamped
-
-  #---------------------------------------------------------------------------------------------------------
-  is_system: ( d ) =>
-    ### Return whether datom is a system datom (i.e. whether its `sigil` equals `'~'`). ###
-    return d.$key.match /^[~\[\]]/
 
   #---------------------------------------------------------------------------------------------------------
   is_stamped: ( d ) => d.$stamped ? false ### i.e. already processed? ###
@@ -131,27 +103,7 @@ class Datom
     return @freeze R
 
   #---------------------------------------------------------------------------------------------------------
-  fresh_datom: ( P... ) => @new_datom P..., { $fresh: true, }
-
-  #---------------------------------------------------------------------------------------------------------
-  wrap_datom: ( $key, $value ) =>
-    @types.validate.datom_key    $key
-    @types.validate.datom_datom  $value
-    return @freeze { $key, $value, }
-
-  #---------------------------------------------------------------------------------------------------------
-  new_single_datom: ( name, P... ) => @types.validate.datom_name name; @_new_datom "^#{name}",  P...
-  new_open_datom:   ( name, P... ) => @types.validate.datom_name name; @new_datom  "<#{name}",  P...
-  new_close_datom:  ( name, P... ) => @types.validate.datom_name name; @new_datom  ">#{name}",  P...
-  new_system_datom: ( name, P... ) => @types.validate.datom_name name; @new_datom  "~#{name}",  P...
-  new_text_datom:   (       P... ) => @new_single_datom  'text', P...
-  new_end_datom:                   -> @new_system_datom  'end'
-  # @new_flush_datom    =                           -> @new_system_datom  'flush'
-
-  #---------------------------------------------------------------------------------------------------------
-  new_warning: ( ref, message, d, other...  ) =>
-    @new_system_datom 'warning', d, { ref, message, }, other...
-
+  new_fresh_datom: ( P... ) => @new_datom P..., { $fresh: true, }
 
 
   #=========================================================================================================
@@ -160,24 +112,8 @@ class Datom
   select: ( d, selector ) =>
     throw new Error "µ86606 expected a selector, got none" unless selector?
     return false unless ( ( @types.isa.object d ) and ( d.$key? ) )
-    #.......................................................................................................
-    unless ( match = ( selector.match p2 ) ? ( selector.match p1 ) )?
-      throw new Error "µ37799 illegal selector #{rpr selector}"
-    g       = {}
-    g[ k ]  = v for k, v of match.groups when v isnt ''
-    if g.attribute? and ( g.attribute isnt 'stamped' )
-      throw new Error "µ77764 unknown attribute name #{rpr g.attribute}"
-    switch g.value
-      when undefined      then stamped_values = [       false, ]
-      when '*'            then stamped_values = [ true, false, ]
-      when 'true'         then stamped_values = [ true,        ]
-      when 'false'        then stamped_values = [       false, ]
-      else throw new Error "µ33366 illegal attribute or value in selector #{rpr selector}"
-    #.......................................................................................................
-    return false if ( d.$stamped ? false ) not in stamped_values
-    return ( d.$key is g.skey ) if g.key?
-    return false unless d.$key.startsWith g.sigil
-    return true
+    return false if ( d.$stamped ? false )
+    return d.$key is selector
 
 
 #===========================================================================================================

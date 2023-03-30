@@ -21,7 +21,6 @@ GUY                       = require 'guy'
   log     }               = GUY.trm
 { Intertype }             = require 'intertype'
 base_types                = null
-xemitter_types            = null
 misfit                    = Symbol 'misfit'
 
 
@@ -72,18 +71,6 @@ get_base_types = ->
   #.........................................................................................................
   return base_types
 
-#-----------------------------------------------------------------------------------------------------------
-get_xemitter_types = ->
-  return xemitter_types if xemitter_types?
-  #.........................................................................................................
-  xemitter_types            = new Intertype get_base_types()
-  { declare }               = xemitter_types
-  #.........................................................................................................
-  declare.callable 'function'
-  #.........................................................................................................
-  return xemitter_types
-
-
 #===========================================================================================================
-module.exports = { misfit, get_base_types, get_xemitter_types, }
+module.exports = { misfit, get_base_types, }
 

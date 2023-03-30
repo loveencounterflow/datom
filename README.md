@@ -21,11 +21,6 @@
 - [WIP](#wip)
   - [PipeDreams Datoms (Data Events)](#pipedreams-datoms-data-events)
   - [`select = ( d, selector ) ->`](#select---d-selector---)
-  - [The XEmitter (XE) Sub-Module](#the-xemitter-xe-sub-module)
-    - [XE Sending API](#xe-sending-api)
-    - [XE Receiving API](#xe-receiving-api)
-    - [Sample](#sample)
-    - [Managing Scope](#managing-scope)
 - [Benchmarks](#benchmarks)
 - [To Do](#to-do)
 

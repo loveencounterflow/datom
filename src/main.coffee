@@ -110,9 +110,6 @@ class Datom
   #=========================================================================================================
   #
   #---------------------------------------------------------------------------------------------------------
-  _get_matchers: ( selectors ) -> ( @_get_matcher selector for selector in selectors )
-
-  #---------------------------------------------------------------------------------------------------------
   _get_matcher: ( selector ) ->
     ### TAINT might make this method part of API ###
     return R if ( R = matcher_cache.get selector )?
@@ -129,9 +126,9 @@ class Datom
     throw new Error "µ86606 expected a selector, got none" unless selectors.length > 0
     return false unless ( ( @types.isa.object d ) and ( d.$key? ) )
     return false if ( d.$stamped ? false )
-    # return ( @_get_matcher selector ) d.$key
-    for matcher in @_get_matchers selectors
-      return true if matcher d.$key
+    #.......................................................................................................
+    for selector in selectors
+      return true if ( @_get_matcher selector ) d.$key
     return false
 
 

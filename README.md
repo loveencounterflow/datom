@@ -30,7 +30,7 @@
 standardized immutable objects in the spirit of datomic, especially suited for use in data pipelines
 
 
-**NOTE: Documentation is still fragmentary. WIP.**
+**NOTE: Documentation is outdated. WIP.**
 
 # Export Bound Methods
 

@@ -24,7 +24,8 @@ GUY                       = require 'guy'
 { get_base_types }        = require './types'
 letsfreezethat            = require 'letsfreezethat'
 letsfreezethat_nofreeze   = require 'letsfreezethat/nofreeze'
-
+minimatch                 = require 'minimatch'
+matcher_cache             = new Map()
 
 
 
@@ -42,6 +43,7 @@ class Datom
     @LFT      = if @cfg.freeze then letsfreezethat else letsfreezethat_nofreeze
     @freeze   = @LFT.freeze
     @thaw     = @LFT.thaw
+    GUY.props.hide @, 'matcher_cache', matcher_cache
     return undefined
 
   #---------------------------------------------------------------------------------------------------------
@@ -109,11 +111,29 @@ class Datom
   #=========================================================================================================
   #
   #---------------------------------------------------------------------------------------------------------
-  select: ( d, selector ) =>
-    throw new Error "µ86606 expected a selector, got none" unless selector?
+  _get_matchers: ( selectors ) -> ( @_get_matcher selector for selector in selectors )
+
+  #---------------------------------------------------------------------------------------------------------
+  _get_matcher: ( selector ) ->
+    ### TAINT might make this method part of API ###
+    return R if ( R = matcher_cache.get selector )?
+    cfg =
+      nocomment:                true
+      preserveMultipleSlashes:  true
+    re  = new RegExp ( minimatch.makeRe selector, cfg ).source, 'u'
+    R   = ( x ) -> re.test x
+    matcher_cache.set selector, R
+    return R
+
+  #---------------------------------------------------------------------------------------------------------
+  select: ( d, selectors... ) =>
+    throw new Error "µ86606 expected a selector, got none" unless selectors.length > 0
     return false unless ( ( @types.isa.object d ) and ( d.$key? ) )
     return false if ( d.$stamped ? false )
-    return d.$key is selector
+    # return ( @_get_matcher selector ) d.$key
+    for matcher in @_get_matchers selectors
+      return true if matcher d.$key
+    return false
 
 
 #===========================================================================================================

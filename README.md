@@ -8,6 +8,7 @@
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
+  - [Dataclasses](#dataclasses)
 - [Export Bound Methods](#export-bound-methods)
 - [Creation of Bespoke Library Instances](#creation-of-bespoke-library-instances)
 - [Configuration Parameters](#configuration-parameters)
@@ -29,6 +30,38 @@
 
 standardized immutable objects in the spirit of datomic, especially suited for use in data pipelines
 
+## Dataclasses
+
+* Dataclasses allow to marry ES6 classes and Intertype type declarations
+* derive your class from `( require 'datom' ).Dataclass`
+* declare class property `declaration` as an [Intertype
+  declaration](https://github.com/loveencounterflow/intertype/blob/main/README-declare.md)
+* simple example:
+
+  ```coffee
+  class Quantity extends Dataclass
+    @declaration:
+      fields:
+        q:    'float'
+        u:    'nonempty.text'
+      template:
+        q:    0
+        u:    'unit'
+  ```
+
+* now, when you do `q = new Quantity()`, you get a (shallowly) frozen object with properties `{ q: 0, u:
+  'unit', }` which is the default value for that class (representing the most generic measurement, zero
+  dimensionless units)
+* this is probably not very useful, so pass in values to override defaults, as in `new Quantity { u: 'km',
+  }` to define a length or `new Quantity { q: 12.5, u: 's', }` to define a time span
+* can modify using `quantity = DATOM.lets quantity, ( quantity ) -> quantity.q = 120`
+* by default, instances of derivatives of `Dataclass` are deep-frozen, meaning not the instance itself nor
+  its properties can be mutated
+  * default can be made explicit by adding `freeze: 'deep'` to type declaration
+  * can also dow shallow freezing by setting `freeze: true`; in that case, properties like lists and objects
+    can still be mutated, but properties can not be reassigned, added or deleted
+  * setting `freeze: false` will result in a fully mutable object
+  * `DATOM.thaw x` can always be used to obtain a fully mutable copy where that is called for
 
 **NOTE: Documentation is outdated. WIP.**
 
@@ -389,6 +422,8 @@ For best performance, it is recommended to
   and cloning (`strcuturedClone()`, `Object.assign()`, `GUY.props.nonull_assign()`)
 * [ ] re-implement (syntax or method for) selecting stamped datoms
 * [ ] implement wildcards for `select()`; cache selectors to avoid re-interpretation of recurrent patterns
+* [ ] dataclasses should optionally be mutable
+* [ ] make deep-freezing the default for `Dataclass`?
 
 
 

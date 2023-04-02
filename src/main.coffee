@@ -117,7 +117,35 @@ class Datom
 
 
 #===========================================================================================================
-module.exports = { Datom, DATOM: new Datom(), }
+class Dataclass
+
+  #---------------------------------------------------------------------------------------------------------
+  @declaration: null
+
+  #---------------------------------------------------------------------------------------------------------
+  @new_datom: ( x ) -> new Proxy x,
+    #.......................................................................................................
+    get: ( target, key, receiver ) ->
+      Object.freeze target unless Object.isFrozen target
+      return Reflect.get target, key, receiver
+    #.......................................................................................................
+    set: ( target, key, value, receiver ) ->
+      Object.freeze target unless Object.isFrozen target
+      throw new TypeError "Cannot assign to read only property #{rpr key} of object #{rpr target}"
+
+  #---------------------------------------------------------------------------------------------------------
+  constructor: ( cfg ) ->
+    clasz   = @constructor
+    __types = clasz.types ? new ( require 'intertype' ).Intertype()
+    GUY.props.hide @, '__types', __types
+    if ( declaration = clasz.declaration )?
+      @__types.declare[ clasz.name ] declaration
+      @[ k ] = v for k, v of @__types.create[ clasz.name ] cfg
+    return clasz.new_datom @
+
+
+#===========================================================================================================
+module.exports = { Datom, DATOM: new Datom(), Dataclass, }
 
 
 

@@ -58,8 +58,8 @@ standardized immutable objects in the spirit of datomic, especially suited for u
 * by default, instances of derivatives of `Dataclass` are deep-frozen, meaning not the instance itself nor
   its properties can be mutated
   * default can be made explicit by adding `freeze: 'deep'` to type declaration
-  * can also dow shallow freezing by setting `freeze: true`; in that case, properties like lists and objects
-    can still be mutated, but properties can not be reassigned, added or deleted
+  * can also dow shallow freezing by setting `freeze: true` or `freeze: 'shallow'`; in that case, properties
+    like lists and objects can still be mutated, but properties can not be reassigned, added or deleted
   * setting `freeze: false` will result in a fully mutable object
   * `DATOM.thaw x` can always be used to obtain a fully mutable copy where that is called for
 

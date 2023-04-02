@@ -5,8 +5,8 @@ dependencies:
     specifier: ^13.5.0
     version: 13.5.0(acorn-loose@8.3.0)(acorn-walk@8.2.0)(acorn@8.8.2)(astring@1.8.4)(dayjs@1.11.7)(tmp@0.2.1)
   intertype:
-    specifier: 0.114.0
-    version: 0.114.0(acorn-loose@8.3.0)(acorn-walk@8.2.0)(acorn@8.8.2)(astring@1.8.4)(tmp@0.2.1)
+    specifier: 0.115.0
+    version: 0.115.0(acorn-loose@8.3.0)(acorn-walk@8.2.0)(acorn@8.8.2)(astring@1.8.4)(tmp@0.2.1)
   letsfreezethat:
     specifier: ^3.1.0
     version: 3.1.0
@@ -134,8 +134,8 @@ packages:
       multimix: 5.0.0
     dev: false
 
-  /intertype@0.114.0(acorn-loose@8.3.0)(acorn-walk@8.2.0)(acorn@8.8.2)(astring@1.8.4)(tmp@0.2.1):
-    resolution: {integrity: sha512-bGZHR4vHBjg7jai5Z2EqvhDcllBWD96UVD2bhOuI1ylZn909lomox/88Yl+mEZdxK8D367AfZsKf6VMXo3uArw==}
+  /intertype@0.115.0(acorn-loose@8.3.0)(acorn-walk@8.2.0)(acorn@8.8.2)(astring@1.8.4)(tmp@0.2.1):
+    resolution: {integrity: sha512-9avQXkbFU5MNHIMzo7RjQk48jKN73XP/2QEgHd6VvzsoLFTfOGelDOwWWnv2h5KdQVrqGKU3fcXqxZQLZt/qOw==}
     dependencies:
       guy: 11.12.0(acorn-loose@8.3.0)(acorn-walk@8.2.0)(acorn@8.8.2)(astring@1.8.4)(tmp@0.2.1)
       intertype-legacy: 7.7.1

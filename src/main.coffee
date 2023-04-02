@@ -138,10 +138,16 @@ class Dataclass
     clasz   = @constructor
     __types = clasz.types ? new ( require 'intertype' ).Intertype()
     GUY.props.hide @, '__types', __types
-    if ( declaration = clasz.declaration )?
+    declaration = clasz.declaration
+    freezemode  = declaration?.freeze ? 'deep'
+    if declaration?
       @__types.declare[ clasz.name ] declaration
-      @[ k ] = v for k, v of @__types.create[ clasz.name ] cfg
-    return clasz.new_datom @
+      paragon = @__types.create[ clasz.name ] cfg
+      paragon = GUY.lft.freeze paragon if freezemode is 'deep'
+      @[ k ]  = v for k, v of paragon
+    return undefined if freezemode is false
+    ( R = clasz.new_datom @ )[ Symbol 'test' ]
+    return R
 
 
 #===========================================================================================================

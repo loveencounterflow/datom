@@ -62,6 +62,45 @@ standardized immutable objects in the spirit of datomic, especially suited for u
     like lists and objects can still be mutated, but properties can not be reassigned, added or deleted
   * setting `freeze: false` will result in a fully mutable object
   * `DATOM.thaw x` can always be used to obtain a fully mutable copy where that is called for
+* one feature that may be useful for some use cases is that `Dataclass` instances can have computed
+  properties; define those in the constructor:
+
+  ```coffee
+  #.......................................................................................................
+  class Something extends Dataclass
+
+    @declaration:
+      freeze:   false
+      fields:
+        mode:   'nonempty.text'
+        name:   'nonempty.text'
+      template:
+        mode:   null
+        name:   null
+
+    constructor: ( P... ) ->
+      super P...
+      GUY.props.def @, 'id',
+        enumerable: true
+        get: => "#{@mode}:#{@name}"
+        set: ( value ) =>
+          @__types.validate.nonempty.text value
+          parts = value.split ':'
+          @mode = parts[ 0 ]
+          @name = parts[ 1 .. ].join ':'
+          return null
+      return undefined
+
+  #.......................................................................................................
+  s = new Something { mode: 'mymode', name: 'p', }
+  debug '^464561^', s
+  T?.eq s, { mode: 'mymode', name: 'p', id: 'mymode:p', }
+  debug '^464561^', s.id
+  s.id = 'foo:bar'
+  T?.eq s, { mode: 'foo', name: 'bar', id: 'foo:bar', }
+  ```
+
+
 
 **NOTE: Documentation is outdated. WIP.**
 

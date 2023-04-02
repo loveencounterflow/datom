@@ -36,7 +36,7 @@ get_base_types = ->
       merge_values:         'boolean'
       freeze:               'boolean'
       dirty:                'boolean' ### TAINT ??? to be removed ??? ###
-    default:
+    template:
       merge_values:         true
       freeze:               true
       dirty:                false ### TAINT ??? to be removed ??? ###
@@ -59,7 +59,7 @@ get_base_types = ->
       $dirty:             'optional.boolean'
       $fresh:             'optional.boolean'
       $vnr:               'optional.datom_vnr'
-    default:
+    template:
       $key:               null
       $stamped:           null
       $dirty:             null

@@ -462,7 +462,9 @@ For best performance, it is recommended to
 * [ ] re-implement (syntax or method for) selecting stamped datoms
 * [ ] implement wildcards for `select()`; cache selectors to avoid re-interpretation of recurrent patterns
 * [ ] dataclasses should optionally be mutable
-* [ ] make deep-freezing the default for `Dataclass`?
+* [X] make deep-freezing the default for `Dataclass`?
+* [ ] devise way to declare `Dataclass` type upon class declaration (possible at all?); next best solution:
+  add class method `register()` or `declare()`
 
 
 

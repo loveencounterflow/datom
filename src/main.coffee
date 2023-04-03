@@ -133,6 +133,9 @@ class Dataclass
       Object.freeze target unless Object.isFrozen target
       throw new TypeError "Cannot assign to read only property #{rpr key} of object #{rpr target}"
 
+  # #---------------------------------------------------------------------------------------------------------
+  # @register: ->
+
   #---------------------------------------------------------------------------------------------------------
   constructor: ( cfg ) ->
     clasz   = @constructor
@@ -148,7 +151,6 @@ class Dataclass
     return undefined if freezemode is false
     ( R = clasz._freeze_on_access @ )[ Symbol 'test' ]
     return R
-
 
 #===========================================================================================================
 module.exports = { Datom, DATOM: new Datom(), Dataclass, }

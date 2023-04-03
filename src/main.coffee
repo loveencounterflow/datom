@@ -123,7 +123,7 @@ class Dataclass
   @declaration: null
 
   #---------------------------------------------------------------------------------------------------------
-  @new_datom: ( x ) -> new Proxy x,
+  @_freeze_on_access: ( x ) -> new Proxy x,
     #.......................................................................................................
     get: ( target, key, receiver ) ->
       Object.freeze target unless Object.isFrozen target
@@ -146,7 +146,7 @@ class Dataclass
       paragon = GUY.lft.freeze paragon if freezemode is 'deep'
       @[ k ]  = v for k, v of paragon
     return undefined if freezemode is false
-    ( R = clasz.new_datom @ )[ Symbol 'test' ]
+    ( R = clasz._freeze_on_access @ )[ Symbol 'test' ]
     return R
 
 

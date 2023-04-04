@@ -133,9 +133,6 @@ class Dataclass
       Object.freeze target unless Object.isFrozen target
       throw new TypeError "Cannot assign to read only property #{rpr key} of object #{rpr target}"
 
-  # #---------------------------------------------------------------------------------------------------------
-  # @register: ->
-
   #---------------------------------------------------------------------------------------------------------
   constructor: ( cfg ) ->
     clasz   = @constructor

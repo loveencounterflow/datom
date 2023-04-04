@@ -144,7 +144,7 @@ class Dataclass
     declaration = clasz.declaration
     freezemode  = declaration?.freeze ? 'deep'
     if declaration?
-      @__types.declare[ clasz.name ] declaration
+      @__types.declare[ clasz.name ] declaration unless @__types.isa.knowntype clasz.name
       paragon = @__types.create[ clasz.name ] cfg
       paragon = GUY.lft.freeze paragon if freezemode is 'deep'
       @[ k ]  = v for k, v of paragon

@@ -139,9 +139,11 @@ class Dataclass
     __types = clasz.types ? new ( require 'intertype' ).Intertype()
     GUY.props.hide @, '__types', __types
     declaration = clasz.declaration
-    freezemode  = declaration?.freeze ? 'deep'
+    freezemode  = declaration?.freeze ?= 'deep'
     if declaration?
+      @__types.declare[ clasz.name ] declaration unless @__types.isa.knowntype clasz.name
       paragon = @__types._create_no_validation { declaration..., cfg, }
+      @__types.validate[ clasz.name ] paragon
       @[ k ]  = v for k, v of paragon
     return undefined if freezemode is false
     ( R = clasz._freeze_on_access @ )[ Symbol 'test' ]

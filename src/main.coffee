@@ -141,9 +141,7 @@ class Dataclass
     declaration = clasz.declaration
     freezemode  = declaration?.freeze ? 'deep'
     if declaration?
-      @__types.declare[ clasz.name ] declaration unless @__types.isa.knowntype clasz.name
-      paragon = @__types.create[ clasz.name ] cfg
-      paragon = GUY.lft.freeze paragon if freezemode is 'deep'
+      paragon = @__types._create_no_validation { declaration..., cfg, }
       @[ k ]  = v for k, v of paragon
     return undefined if freezemode is false
     ( R = clasz._freeze_on_access @ )[ Symbol 'test' ]

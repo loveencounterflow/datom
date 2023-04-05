@@ -465,6 +465,8 @@ For best performance, it is recommended to
 * [X] make deep-freezing the default for `Dataclass`?
 * [ ] devise way to declare `Dataclass` type upon class declaration (possible at all?); next best solution:
   add class method `register()` or `declare()`
+* [ ] when declaring, validating dataclass instances, consider to use private name (symbol) to avoid any
+  chance for name clashes
 
 
 

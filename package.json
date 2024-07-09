@@ -28,7 +28,7 @@
   "homepage": "https://github.com/loveencounterflow/datom#readme",
   "dependencies": {
     "guy": "^13.5.0",
-    "intertype": "0.118.0",
+    "intertype": "^0.119.1",
     "letsfreezethat": "^3.1.0"
   }
 }
